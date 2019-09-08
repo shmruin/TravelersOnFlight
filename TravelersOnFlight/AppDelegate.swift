@@ -7,15 +7,44 @@
 //
 
 import UIKit
+import RxFlow
+import RxSwift
+import RxCocoa
+import NSObject_Rx
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var coordinator = FlowCoordinator()
+    let travelService = TravelService()
+    let scheduleService = ScheduleService()
+    lazy var appServices = {
+        return AppServices(travelService: self.travelService, scheduleServices: self.scheduleService)
+    }()
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        guard let window = self.window else { return false }
+        
+        self.coordinator.rx.willNavigate.subscribe(onNext: { (flow, step) in
+            print("will navigate to flow=\(flow) and step=\(step)")
+        }).disposed(by: rx.disposeBag)
+        
+        self.coordinator.rx.didNavigate.subscribe(onNext: { (flow, step) in
+            print("did navigate to flow=\(flow) and step=\(step)")
+        }).disposed(by: rx.disposeBag)
+        
+        let appFlow = AppFlow(services: self.appServices)
+        
+        Flows.whenReady(flow1: appFlow) { root in
+            window.rootViewController = root
+            window.makeKeyAndVisible()
+        }
+        
+        self.coordinator.coordinate(flow: appFlow, with: AppStepper(withServices: self.appServices))
+        
         return true
     }
 
@@ -41,6 +70,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
 }
 
+struct AppServices: HasTravelService {
+    let travelService: TravelService
+    let scheduleServices: ScheduleService
+}
