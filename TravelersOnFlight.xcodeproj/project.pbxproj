@@ -29,6 +29,7 @@
 		A822AC64230F0A8E00F8E1A0 /* TravelersOnFlightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822AC63230F0A8E00F8E1A0 /* TravelersOnFlightTests.swift */; };
 		A822AC6F230F0A8E00F8E1A0 /* TravelersOnFlightUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822AC6E230F0A8E00F8E1A0 /* TravelersOnFlightUITests.swift */; };
 		A828B98C231EB68400411483 /* ItemRelationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A828B98B231EB68400411483 /* ItemRelationService.swift */; };
+		A82E9CBF2328179100027D47 /* NewTravelListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82E9CBE2328179100027D47 /* NewTravelListCollectionViewCell.swift */; };
 		A85BB4F2231192D50060C7EF /* TravelsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85BB4F1231192D50060C7EF /* TravelsService.swift */; };
 		A85BB4F7231193DA0060C7EF /* TravelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85BB4F6231193DA0060C7EF /* TravelItem.swift */; };
 		A85BB4F9231193F80060C7EF /* ScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85BB4F8231193F80060C7EF /* ScheduleItem.swift */; };
@@ -37,6 +38,7 @@
 		A8A1420D2315549F00A8BF0D /* TravelTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1420C2315549F00A8BF0D /* TravelTheme.swift */; };
 		A8A1420F23155CEE00A8BF0D /* TravelListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1420E23155CEE00A8BF0D /* TravelListCollectionViewCell.swift */; };
 		A8A14212231570FD00A8BF0D /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A14211231570FD00A8BF0D /* Date.swift */; };
+		A8FE39C3232B877600AF02CD /* CreateTravelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FE39C2232B877600AF02CD /* CreateTravelModel.swift */; };
 		F6AD81CD0AF09B4FF2C564A2 /* Pods_TravelersOnFlightUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A78139001BC1AB46B3A1795B /* Pods_TravelersOnFlightUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +92,7 @@
 		A822AC6E230F0A8E00F8E1A0 /* TravelersOnFlightUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelersOnFlightUITests.swift; sourceTree = "<group>"; };
 		A822AC70230F0A8E00F8E1A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A828B98B231EB68400411483 /* ItemRelationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRelationService.swift; sourceTree = "<group>"; };
+		A82E9CBE2328179100027D47 /* NewTravelListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTravelListCollectionViewCell.swift; sourceTree = "<group>"; };
 		A85BB4F1231192D50060C7EF /* TravelsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelsService.swift; sourceTree = "<group>"; };
 		A85BB4F6231193DA0060C7EF /* TravelItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelItem.swift; sourceTree = "<group>"; };
 		A85BB4F8231193F80060C7EF /* ScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleItem.swift; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 		A8A1420C2315549F00A8BF0D /* TravelTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelTheme.swift; sourceTree = "<group>"; };
 		A8A1420E23155CEE00A8BF0D /* TravelListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelListCollectionViewCell.swift; sourceTree = "<group>"; };
 		A8A14211231570FD00A8BF0D /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		A8FE39C2232B877600AF02CD /* CreateTravelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTravelModel.swift; sourceTree = "<group>"; };
 		B62008543ACF2524F40736AD /* Pods-TravelersOnFlightUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelersOnFlightUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TravelersOnFlightUITests/Pods-TravelersOnFlightUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D544F2BF482612276BA4CB59 /* Pods_TravelersOnFlight.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TravelersOnFlight.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D636CA68CC098872E2C8C793 /* Pods-TravelersOnFlightUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelersOnFlightUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TravelersOnFlightUITests/Pods-TravelersOnFlightUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 		A8087F26231423F7004AB052 /* Travel */ = {
 			isa = PBXGroup;
 			children = (
+				A8FE39C1232B876500AF02CD /* Models */,
 				A8087F272314240B004AB052 /* Cells */,
 				A8A1420A2315515800A8BF0D /* TravelListViewController.storyboard */,
 				A8087F282314248D004AB052 /* TravelListViewController.swift */,
@@ -194,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				A8A1420E23155CEE00A8BF0D /* TravelListCollectionViewCell.swift */,
+				A82E9CBE2328179100027D47 /* NewTravelListCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -304,6 +310,14 @@
 				A8A14211231570FD00A8BF0D /* Date.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A8FE39C1232B876500AF02CD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A8FE39C2232B877600AF02CD /* CreateTravelModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		B8393C60D8430E69F75063FE /* Frameworks */ = {
@@ -552,9 +566,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8FE39C3232B877600AF02CD /* CreateTravelModel.swift in Sources */,
 				A822AC51230F0A8D00F8E1A0 /* ViewController.swift in Sources */,
 				A8030C8F23126B6F004ECE65 /* AppFlow.swift in Sources */,
 				A8030C8A23125689004ECE65 /* CategoryRepository.swift in Sources */,
+				A82E9CBF2328179100027D47 /* NewTravelListCollectionViewCell.swift in Sources */,
 				A85BB4F7231193DA0060C7EF /* TravelItem.swift in Sources */,
 				A8087F292314248D004AB052 /* TravelListViewController.swift in Sources */,
 				A806EFEF231D6C9E00C071F6 /* ItemRelation.swift in Sources */,

@@ -137,7 +137,7 @@ protocol ItemRelationServiceType: RealmServiceType {
     func connectRelation<T: Relationable>(element: T, parent: T, nextToSibling: T) -> Observable<T>
     
     @discardableResult
-    func disconnectRelation<T: Relationable>(element: T) -> Observable<T>
+    func disconnectRelation<T: Relationable>(element: T) -> Observable<Void>
     
     @discardableResult
     func connectToLast<T: Relationable>(element: T) -> Observable<T>

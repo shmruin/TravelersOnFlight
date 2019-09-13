@@ -43,17 +43,12 @@ struct TravelService: TravelServiceType {
                 realm.add(travel)
             }
             return .just(travel)
-        }
+            }?
+            .do(onNext: { resTravel in
+                return self.itemRealtionService.connectToLast(element: resTravel)
+            })
         
-        if let res = result {
-            return res
-                .takeLast(1)
-                .subscribe(onNext: { resTravel in
-                    return self.itemRealtionService.connectToLast(element: resTravel)
-                }) as! Observable<TravelItem>
-        } else {
-            return .error(TravelServiceError.creationFailed)
-        }
+        return result ?? .error(TravelServiceError.creationFailed)
     }
     
     @discardableResult

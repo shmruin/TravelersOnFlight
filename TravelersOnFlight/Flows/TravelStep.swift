@@ -11,6 +11,8 @@ import RxFlow
 enum TravelStep: Step {
     // Global
     case alert(String)
+    case idle
+    case travelFlowIsRequired
     
     // Travel
     case travelScreenIsRequired

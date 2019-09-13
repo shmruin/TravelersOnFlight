@@ -38,14 +38,14 @@ class AppFlow: Flow {
         guard let step = step as? TravelStep else { return .none }
         
         switch step {
-        case .travelScreenIsRequired:
-            return navigationToTravelScreen()
+        case .travelFlowIsRequired:
+            return navigationToTravelFlow()
         default:
             return .none
         }
     }
     
-    private func navigationToTravelScreen() -> FlowContributors {
+    private func navigationToTravelFlow() -> FlowContributors {
         let travelFlow = TravelFlow(withServices: self.services)
         
         Flows.whenReady(flow1: travelFlow) { [unowned self] root in
@@ -71,11 +71,11 @@ class AppStepper: Stepper {
     }
     
     var initialStep: Step {
-        return TravelStep.travelScreenIsRequired
+        return TravelStep.idle
     }
     
     func readyToEmitSteps() {
         steps
-            .accept(TravelStep.travelScreenIsRequired)
+            .accept(TravelStep.travelFlowIsRequired)
     }
 }

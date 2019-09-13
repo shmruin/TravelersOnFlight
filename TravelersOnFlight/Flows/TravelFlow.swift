@@ -35,8 +35,8 @@ class TravelFlow: Flow {
         switch step {
         case .travelScreenIsRequired:
             return navigateToTravelScreen()
-        case .travelIsSelected(let travelId):
-            return navigateToScheduleScreen(with: travelId)
+        case .travelIsSelected(let travel):
+            return navigateToScheduleScreen(with: travel)
         default:
             return .none
         }
@@ -48,8 +48,9 @@ class TravelFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewController.viewModel))
     }
     
-    private func navigateToScheduleScreen(with travelId: Int) -> FlowContributors {
+    private func navigateToScheduleScreen(with travel: TravelItem) -> FlowContributors {
         // TODO: Schedule later
+        print("\(type(of: self)): \(#function)")
         return .none
     }
 }

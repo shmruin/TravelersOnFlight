@@ -25,7 +25,7 @@ class TravelRoot: Object, Relationable {
 class TravelItem: Object, Relationable {
     @objc dynamic var uid: String = UUID().uuidString
     @objc dynamic var parentUid: String = "0"
-    @objc dynamic var firstCity: String = "None"
+    @objc dynamic var firstCity: String = "NoWhere"
     @objc dynamic var numCountries: Int = 0
     @objc dynamic var numCities: Int = 0
     @objc dynamic var stDate: Date = Date()
@@ -43,10 +43,4 @@ extension TravelItem: IdentifiableType {
     }
 }
 
-//struct Travel {
-//    let id: Int
-//    let stDate: Date
-//    let fnDate: Date
-//    let theme: TravelTheme
-//    let travelScheduleId: Int
-//}
+let DummyTravelItem = TravelItem()

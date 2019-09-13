@@ -35,7 +35,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.34999999999999998" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultTheme" translatesAutoresizingMaskIntoConstraints="NO" id="IyT-cz-WIa">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultTheme" translatesAutoresizingMaskIntoConstraints="NO" id="IyT-cz-WIa">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="150"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -74,23 +74,99 @@
                                             <outlet property="travelTitle" destination="Dei-9n-J9r" id="v5G-id-HZs"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="newTravelCollectionViewCell" id="9OT-Fd-OP7" customClass="NewTravelListCollectionViewCell" customModule="TravelersOnFlight" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="160" width="374" height="150"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="150"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultTheme" translatesAutoresizingMaskIntoConstraints="NO" id="lOu-ko-aP3">
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="150"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First City," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tge-br-AYn">
+                                                    <rect key="frame" x="182" y="20" width="68" height="21"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(TOUCH TO ADD NEW TRAVEL)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Lm-jj-7bf">
+                                                    <rect key="frame" x="126" y="51" width="228" height="20"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="19.08.31 - 19.09.11" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8id-Tx-LOo">
+                                                    <rect key="frame" x="223" y="110" width="131" height="20"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Travel Theme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SI7-SG-Nwp">
+                                                    <rect key="frame" x="256" y="20" width="98" height="21"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Month," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3mM-pK-xpm">
+                                                    <rect key="frame" x="125" y="20" width="51" height="21"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="lOu-ko-aP3" firstAttribute="top" secondItem="SI7-SG-Nwp" secondAttribute="bottom" constant="-41" id="7jM-zr-Zui"/>
+                                            <constraint firstItem="lOu-ko-aP3" firstAttribute="leading" secondItem="9OT-Fd-OP7" secondAttribute="leading" id="9uN-CN-ykx"/>
+                                            <constraint firstAttribute="bottom" secondItem="lOu-ko-aP3" secondAttribute="bottom" id="ES3-mN-Q6z"/>
+                                            <constraint firstAttribute="trailing" secondItem="lOu-ko-aP3" secondAttribute="trailing" id="GkS-fw-3gl"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="8id-Tx-LOo" secondAttribute="trailing" constant="12" id="GsN-0s-dcs"/>
+                                            <constraint firstItem="SI7-SG-Nwp" firstAttribute="leading" secondItem="tge-br-AYn" secondAttribute="trailing" constant="6" id="L8h-YL-0LJ"/>
+                                            <constraint firstItem="SI7-SG-Nwp" firstAttribute="centerY" secondItem="tge-br-AYn" secondAttribute="centerY" id="Low-cb-s41"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="8Lm-jj-7bf" secondAttribute="trailing" constant="12" id="VuX-QG-4L4"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="8id-Tx-LOo" secondAttribute="bottom" constant="12" id="XWZ-Jh-srT"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="SI7-SG-Nwp" secondAttribute="trailing" constant="12" id="XmB-7l-XYQ"/>
+                                            <constraint firstItem="lOu-ko-aP3" firstAttribute="top" secondItem="9OT-Fd-OP7" secondAttribute="top" id="gmZ-oj-9PO"/>
+                                            <constraint firstItem="tge-br-AYn" firstAttribute="centerY" secondItem="3mM-pK-xpm" secondAttribute="centerY" id="h3K-WL-tep"/>
+                                            <constraint firstItem="8Lm-jj-7bf" firstAttribute="top" secondItem="SI7-SG-Nwp" secondAttribute="bottom" constant="10" id="s3J-65-Ql7"/>
+                                            <constraint firstItem="tge-br-AYn" firstAttribute="leading" secondItem="3mM-pK-xpm" secondAttribute="trailing" constant="6" id="xBd-oD-NRX"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="travelBackgroundImage" destination="lOu-ko-aP3" id="dxW-FV-ZO3"/>
+                                            <outlet property="travelCity" destination="tge-br-AYn" id="6th-ya-XPT"/>
+                                            <outlet property="travelDates" destination="8id-Tx-LOo" id="GGK-su-dd4"/>
+                                            <outlet property="travelMonth" destination="3mM-pK-xpm" id="JHL-Ig-QE1"/>
+                                            <outlet property="travelSummary" destination="8Lm-jj-7bf" id="OqA-x7-gct"/>
+                                            <outlet property="travelTheme" destination="SI7-SG-Nwp" id="GfP-FI-tM8"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Now Offline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OSs-Bs-L3F">
-                                <rect key="frame" x="304" y="70" width="90" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="300.5" y="70" width="85.5" height="21"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BIh-9j-z2t">
+                                <rect key="frame" x="28" y="70" width="84" height="21"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="BIh-9j-z2t" firstAttribute="centerY" secondItem="OSs-Bs-L3F" secondAttribute="centerY" id="HAQ-kI-Soy"/>
                             <constraint firstItem="vgW-cp-0uh" firstAttribute="trailing" secondItem="L1g-71-iIw" secondAttribute="trailing" constant="20" id="NXk-Yw-Ayf"/>
                             <constraint firstItem="L1g-71-iIw" firstAttribute="top" secondItem="OSs-Bs-L3F" secondAttribute="bottom" constant="20" id="Xgu-Lb-gs5"/>
                             <constraint firstItem="L1g-71-iIw" firstAttribute="bottom" secondItem="vgW-cp-0uh" secondAttribute="bottom" id="czd-Lm-UFD"/>
-                            <constraint firstItem="vgW-cp-0uh" firstAttribute="trailing" secondItem="OSs-Bs-L3F" secondAttribute="trailing" constant="20" id="dJw-9T-lG0"/>
+                            <constraint firstItem="vgW-cp-0uh" firstAttribute="trailing" secondItem="OSs-Bs-L3F" secondAttribute="trailing" constant="28" id="dJw-9T-lG0"/>
                             <constraint firstItem="OSs-Bs-L3F" firstAttribute="top" secondItem="vgW-cp-0uh" secondAttribute="top" constant="26" id="iaD-tG-Xx8"/>
                             <constraint firstItem="L1g-71-iIw" firstAttribute="leading" secondItem="vgW-cp-0uh" secondAttribute="leading" constant="20" id="sFA-4s-22d"/>
+                            <constraint firstItem="BIh-9j-z2t" firstAttribute="top" secondItem="vgW-cp-0uh" secondAttribute="top" constant="26" id="tdj-BX-ido"/>
+                            <constraint firstItem="BIh-9j-z2t" firstAttribute="leading" secondItem="vgW-cp-0uh" secondAttribute="leading" constant="28" id="xYd-RM-7BK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vgW-cp-0uh"/>
                     </view>

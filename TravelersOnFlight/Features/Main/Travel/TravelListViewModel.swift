@@ -24,15 +24,18 @@ class TravelListViewModel: ServicesViewModel, Stepper {
             .map { results in
                 let travelItems = results.sorted(byKeyPath: "stDate", ascending: false)
                 
-                return [TravelSection(model: "Travels", items: travelItems.toArray())]
+                return [TravelSection(model: "Travels", items: travelItems.toArray()),
+                        TravelSection(model: "NewTravel", items: [DummyTravelItem])]
             }
     }
     
-    init(services: Services) {
-        self.services = services
+    init() { }
+    
+    public func selectToSchedule(travel: TravelItem) {
+        self.steps.accept(TravelStep.travelIsSelected(withTravel: travel))
     }
     
-    public func select(travel: TravelItem) {
-        self.steps.accept(TravelStep.travelIsSelected(withTravel: travel))
+    public func createTravelWithCell(model: CreateModel) {
+        
     }
 }

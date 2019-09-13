@@ -24,6 +24,8 @@ class TravelListViewController: UIViewController, StoryboardBased, ViewModelBase
         super.viewDidLoad()
         
         configureDataSource()
+        bindViewModel()
+        layoutSetting()
     }
     
     func bindViewModel() {
@@ -34,18 +36,36 @@ class TravelListViewController: UIViewController, StoryboardBased, ViewModelBase
         travelsCollectionView.rx.itemSelected
             .subscribe(onNext: { [unowned self] indexPath in
                 let travel = try! self.dataSource.model(at: indexPath) as! TravelItem
-                self.viewModel.select(travel: travel)
+                if travel.uid == DummyTravelItem.uid {
+                    if let cell = self.travelsCollectionView.cellForItem(at: indexPath) as? NewTravelListCollectionViewCell {
+                        cell.addNewTravel(onComplete: self.viewModel.createTravelWithCell(model:))
+                    } else {
+                        print("#ERROR - Selcted cell is not converted to NewTravelListCollectionViewCell")
+                    }
+                } else {
+                    self.viewModel.selectToSchedule(travel: travel)
+                }
             })
             .disposed(by: self.rx.disposeBag)
     }
     
     func configureDataSource() {
         dataSource = RxCollectionViewSectionedAnimatedDataSource<TravelSection>(configureCell: { [weak self] dataSource, collectionView, indexPath, item -> UICollectionViewCell in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "travelCollectionViewCell", for: indexPath) as! TravelListCollectionViewCell
-            if let self = self { // for action later
+            
+            if item.uid == DummyTravelItem.uid {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "newTravelCollectionViewCell", for: indexPath)
+                return cell
+            } else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "travelCollectionViewCell", for: indexPath) as! TravelListCollectionViewCell
                 cell.configure(with: item)
+                return cell
             }
-            return cell
         })
+    }
+    
+    func layoutSetting() {
+        let collectionViewLayout = travelsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        collectionViewLayout?.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 14, right: 0)
+        collectionViewLayout?.invalidateLayout()
     }
 }
