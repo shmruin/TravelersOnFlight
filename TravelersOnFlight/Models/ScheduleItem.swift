@@ -19,109 +19,63 @@ enum ScheduleLevel: Int {
     case Activity
 }
 
-protocol ScheduleItem: Relationable {
-}
-
-class TravelScheduleItem: Object, ScheduleItem {
+class ScheduleItem: Object, Relationable {
     @objc dynamic var uid: String = UUID().uuidString
     @objc dynamic var parentUid: String = ""
-    @objc dynamic var level: Int = ScheduleLevel.Travel.rawValue
     
     override class func primaryKey() -> String? {
         return "uid"
     }
 }
 
-extension TravelScheduleItem: IdentifiableType {
+extension ScheduleItem: IdentifiableType {
     var identity: String {
         return self.isInvalidated ? "" : uid
     }
 }
 
-class DayScheduleItem: Object, ScheduleItem {
-    @objc dynamic var uid: String = UUID().uuidString
-    @objc dynamic var parentUid: String = ""
+class TravelScheduleItem: ScheduleItem {
+    @objc dynamic var level: Int = ScheduleLevel.Travel.rawValue
+}
+
+class DayScheduleItem: ScheduleItem {
     @objc dynamic var level: Int = ScheduleLevel.Day.rawValue
     @objc dynamic var day: Date = Date()
-    
-    override class func primaryKey() -> String? {
-        return "uid"
-    }
 }
 
-extension DayScheduleItem: IdentifiableType {
-    var identity: String {
-        return self.isInvalidated ? "" : uid
-    }
-}
+//class LocationScheduleItem: Object, ScheduleItem {
+//    @objc dynamic var uid: String = UUID().uuidString
+//    @objc dynamic var parentUid: String = ""
+//    @objc dynamic var level: Int = ScheduleLevel.Location.rawValue
+//    @objc dynamic var country: String = ""
+//    @objc dynamic var city: String = ""
+//
+//    override class func primaryKey() -> String? {
+//        return "uid"
+//    }
+//}
+//
+//extension LocationScheduleItem: IdentifiableType {
+//    var identity: String {
+//        return self.isInvalidated ? "" : uid
+//    }
+//}
 
-class LocationScheduleItem: Object, ScheduleItem {
-    @objc dynamic var uid: String = UUID().uuidString
-    @objc dynamic var parentUid: String = ""
-    @objc dynamic var level: Int = ScheduleLevel.Location.rawValue
+class SpecificScheduleItem: ScheduleItem {
+    @objc dynamic var level: Int = ScheduleLevel.Specific.rawValue
     @objc dynamic var country: String = ""
     @objc dynamic var city: String = ""
-    
-    override class func primaryKey() -> String? {
-        return "uid"
-    }
-}
-
-extension LocationScheduleItem: IdentifiableType {
-    var identity: String {
-        return self.isInvalidated ? "" : uid
-    }
-}
-
-class SpecificScheduleItem: Object, ScheduleItem {
-    @objc dynamic var uid: String = UUID().uuidString
-    @objc dynamic var parentUid: String = ""
-    @objc dynamic var level: Int = ScheduleLevel.Specific.rawValue
     @objc dynamic var time: Date = Date()
-    
-    override class func primaryKey() -> String? {
-        return "uid"
-    }
 }
 
-extension SpecificScheduleItem: IdentifiableType {
-    var identity: String {
-        return self.isInvalidated ? "" : uid
-    }
-}
-
-class PlaceScheduleItem: Object, ScheduleItem {
-    @objc dynamic var uid: String = UUID().uuidString
-    @objc dynamic var parentUid: String = ""
+class PlaceScheduleItem: ScheduleItem {
     @objc dynamic var level: Int = ScheduleLevel.Specific.rawValue
     @objc dynamic var placeCategory: String = ""
     @objc dynamic var placeName: String = ""
-    
-    override class func primaryKey() -> String? {
-        return "uid"
-    }
 }
 
-extension PlaceScheduleItem: IdentifiableType {
-    var identity: String {
-        return self.isInvalidated ? "" : uid
-    }
-}
-
-class ActivityScheduleItem: Object, ScheduleItem {
-    @objc dynamic var uid: String = UUID().uuidString
-    @objc dynamic var parentUid: String = ""
+class ActivityScheduleItem: ScheduleItem {
     @objc dynamic var level: Int = ScheduleLevel.Specific.rawValue
     @objc dynamic var activityCategory: String = ""
     @objc dynamic var activityName: String = ""
-    
-    override class func primaryKey() -> String? {
-        return "uid"
-    }
-}
-
-extension ActivityScheduleItem: IdentifiableType {
-    var identity: String {
-        return self.isInvalidated ? "" : uid
-    }
 }

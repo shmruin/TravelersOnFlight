@@ -16,8 +16,8 @@ enum TravelStep: Step {
     
     // Travel
     case travelScreenIsRequired
-    case travelIsSelected(withTravel: TravelItem)
+    case travelIsSelected(withTravelData: TravelDataModel)
     
     // Schedule
-    case scheduleScreenIsRequired
+    case scheduleScreenIsRequired(withDay: Int)
 }

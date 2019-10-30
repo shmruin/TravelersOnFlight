@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let travelService = TravelService()
     let scheduleService = ScheduleService()
     lazy var appServices = {
-        return AppServices(travelService: self.travelService, scheduleServices: self.scheduleService)
+        return AppServices(travelService: self.travelService, scheduleService: self.scheduleService)
     }()
     
 
@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
-struct AppServices: HasTravelService {
+struct AppServices: HasTravelService, HasScheduleService {
     let travelService: TravelService
-    let scheduleServices: ScheduleService
+    let scheduleService: ScheduleService
 }

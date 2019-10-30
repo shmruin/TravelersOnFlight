@@ -13,6 +13,24 @@ import RxRealm
 
 struct ItemRelationService: ItemRelationServiceType {
     @discardableResult
+    func createRelation(parentUid: String) -> Observable<Void> {
+        let result = withRealm(RealmDraft.Relation, "creating") { (realm) -> Observable<Void> in
+            let existData = realm.objects(ItemRelation.self).filter("parentUid = %@", parentUid)
+            if let _ = existData.first {
+                return .error(RelationServiceError.duplicatedCreation)
+            } else {
+                let relation = ItemRelation()
+                relation.parentUid = parentUid
+                try realm.write {
+                    realm.add(relation)
+                }
+                return .empty()
+            }
+        }
+        return result ?? .error(RelationServiceError.creationFailed)
+    }
+    
+    @discardableResult
     func connectRelation<T>(element: T, parent: T, nextToSibling: T) -> Observable<T> where T : Relationable {
         let result = withRealm(RealmDraft.Relation, "connecting") { (realm) -> Observable<T> in
             let existData = realm.objects(ItemRelation.self).filter("parentUid = %@", element.parentUid)

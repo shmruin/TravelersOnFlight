@@ -19,9 +19,11 @@
 		A8087F2323141E39004AB052 /* ViewModelBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8087F2223141E39004AB052 /* ViewModelBased.swift */; };
 		A8087F292314248D004AB052 /* TravelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8087F282314248D004AB052 /* TravelListViewController.swift */; };
 		A8087F2B231424ED004AB052 /* TravelListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8087F2A231424ED004AB052 /* TravelListViewModel.swift */; };
-		A81AE74F2319462C00744E8D /* ScheduleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81AE74E2319462C00744E8D /* ScheduleListViewController.swift */; };
-		A81AE7512319467100744E8D /* ScheduleListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81AE7502319467100744E8D /* ScheduleListViewModel.swift */; };
+		A815A63C2343B8480062B67F /* ScheduleFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A815A63B2343B8480062B67F /* ScheduleFlow.swift */; };
 		A81AE7552319485800744E8D /* ScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81AE7542319485800744E8D /* ScheduleService.swift */; };
+		A820A40B2362AAF000012DAA /* SchedulePageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A820A40A2362AAF000012DAA /* SchedulePageContentViewController.swift */; };
+		A820A40D2362AB5D00012DAA /* SchedulePageContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A820A40C2362AB5D00012DAA /* SchedulePageContentViewModel.swift */; };
+		A820A40F2362AB9600012DAA /* SchedulePageContentViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A820A40E2362AB9600012DAA /* SchedulePageContentViewController.storyboard */; };
 		A822AC4F230F0A8D00F8E1A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822AC4E230F0A8D00F8E1A0 /* AppDelegate.swift */; };
 		A822AC51230F0A8D00F8E1A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822AC50230F0A8D00F8E1A0 /* ViewController.swift */; };
 		A822AC56230F0A8E00F8E1A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A822AC55230F0A8E00F8E1A0 /* Assets.xcassets */; };
@@ -76,9 +78,11 @@
 		A8087F2223141E39004AB052 /* ViewModelBased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBased.swift; sourceTree = "<group>"; };
 		A8087F282314248D004AB052 /* TravelListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelListViewController.swift; sourceTree = "<group>"; };
 		A8087F2A231424ED004AB052 /* TravelListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelListViewModel.swift; sourceTree = "<group>"; };
-		A81AE74E2319462C00744E8D /* ScheduleListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListViewController.swift; sourceTree = "<group>"; };
-		A81AE7502319467100744E8D /* ScheduleListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListViewModel.swift; sourceTree = "<group>"; };
+		A815A63B2343B8480062B67F /* ScheduleFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFlow.swift; sourceTree = "<group>"; };
 		A81AE7542319485800744E8D /* ScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleService.swift; sourceTree = "<group>"; };
+		A820A40A2362AAF000012DAA /* SchedulePageContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulePageContentViewController.swift; sourceTree = "<group>"; };
+		A820A40C2362AB5D00012DAA /* SchedulePageContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulePageContentViewModel.swift; sourceTree = "<group>"; };
+		A820A40E2362AB9600012DAA /* SchedulePageContentViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SchedulePageContentViewController.storyboard; sourceTree = "<group>"; };
 		A822AC4B230F0A8D00F8E1A0 /* TravelersOnFlight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelersOnFlight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A822AC4E230F0A8D00F8E1A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A822AC50230F0A8D00F8E1A0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 				A801FD942312CD730006C340 /* TravelStep.swift */,
 				A8030C8E23126B6F004ECE65 /* AppFlow.swift */,
 				A801FD962312DAED0006C340 /* TravelFlow.swift */,
+				A815A63B2343B8480062B67F /* ScheduleFlow.swift */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -188,9 +193,9 @@
 			children = (
 				A8FE39C1232B876500AF02CD /* Models */,
 				A8087F272314240B004AB052 /* Cells */,
-				A8A1420A2315515800A8BF0D /* TravelListViewController.storyboard */,
 				A8087F282314248D004AB052 /* TravelListViewController.swift */,
 				A8087F2A231424ED004AB052 /* TravelListViewModel.swift */,
+				A8A1420A2315515800A8BF0D /* TravelListViewController.storyboard */,
 			);
 			path = Travel;
 			sourceTree = "<group>";
@@ -207,9 +212,11 @@
 		A81AE74B231944D800744E8D /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				A82FA47A23409AE8006E23E7 /* Models */,
 				A81AE74D231945EE00744E8D /* Cells */,
-				A81AE74E2319462C00744E8D /* ScheduleListViewController.swift */,
-				A81AE7502319467100744E8D /* ScheduleListViewModel.swift */,
+				A820A40A2362AAF000012DAA /* SchedulePageContentViewController.swift */,
+				A820A40C2362AB5D00012DAA /* SchedulePageContentViewModel.swift */,
+				A820A40E2362AB9600012DAA /* SchedulePageContentViewController.storyboard */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -277,6 +284,13 @@
 				A822AC70230F0A8E00F8E1A0 /* Info.plist */,
 			);
 			path = TravelersOnFlightUITests;
+			sourceTree = "<group>";
+		};
+		A82FA47A23409AE8006E23E7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		A85BB4F0231191680060C7EF /* Services */ = {
@@ -441,6 +455,7 @@
 				A822AC59230F0A8E00F8E1A0 /* LaunchScreen.storyboard in Resources */,
 				A822AC56230F0A8E00F8E1A0 /* Assets.xcassets in Resources */,
 				A8A1420B2315515800A8BF0D /* TravelListViewController.storyboard in Resources */,
+				A820A40F2362AB9600012DAA /* SchedulePageContentViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +522,7 @@
 				"${BUILT_PRODUCTS_DIR}/Action/Action.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/NSObject+Rx/NSObject_Rx.framework",
+				"${BUILT_PRODUCTS_DIR}/RLBAlertsPickers/RLBAlertsPickers.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
@@ -524,6 +540,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Action.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSObject_Rx.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RLBAlertsPickers.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
@@ -569,11 +586,14 @@
 				A8FE39C3232B877600AF02CD /* CreateTravelModel.swift in Sources */,
 				A822AC51230F0A8D00F8E1A0 /* ViewController.swift in Sources */,
 				A8030C8F23126B6F004ECE65 /* AppFlow.swift in Sources */,
+				A820A40B2362AAF000012DAA /* SchedulePageContentViewController.swift in Sources */,
 				A8030C8A23125689004ECE65 /* CategoryRepository.swift in Sources */,
 				A82E9CBF2328179100027D47 /* NewTravelListCollectionViewCell.swift in Sources */,
 				A85BB4F7231193DA0060C7EF /* TravelItem.swift in Sources */,
+				A815A63C2343B8480062B67F /* ScheduleFlow.swift in Sources */,
 				A8087F292314248D004AB052 /* TravelListViewController.swift in Sources */,
 				A806EFEF231D6C9E00C071F6 /* ItemRelation.swift in Sources */,
+				A820A40D2362AB5D00012DAA /* SchedulePageContentViewModel.swift in Sources */,
 				A801FD972312DAED0006C340 /* TravelFlow.swift in Sources */,
 				A822AC4F230F0A8D00F8E1A0 /* AppDelegate.swift in Sources */,
 				A828B98C231EB68400411483 /* ItemRelationService.swift in Sources */,
@@ -587,10 +607,8 @@
 				A81AE7552319485800744E8D /* ScheduleService.swift in Sources */,
 				A8A1420F23155CEE00A8BF0D /* TravelListCollectionViewCell.swift in Sources */,
 				A806EFED231D637C00C071F6 /* ServiceType.swift in Sources */,
-				A81AE74F2319462C00744E8D /* ScheduleListViewController.swift in Sources */,
 				A8087F2323141E39004AB052 /* ViewModelBased.swift in Sources */,
 				A8030C8C2312596F004ECE65 /* Category.swift in Sources */,
-				A81AE7512319467100744E8D /* ScheduleListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

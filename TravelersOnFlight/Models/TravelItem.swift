@@ -15,26 +15,23 @@ import RxDataSources
     @objc dynamic var parentUid: String { get set }
 }
 
-class TravelRoot: Object, Relationable {
-    static let TravelRootInstance = TravelRoot()
-    
-    @objc dynamic var uid: String = UUID().uuidString
-    @objc dynamic var parentUid: String = "-1"
-}
-
 class TravelItem: Object, Relationable {
-    @objc dynamic var uid: String = UUID().uuidString
-    @objc dynamic var parentUid: String = "0"
-    @objc dynamic var firstCity: String = "NoWhere"
-    @objc dynamic var numCountries: Int = 0
-    @objc dynamic var numCities: Int = 0
+    @objc dynamic var uid: String = ""
+    @objc dynamic var parentUid: String = RootParentUid
+    dynamic var countries: List<String> = List<String>()
+    dynamic var cities: List<String> = List<String>()
     @objc dynamic var stDate: Date = Date()
     @objc dynamic var fnDate: Date = Date()
-    @objc dynamic var theme: String = TravelTheme.AlwaysGood.rawValue
+    @objc dynamic var theme: String = TravelTheme.getDefault().rawValue
     
     override class func primaryKey() -> String? {
         return "uid"
     }
+    
+    static func makeUid() -> String {
+        return UUID().uuidString
+    }
+
 }
 
 extension TravelItem: IdentifiableType {
@@ -43,4 +40,4 @@ extension TravelItem: IdentifiableType {
     }
 }
 
-let DummyTravelItem = TravelItem()
+let RootParentUid = UUID().uuidString

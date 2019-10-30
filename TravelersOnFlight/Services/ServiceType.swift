@@ -12,11 +12,17 @@ import RealmSwift
 
 enum RealmDraft: String {
     case Travel = "travel.realm"
-    case Schedule = "schedule.realm"
+    case TravelSchedule = "travelSchedule.realm"
+    case DaySchedule = "daySchedule.realm"
+    case SpecificSchedule = "specificSchedule.realm"
+    case PlaceSchedule = "placeSchedule.realm"
+    case ActivitySchedule = "activitySchedule.realm"
     case Relation = "relation.realm"
 }
 
 enum TravelServiceError: Error {
+    case itemNotExistOfId(String)
+    case gettingFailed
     case creationFailed
     case updateFailed(TravelItem)
     case deletionFailed(TravelItem)
@@ -24,13 +30,17 @@ enum TravelServiceError: Error {
 }
 
 enum ScheduleServiceError: Error {
-    case creationFailed
+    case itemNotExistOfId(String)
+    case gettingFailed
+    case creationFailed(ScheduleItem.Type)
     case updateFailed(ScheduleItem)
     case deletionFailed(ScheduleItem)
     case moveFailed(ScheduleItem)
 }
 
 enum RelationServiceError: Error {
+    case duplicatedCreation
+    case creationFailed
     case connectionFailed
     case disconnectionFailed
     case connectionToLastFailed
@@ -49,7 +59,13 @@ extension RealmServiceType {
         let url = documentDirectory.appendingPathComponent(draft.rawValue)
         var config = Realm.Configuration()
         config.fileURL = url
-        return try! Realm(configuration: config)
+        let realm = try! Realm(configuration: config)
+        // To unlock encrypt
+        let folderPath = realm.configuration.fileURL!.deletingLastPathComponent().path
+        // Disable file protection for this directory
+        try! FileManager.default.setAttributes([FileAttributeKey.protectionKey: FileProtectionType.none],
+                                               ofItemAtPath: folderPath)
+        return realm
     }
     
     func withRealm<T>(_ draft: RealmDraft,_ operation: String, action: (Realm) throws -> T) -> T? {
@@ -65,7 +81,7 @@ extension RealmServiceType {
 
 protocol TravelServiceType: RealmServiceType {
     @discardableResult
-    func createTravel(stDate: Date, fnDate: Date, eTheme: TravelTheme) -> Observable<TravelItem>
+    func createTravel(uid: String, countries: [String], cities: [String], stDate: Date, fnDate: Date, eTheme: TravelTheme) -> Observable<TravelItem>
     
     @discardableResult
     func deleteTravel(travel: TravelItem) -> Observable<Void>
@@ -76,63 +92,70 @@ protocol TravelServiceType: RealmServiceType {
     @discardableResult
     func moveTravel(travel: TravelItem, parent: TravelItem, nextToItem: TravelItem) -> Observable<TravelItem>
     
+    func getTravel(travelUid: String) -> Observable<TravelItem>
+    
     func travels() -> Observable<Results<TravelItem>>
 }
 
 protocol ScheduleServiceType: RealmServiceType {
     @discardableResult
-    func createTravelSchedule() -> Observable<TravelScheduleItem>
-    
+    func createTravelSchedule(parent: TravelItem) -> Observable<TravelScheduleItem>
+
     @discardableResult
-    func createDaySchedule(day: Date) -> Observable<DayScheduleItem>
-    
+    func createDaySchedule(parent: TravelScheduleItem, day: Date) -> Observable<DayScheduleItem>
+
     @discardableResult
-    func createLocationSchedule(country: String, city: String) -> Observable<LocationScheduleItem>
-    
+    func createSpecificSchedule(parent: DayScheduleItem, country: String, city: String, time: Date) -> Observable<SpecificScheduleItem>
+
     @discardableResult
-    func createSpecificSchedule(time: Date) -> Observable<SpecificScheduleItem>
-    
+    func createPlaceSchedule(parent: SpecificScheduleItem, placeCategory: PlaceCategoryRepository, placeName: String) -> Observable<PlaceScheduleItem>
+
     @discardableResult
-    func createPlaceSchedule(placeCategory: PlaceCategoryRepository, placeName: String) -> Observable<PlaceScheduleItem>
-    
-    @discardableResult
-    func createActivitySchedule(activityCategory: ActivityCategoryRepository, activityName: String) -> Observable<ActivityScheduleItem>
-    
+    func createActivitySchedule(parent: PlaceScheduleItem, activityCategory: ActivityCategoryRepository, activityName: String) -> Observable<ActivityScheduleItem>
+
     @discardableResult
     func updateDaySchedule(daySchedule: DayScheduleItem, day: Date) -> Observable<DayScheduleItem>
-    
+
     @discardableResult
-    func updateLocationSchedule(locationSchedule: LocationScheduleItem, country: String, city: String) -> Observable<LocationScheduleItem>
-    
-    @discardableResult
-    func updateSpecificSchedule(specificSchedule: SpecificScheduleItem, time: Date) -> Observable<SpecificScheduleItem>
-    
+    func updateSpecificSchedule(specificSchedule: SpecificScheduleItem, country: String, city: String, time: Date) -> Observable<SpecificScheduleItem>
+
     @discardableResult
     func updatePlaceSchedule(placeSchedule: PlaceScheduleItem, placeCategory: PlaceCategoryRepository, placeName: String) -> Observable<PlaceScheduleItem>
-    
+
     @discardableResult
     func updateActivitySchedule(activitySchedule: ActivityScheduleItem, activityCategory: ActivityCategoryRepository, activityName: String) -> Observable<ActivityScheduleItem>
-    
+
     @discardableResult
-    func deleteSchedule(schedule: ScheduleItem) -> Observable<Void>
+    func deleteSchedule<T>(schedule: ScheduleItem, scheduleType: T.Type) -> Observable<Void>
+
+//    @discardableResult
+//    func moveSchedule<T>(schedule: ScheduleItem, parent: ScheduleItem, nextToItem: ScheduleItem, scheduleType: T.Type) -> Observable<ScheduleItem>
     
-    @discardableResult
-    func moveSchedule(schedule: ScheduleItem, parent: ScheduleItem, nextToItem: ScheduleItem) -> Observable<ScheduleItem>
+    func getTravelSchedule(travelScheduleUid: String) -> Observable<TravelScheduleItem>
+    
+    func getDaySchedule(dayScheduleUid: String) -> Observable<DayScheduleItem>
+    
+    func getSpecificSchedule(specificScheduleUid: String) -> Observable<SpecificScheduleItem>
+    
+    func getPlaceSchedule(placeScheduleUid: String) -> Observable<PlaceScheduleItem>
+    
+    func getActivitySchedule(activityScheduleUid: String) -> Observable<ActivityScheduleItem>
     
     func travelSchedules() -> Observable<Results<TravelScheduleItem>>
-    
+
     func daySchedules(ofTravelSchedule: ScheduleItem) -> Observable<Results<DayScheduleItem>>
-    
-    func locationSchedules(ofDaySchedule: ScheduleItem) -> Observable<Results<LocationScheduleItem>>
-    
-    func specificSchedules(ofLocationSchedule: ScheduleItem) -> Observable<Results<SpecificScheduleItem>>
-    
+
+    func specificSchedules(ofDaySchedule: ScheduleItem) -> Observable<Results<SpecificScheduleItem>>
+
     func placeSchedules(ofSpecificSchedule: ScheduleItem) -> Observable<Results<PlaceScheduleItem>>
-    
+
     func activitySchedules(ofPlaceSchedule: ScheduleItem) -> Observable<Results<ActivityScheduleItem>>
 }
 
 protocol ItemRelationServiceType: RealmServiceType {
+    @discardableResult
+    func createRelation(parentUid: String) -> Observable<Void>
+    
     @discardableResult
     func connectRelation<T: Relationable>(element: T, parent: T, nextToSibling: T) -> Observable<T>
     

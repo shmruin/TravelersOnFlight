@@ -12,6 +12,7 @@ import RxFlow
 import RxSwift
 import RxDataSources
 import RxCocoa
+import RxRealm
 
 class TravelListViewController: UIViewController, StoryboardBased, ViewModelBased {
     
@@ -35,15 +36,15 @@ class TravelListViewController: UIViewController, StoryboardBased, ViewModelBase
         
         travelsCollectionView.rx.itemSelected
             .subscribe(onNext: { [unowned self] indexPath in
-                let travel = try! self.dataSource.model(at: indexPath) as! TravelItem
-                if travel.uid == DummyTravelItem.uid {
+                let travel = try! self.dataSource.model(at: indexPath) as! TravelDataModel
+                if travel.itemUid != DummyTravelData.itemUid {
+                    self.viewModel.selectToSchedule(travelData: travel)
+                } else {
                     if let cell = self.travelsCollectionView.cellForItem(at: indexPath) as? NewTravelListCollectionViewCell {
-                        cell.addNewTravel(onComplete: self.viewModel.createTravelWithCell(model:))
+                        cell.addNewTravel(viewController: self, onComplete: self.viewModel.createItemOfTravel(model:))
                     } else {
                         print("#ERROR - Selcted cell is not converted to NewTravelListCollectionViewCell")
                     }
-                } else {
-                    self.viewModel.selectToSchedule(travel: travel)
                 }
             })
             .disposed(by: self.rx.disposeBag)
@@ -52,8 +53,8 @@ class TravelListViewController: UIViewController, StoryboardBased, ViewModelBase
     func configureDataSource() {
         dataSource = RxCollectionViewSectionedAnimatedDataSource<TravelSection>(configureCell: { [weak self] dataSource, collectionView, indexPath, item -> UICollectionViewCell in
             
-            if item.uid == DummyTravelItem.uid {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "newTravelCollectionViewCell", for: indexPath)
+            if item.itemUid == DummyTravelData.itemUid {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "newTravelCollectionViewCell", for: indexPath) as! NewTravelListCollectionViewCell
                 return cell
             } else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "travelCollectionViewCell", for: indexPath) as! TravelListCollectionViewCell

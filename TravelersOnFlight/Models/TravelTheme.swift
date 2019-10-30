@@ -7,7 +7,7 @@
 //
 
 
-enum TravelTheme: String {
+enum TravelTheme: String, CaseIterable {
     case AlwaysGood = "AlwaysGood"
     case LookingForHappiness = "Looking For Happiness"
     case Vacation = "Vacation"
@@ -17,4 +17,8 @@ enum TravelTheme: String {
     case WithFriends = "With Friends"
     case WithFamily = "With Family"
     case DreamsComeTrue = "Dreams Come True"
+    
+    static func getDefault() -> TravelTheme {
+        return .Unexpected
+    }
 }
