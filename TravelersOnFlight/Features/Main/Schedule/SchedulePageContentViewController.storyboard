@@ -17,65 +17,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Now Offline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJG-ov-oIg">
-                                <rect key="frame" x="300.5" y="70" width="85.5" height="20.5"/>
-                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gpn-ds-y2D">
+                                <rect key="frame" x="50" y="80" width="72.5" height="27.5"/>
+                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iU8-Cv-Gmg">
-                                <rect key="frame" x="28" y="70" width="84" height="20.5"/>
-                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00.00.00 (Mon)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9aL-GQ-lzB">
+                                <rect key="frame" x="221" y="88" width="143" height="19.5"/>
+                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="HBa-zc-UAu">
-                                <rect key="frame" x="50" y="105.5" width="314" height="50"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="F5o-Z5-79d">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="20"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mwn-wb-Cnb">
-                                                <rect key="frame" x="0.0" y="0.0" width="51.5" height="20"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="20" id="jLz-Nn-AMW"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00.00.00 (Mon)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wGK-Fo-zjP">
-                                                <rect key="frame" x="171" y="0.0" width="143" height="20"/>
-                                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Uu7-hN-x3Q">
-                                        <rect key="frame" x="0.0" y="30" width="314" height="20"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7Q-XZ-ETh">
-                                                <rect key="frame" x="0.0" y="0.0" width="31" height="20"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="20" id="te3-H6-hpz"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99.99.99 (Fri)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xxh-Gh-uKv">
-                                                <rect key="frame" x="171" y="0.0" width="143" height="20"/>
-                                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                            </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Vwc-pE-8Cs">
-                                <rect key="frame" x="20" y="179.5" width="374" height="682.5"/>
+                                <rect key="frame" x="20" y="149.5" width="374" height="712.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OyW-0N-yhi">
                                     <size key="itemSize" width="374" height="243"/>
@@ -124,41 +79,62 @@
                                                     <rect key="frame" x="16" y="47.5" width="342" height="187.5"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cX2-oU-low">
-                                                        <size key="itemSize" width="339" height="57"/>
+                                                        <size key="itemSize" width="339" height="100"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     </collectionViewFlowLayout>
                                                     <cells>
                                                         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="iVs-7w-6Kn">
-                                                            <rect key="frame" x="1.5" y="0.0" width="339" height="57"/>
+                                                            <rect key="frame" x="1.5" y="0.0" width="339" height="100"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fZD-wg-XwE">
-                                                                <rect key="frame" x="0.0" y="0.0" width="339" height="57"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="339" height="100"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#Drink a cup of coffee" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CgR-Rw-s7j">
-                                                                        <rect key="frame" x="161" y="18" width="170" height="20.5"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@Cafe" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="50p-aG-iu4">
-                                                                        <rect key="frame" x="8" y="18" width="51" height="20.5"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="f7d-Y5-6xH">
+                                                                        <rect key="frame" x="10" y="17.5" width="71" height="48"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@Cafe" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="50p-aG-iu4">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="47" height="20.5"/>
+                                                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starbucks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ESh-R1-PZx">
+                                                                                <rect key="frame" x="0.0" y="27.5" width="71" height="20.5"/>
+                                                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="TPF-8g-Vfc">
+                                                                        <rect key="frame" x="159" y="17.5" width="170" height="48"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#Drink a cup of coffee" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CgR-Rw-s7j">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="170" height="20.5"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latte 1, Americano 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9OH-MW-PaY">
+                                                                                <rect key="frame" x="0.0" y="27.5" width="146" height="20.5"/>
+                                                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                        </subviews>
+                                                                    </stackView>
                                                                 </subviews>
                                                                 <constraints>
-                                                                    <constraint firstItem="CgR-Rw-s7j" firstAttribute="centerY" secondItem="50p-aG-iu4" secondAttribute="centerY" id="8xG-rC-RAt"/>
-                                                                    <constraint firstItem="50p-aG-iu4" firstAttribute="top" secondItem="fZD-wg-XwE" secondAttribute="top" constant="18" id="lID-RV-oA3"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="CgR-Rw-s7j" secondAttribute="trailing" constant="8" id="mo0-BS-hWf"/>
-                                                                    <constraint firstItem="50p-aG-iu4" firstAttribute="leading" secondItem="fZD-wg-XwE" secondAttribute="leading" constant="8" id="oiE-br-7fa"/>
-                                                                    <constraint firstItem="CgR-Rw-s7j" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="50p-aG-iu4" secondAttribute="trailing" constant="50" id="xcx-Vp-6qj"/>
+                                                                    <constraint firstItem="f7d-Y5-6xH" firstAttribute="top" secondItem="fZD-wg-XwE" secondAttribute="top" constant="17.5" id="JHO-Bl-FQA"/>
+                                                                    <constraint firstItem="f7d-Y5-6xH" firstAttribute="leading" secondItem="fZD-wg-XwE" secondAttribute="leading" constant="10" id="SbL-JC-b9F"/>
+                                                                    <constraint firstItem="TPF-8g-Vfc" firstAttribute="centerY" secondItem="f7d-Y5-6xH" secondAttribute="centerY" id="dqi-QF-ae2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="TPF-8g-Vfc" secondAttribute="trailing" constant="10" id="i4j-68-kcb"/>
                                                                 </constraints>
                                                             </collectionViewCellContentView>
-                                                            <size key="customSize" width="339" height="57"/>
+                                                            <size key="customSize" width="339" height="100"/>
                                                         </collectionViewCell>
                                                     </cells>
                                                 </collectionView>
@@ -181,17 +157,13 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="iU8-Cv-Gmg" firstAttribute="top" secondItem="sd1-IB-DHT" secondAttribute="top" constant="26" id="4zY-cU-B35"/>
-                            <constraint firstItem="CJG-ov-oIg" firstAttribute="top" secondItem="sd1-IB-DHT" secondAttribute="top" constant="26" id="6bM-3Z-Fhw"/>
+                            <constraint firstItem="9aL-GQ-lzB" firstAttribute="bottom" secondItem="Gpn-ds-y2D" secondAttribute="bottom" id="2Wt-lg-uc9"/>
+                            <constraint firstItem="sd1-IB-DHT" firstAttribute="trailing" secondItem="9aL-GQ-lzB" secondAttribute="trailing" constant="50" id="6V6-Xj-bDX"/>
                             <constraint firstItem="Vwc-pE-8Cs" firstAttribute="bottom" secondItem="sd1-IB-DHT" secondAttribute="bottom" id="7DH-oG-L6p"/>
                             <constraint firstItem="sd1-IB-DHT" firstAttribute="trailing" secondItem="Vwc-pE-8Cs" secondAttribute="trailing" constant="20" id="8hd-K9-bwO"/>
-                            <constraint firstItem="Vwc-pE-8Cs" firstAttribute="top" secondItem="HBa-zc-UAu" secondAttribute="bottom" constant="24" id="G0F-Nb-f1K"/>
-                            <constraint firstItem="HBa-zc-UAu" firstAttribute="leading" secondItem="sd1-IB-DHT" secondAttribute="leading" constant="50" id="Jvu-Jj-LY0"/>
-                            <constraint firstItem="HBa-zc-UAu" firstAttribute="top" secondItem="iU8-Cv-Gmg" secondAttribute="bottom" constant="15" id="Lmv-NR-3Jt"/>
-                            <constraint firstItem="sd1-IB-DHT" firstAttribute="trailing" secondItem="CJG-ov-oIg" secondAttribute="trailing" constant="28" id="Qft-Jk-RY4"/>
-                            <constraint firstItem="HBa-zc-UAu" firstAttribute="centerX" secondItem="BD0-Vi-Vug" secondAttribute="centerX" id="XqB-CI-QZK"/>
-                            <constraint firstItem="CJG-ov-oIg" firstAttribute="centerY" secondItem="iU8-Cv-Gmg" secondAttribute="centerY" id="goq-Zn-zRk"/>
-                            <constraint firstItem="iU8-Cv-Gmg" firstAttribute="leading" secondItem="sd1-IB-DHT" secondAttribute="leading" constant="28" id="k8G-yb-P5f"/>
+                            <constraint firstItem="Gpn-ds-y2D" firstAttribute="leading" secondItem="sd1-IB-DHT" secondAttribute="leading" constant="50" id="KUH-M8-Dqw"/>
+                            <constraint firstItem="Gpn-ds-y2D" firstAttribute="top" secondItem="sd1-IB-DHT" secondAttribute="top" constant="36" id="N6s-k4-dPq"/>
+                            <constraint firstItem="Vwc-pE-8Cs" firstAttribute="top" secondItem="Gpn-ds-y2D" secondAttribute="bottom" constant="42" id="jac-tm-3Uz"/>
                             <constraint firstItem="Vwc-pE-8Cs" firstAttribute="leading" secondItem="sd1-IB-DHT" secondAttribute="leading" constant="20" id="sMN-KJ-3mm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sd1-IB-DHT"/>

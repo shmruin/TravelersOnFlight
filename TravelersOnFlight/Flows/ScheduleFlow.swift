@@ -13,7 +13,6 @@ import RxCocoa
 import RxSwift
 import NSObject_Rx
 
-
 class ScheduleFlow: Flow {
     var root: Presentable {
         return self.rootViewController
@@ -34,9 +33,8 @@ class ScheduleFlow: Flow {
         print("\(type(of: self)): \(#function)")
     }
     
-    func makeTopItems(withView view: UIViewController, withDay day: Int) {
+    func makeTitle(view: UIViewController) {
         view.title = screenTitle
-        view.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Day " + String(day), style: .plain, target: self, action: #selector(self.changeDay(sender:)))
     }
     
     func navigate(to step: Step) -> FlowContributors {
@@ -52,14 +50,8 @@ class ScheduleFlow: Flow {
     
     private func navigateToFirstScheduleScreen(day: Int) -> FlowContributors {
         let viewController = SchedulePageContentViewController.instantiate(withViewModel: SchedulePageContentViewModel(day: day), andServices: self.services)
-        makeTopItems(withView: viewController, withDay: day)
+        makeTitle(view: viewController)
         self.rootViewController.pushViewController(viewController, animated: false)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewController.viewModel))
-    }
-}
-
-extension ScheduleFlow {
-    @objc func changeDay(sender: UIBarButtonItem) {
-        print("change Day!!")
     }
 }

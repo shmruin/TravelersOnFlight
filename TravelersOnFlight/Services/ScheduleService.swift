@@ -48,7 +48,7 @@ class ScheduleService: ScheduleServiceType {
                                     self.itemRealtionService.connectToLast(element: res)
                                 })
                                 .disposed(by: disposeBag)
-                            return self.createSpecificSchedule(parent: daySchedule, country: "Japan", city: "Tokyo", time: Date())
+                            return self.createSpecificSchedule(parent: daySchedule, country: "Japan", city: "Tokyo", stTime: Date(), fnTime: Date())
                         }
                         // create dummy specific
                         .flatMapLatest { specificSchedule -> Observable<PlaceScheduleItem> in
@@ -124,13 +124,14 @@ class ScheduleService: ScheduleServiceType {
     }
     
     @discardableResult
-    func createSpecificSchedule(parent: DayScheduleItem, country: String, city: String, time: Date) -> Observable<SpecificScheduleItem> {
+    func createSpecificSchedule(parent: DayScheduleItem, country: String, city: String, stTime: Date, fnTime: Date) -> Observable<SpecificScheduleItem> {
         let result = withRealm(RealmDraft.SpecificSchedule, "creating specific schedule") { (realm) -> Observable<SpecificScheduleItem> in
             let specificSchedule = SpecificScheduleItem()
             specificSchedule.parentUid = parent.uid
             specificSchedule.country = country
             specificSchedule.city = city
-            specificSchedule.time = time
+            specificSchedule.stTime = stTime
+            specificSchedule.fnTime = fnTime
             try realm.write {
                 realm.add(specificSchedule)
             }
@@ -193,12 +194,13 @@ class ScheduleService: ScheduleServiceType {
     }
     
     @discardableResult
-    func updateSpecificSchedule(specificSchedule: SpecificScheduleItem, country: String, city: String, time: Date) -> Observable<SpecificScheduleItem> {
+    func updateSpecificSchedule(specificSchedule: SpecificScheduleItem, country: String, city: String, stTime: Date, fnTime: Date) -> Observable<SpecificScheduleItem> {
         let result = withRealm(RealmDraft.SpecificSchedule, "updating specific schedule") { (realm) -> Observable<SpecificScheduleItem> in
             try realm.write {
                 specificSchedule.country = country
                 specificSchedule.city = city
-                specificSchedule.time = time
+                specificSchedule.stTime = stTime
+                specificSchedule.fnTime = fnTime
             }
             return .just(specificSchedule)
         }
@@ -284,6 +286,21 @@ class ScheduleService: ScheduleServiceType {
                 return .just(data)
             } else {
                 return .error(ScheduleServiceError.itemNotExistOfId(dayScheduleUid))
+            }
+        }
+        return result ?? .error(ScheduleServiceError.gettingFailed)
+    }
+    
+    func getDaySchedule(ofNthDay: Int) -> Observable<DayScheduleItem> {
+        let result = withRealm(RealmDraft.DaySchedule, "getting day schedule of nth day") { (realm) -> Observable<DayScheduleItem> in
+            let existData = realm.objects(DayScheduleItem.self).filter("day = %@", ofNthDay)
+            if existData.count > 1 {
+                return .error(CommonRealmError.duplicatedUniqueValue("day"))
+            }
+            if let data = existData.first {
+                return .just(data)
+            } else {
+                return .error(ScheduleServiceError.itemNotExistOfCondition)
             }
         }
         return result ?? .error(ScheduleServiceError.gettingFailed)

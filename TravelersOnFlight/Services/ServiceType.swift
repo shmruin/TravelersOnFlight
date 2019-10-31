@@ -20,6 +20,10 @@ enum RealmDraft: String {
     case Relation = "relation.realm"
 }
 
+enum CommonRealmError: Error {
+    case duplicatedUniqueValue(String)
+}
+
 enum TravelServiceError: Error {
     case itemNotExistOfId(String)
     case gettingFailed
@@ -31,6 +35,7 @@ enum TravelServiceError: Error {
 
 enum ScheduleServiceError: Error {
     case itemNotExistOfId(String)
+    case itemNotExistOfCondition
     case gettingFailed
     case creationFailed(ScheduleItem.Type)
     case updateFailed(ScheduleItem)
@@ -105,7 +110,7 @@ protocol ScheduleServiceType: RealmServiceType {
     func createDaySchedule(parent: TravelScheduleItem, day: Date) -> Observable<DayScheduleItem>
 
     @discardableResult
-    func createSpecificSchedule(parent: DayScheduleItem, country: String, city: String, time: Date) -> Observable<SpecificScheduleItem>
+    func createSpecificSchedule(parent: DayScheduleItem, country: String, city: String, stTime: Date, fnTime: Date) -> Observable<SpecificScheduleItem>
 
     @discardableResult
     func createPlaceSchedule(parent: SpecificScheduleItem, placeCategory: PlaceCategoryRepository, placeName: String) -> Observable<PlaceScheduleItem>
@@ -117,7 +122,7 @@ protocol ScheduleServiceType: RealmServiceType {
     func updateDaySchedule(daySchedule: DayScheduleItem, day: Date) -> Observable<DayScheduleItem>
 
     @discardableResult
-    func updateSpecificSchedule(specificSchedule: SpecificScheduleItem, country: String, city: String, time: Date) -> Observable<SpecificScheduleItem>
+    func updateSpecificSchedule(specificSchedule: SpecificScheduleItem, country: String, city: String, stTime: Date, fnTime: Date) -> Observable<SpecificScheduleItem>
 
     @discardableResult
     func updatePlaceSchedule(placeSchedule: PlaceScheduleItem, placeCategory: PlaceCategoryRepository, placeName: String) -> Observable<PlaceScheduleItem>
@@ -134,6 +139,8 @@ protocol ScheduleServiceType: RealmServiceType {
     func getTravelSchedule(travelScheduleUid: String) -> Observable<TravelScheduleItem>
     
     func getDaySchedule(dayScheduleUid: String) -> Observable<DayScheduleItem>
+    
+    func getDaySchedule(ofNthDay: Int) -> Observable<DayScheduleItem>
     
     func getSpecificSchedule(specificScheduleUid: String) -> Observable<SpecificScheduleItem>
     

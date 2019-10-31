@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="L1g-71-iIw">
-                                <rect key="frame" x="20" y="111" width="374" height="751"/>
+                                <rect key="frame" x="20" y="44" width="374" height="818"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Uhj-ks-dZr">
                                     <size key="itemSize" width="374" height="150"/>
@@ -122,30 +122,13 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Now Offline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OSs-Bs-L3F">
-                                <rect key="frame" x="300.5" y="70" width="85.5" height="21"/>
-                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BIh-9j-z2t">
-                                <rect key="frame" x="28" y="70" width="84" height="21"/>
-                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="BIh-9j-z2t" firstAttribute="centerY" secondItem="OSs-Bs-L3F" secondAttribute="centerY" id="HAQ-kI-Soy"/>
                             <constraint firstItem="vgW-cp-0uh" firstAttribute="trailing" secondItem="L1g-71-iIw" secondAttribute="trailing" constant="20" id="NXk-Yw-Ayf"/>
-                            <constraint firstItem="L1g-71-iIw" firstAttribute="top" secondItem="OSs-Bs-L3F" secondAttribute="bottom" constant="20" id="Xgu-Lb-gs5"/>
+                            <constraint firstItem="L1g-71-iIw" firstAttribute="top" secondItem="vgW-cp-0uh" secondAttribute="top" id="T0T-k7-18f"/>
                             <constraint firstItem="L1g-71-iIw" firstAttribute="bottom" secondItem="vgW-cp-0uh" secondAttribute="bottom" id="czd-Lm-UFD"/>
-                            <constraint firstItem="vgW-cp-0uh" firstAttribute="trailing" secondItem="OSs-Bs-L3F" secondAttribute="trailing" constant="28" id="dJw-9T-lG0"/>
-                            <constraint firstItem="OSs-Bs-L3F" firstAttribute="top" secondItem="vgW-cp-0uh" secondAttribute="top" constant="26" id="iaD-tG-Xx8"/>
                             <constraint firstItem="L1g-71-iIw" firstAttribute="leading" secondItem="vgW-cp-0uh" secondAttribute="leading" constant="20" id="sFA-4s-22d"/>
-                            <constraint firstItem="BIh-9j-z2t" firstAttribute="top" secondItem="vgW-cp-0uh" secondAttribute="top" constant="26" id="tdj-BX-ido"/>
-                            <constraint firstItem="BIh-9j-z2t" firstAttribute="leading" secondItem="vgW-cp-0uh" secondAttribute="leading" constant="28" id="xYd-RM-7BK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vgW-cp-0uh"/>
                     </view>

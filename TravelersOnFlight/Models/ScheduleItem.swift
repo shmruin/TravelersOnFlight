@@ -65,7 +65,8 @@ class SpecificScheduleItem: ScheduleItem {
     @objc dynamic var level: Int = ScheduleLevel.Specific.rawValue
     @objc dynamic var country: String = ""
     @objc dynamic var city: String = ""
-    @objc dynamic var time: Date = Date()
+    @objc dynamic var stTime: Date = Date()
+    @objc dynamic var fnTime: Date = Date()
 }
 
 class PlaceScheduleItem: ScheduleItem {

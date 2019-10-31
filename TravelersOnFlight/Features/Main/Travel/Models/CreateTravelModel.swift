@@ -100,6 +100,7 @@ extension TravelDataModel: Equatable {
     }
 }
 
+// Use for 'new' section
 let DummyTravelData = TravelDataModel(itemUid: TravelItem.makeUid(),
                                       countries: BehaviorRelay<[String]>(value: [""]),
                                       cities: BehaviorRelay<[String]>(value: [""]),
