@@ -93,9 +93,23 @@ struct ItemRelationService: ItemRelationServiceType {
                 }
                 return .just(element)
             } else {
-                return .error(RelationServiceError.parentNotExist)
+//                return .error(RelationServiceError.parentNotExist)
+                _ = createRelation(parentUid: element.parentUid)
+                return .just(element)
             }
         }
         return result ?? .error(RelationServiceError.connectionToLastFailed)
+    }
+    
+    @discardableResult
+    func checkIfExist(parentUid: String) -> Bool {
+        return withRealm(RealmDraft.Relation, "is id exist in relation") { (realm) -> Bool in
+            let existData = realm.objects(ItemRelation.self).filter("parentUid = %@", parentUid)
+            if let _ = existData.first {
+                return true
+            } else {
+                return false
+            }
+        }!
     }
 }

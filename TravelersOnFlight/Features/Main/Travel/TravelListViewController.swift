@@ -55,9 +55,13 @@ class TravelListViewController: UIViewController, StoryboardBased, ViewModelBase
             
             if item.itemUid == DummyTravelData.itemUid {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "newTravelCollectionViewCell", for: indexPath) as! NewTravelListCollectionViewCell
+                cell.layer.borderColor = UIColor.gray.cgColor
+                cell.layer.borderWidth = 1
                 return cell
             } else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "travelCollectionViewCell", for: indexPath) as! TravelListCollectionViewCell
+                cell.layer.borderColor = UIColor.gray.cgColor
+                cell.layer.borderWidth = 1
                 cell.configure(with: item)
                 return cell
             }

@@ -26,6 +26,10 @@ class ScheduleItem: Object, Relationable {
     override class func primaryKey() -> String? {
         return "uid"
     }
+    
+    static func makeUid() -> String {
+        return UUID().uuidString
+    }
 }
 
 extension ScheduleItem: IdentifiableType {
@@ -40,43 +44,19 @@ class TravelScheduleItem: ScheduleItem {
 
 class DayScheduleItem: ScheduleItem {
     @objc dynamic var level: Int = ScheduleLevel.Day.rawValue
-    @objc dynamic var day: Date = Date()
+    @objc dynamic var day: Int = 1
+    @objc dynamic var date: Date = Date()
 }
-
-//class LocationScheduleItem: Object, ScheduleItem {
-//    @objc dynamic var uid: String = UUID().uuidString
-//    @objc dynamic var parentUid: String = ""
-//    @objc dynamic var level: Int = ScheduleLevel.Location.rawValue
-//    @objc dynamic var country: String = ""
-//    @objc dynamic var city: String = ""
-//
-//    override class func primaryKey() -> String? {
-//        return "uid"
-//    }
-//}
-//
-//extension LocationScheduleItem: IdentifiableType {
-//    var identity: String {
-//        return self.isInvalidated ? "" : uid
-//    }
-//}
 
 class SpecificScheduleItem: ScheduleItem {
     @objc dynamic var level: Int = ScheduleLevel.Specific.rawValue
     @objc dynamic var country: String = ""
     @objc dynamic var city: String = ""
-    @objc dynamic var stTime: Date = Date()
-    @objc dynamic var fnTime: Date = Date()
-}
-
-class PlaceScheduleItem: ScheduleItem {
-    @objc dynamic var level: Int = ScheduleLevel.Specific.rawValue
+    @objc dynamic var area: String = ""
     @objc dynamic var placeCategory: String = ""
     @objc dynamic var placeName: String = ""
-}
-
-class ActivityScheduleItem: ScheduleItem {
-    @objc dynamic var level: Int = ScheduleLevel.Specific.rawValue
     @objc dynamic var activityCategory: String = ""
     @objc dynamic var activityName: String = ""
+    @objc dynamic var stTime: Date = Date()
+    @objc dynamic var fnTime: Date = Date()
 }

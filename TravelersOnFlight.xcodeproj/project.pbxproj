@@ -42,6 +42,8 @@
 		A8A1420D2315549F00A8BF0D /* TravelTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1420C2315549F00A8BF0D /* TravelTheme.swift */; };
 		A8A1420F23155CEE00A8BF0D /* TravelListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1420E23155CEE00A8BF0D /* TravelListCollectionViewCell.swift */; };
 		A8A14212231570FD00A8BF0D /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A14211231570FD00A8BF0D /* Date.swift */; };
+		A8F09C26236D302E001C2198 /* SpecificListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F09C25236D302E001C2198 /* SpecificListCollectionViewCell.swift */; };
+		A8F09C28236D36C7001C2198 /* NewSpecificListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F09C27236D36C7001C2198 /* NewSpecificListCollectionViewCell.swift */; };
 		A8FE39C3232B877600AF02CD /* CreateTravelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FE39C2232B877600AF02CD /* CreateTravelModel.swift */; };
 		F6AD81CD0AF09B4FF2C564A2 /* Pods_TravelersOnFlightUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A78139001BC1AB46B3A1795B /* Pods_TravelersOnFlightUITests.framework */; };
 /* End PBXBuildFile section */
@@ -109,6 +111,8 @@
 		A8A1420C2315549F00A8BF0D /* TravelTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelTheme.swift; sourceTree = "<group>"; };
 		A8A1420E23155CEE00A8BF0D /* TravelListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelListCollectionViewCell.swift; sourceTree = "<group>"; };
 		A8A14211231570FD00A8BF0D /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		A8F09C25236D302E001C2198 /* SpecificListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificListCollectionViewCell.swift; sourceTree = "<group>"; };
+		A8F09C27236D36C7001C2198 /* NewSpecificListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSpecificListCollectionViewCell.swift; sourceTree = "<group>"; };
 		A8FE39C2232B877600AF02CD /* CreateTravelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTravelModel.swift; sourceTree = "<group>"; };
 		B62008543ACF2524F40736AD /* Pods-TravelersOnFlightUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelersOnFlightUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TravelersOnFlightUITests/Pods-TravelersOnFlightUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D544F2BF482612276BA4CB59 /* Pods_TravelersOnFlight.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TravelersOnFlight.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -228,6 +232,8 @@
 		A81AE74D231945EE00744E8D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				A8F09C25236D302E001C2198 /* SpecificListCollectionViewCell.swift */,
+				A8F09C27236D36C7001C2198 /* NewSpecificListCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -293,8 +299,8 @@
 		A82FA47A23409AE8006E23E7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A83BD7B6236B4F96006830D2 /* CreateDayDataModel.swift */,
 				A83BD7B4236B30A9006830D2 /* CreateSpecificModel.swift */,
+				A83BD7B6236B4F96006830D2 /* CreateDayDataModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -612,7 +618,9 @@
 				A85BB4F2231192D50060C7EF /* TravelsService.swift in Sources */,
 				A8A1420D2315549F00A8BF0D /* TravelTheme.swift in Sources */,
 				A83BD7B5236B30A9006830D2 /* CreateSpecificModel.swift in Sources */,
+				A8F09C26236D302E001C2198 /* SpecificListCollectionViewCell.swift in Sources */,
 				A81AE7552319485800744E8D /* ScheduleService.swift in Sources */,
+				A8F09C28236D36C7001C2198 /* NewSpecificListCollectionViewCell.swift in Sources */,
 				A8A1420F23155CEE00A8BF0D /* TravelListCollectionViewCell.swift in Sources */,
 				A806EFED231D637C00C071F6 /* ServiceType.swift in Sources */,
 				A8087F2323141E39004AB052 /* ViewModelBased.swift in Sources */,

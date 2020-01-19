@@ -13,16 +13,14 @@ import RxDataSources
 
 class DayDataModel {
     var itemUid: String
-    var day: BehaviorRelay<Date>?
+    var day: BehaviorRelay<Int>
+    var date: BehaviorRelay<Date>
     
-    init(itemUid: String, day: BehaviorRelay<Date>) {
+    init(itemUid: String, day: BehaviorRelay<Int>, date: BehaviorRelay<Date>) {
         self.itemUid = itemUid
         self.day = day
+        self.date = date
     }
-    
-//    func makeDayTimes() -> String {
-//
-//    }
 }
 
 extension DayDataModel: IdentifiableType {

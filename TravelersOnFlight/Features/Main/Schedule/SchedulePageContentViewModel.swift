@@ -16,19 +16,22 @@ import NSObject_Rx
 
 typealias SpecificSection = AnimatableSectionModel<String, SpecificDataModel>
 
-class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag {
+protocol receiveStepBelow { }
+
+class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, receiveStepBelow {
     typealias Services = HasScheduleService
 
     let steps = PublishRelay<Step>()
     var services: Services!
     
-    let thisDay: Int?
+    let thisDay: Int? 
     
     var dayItem: Observable<DayDataModel> {
         return self.services.scheduleService.getDaySchedule(ofNthDay: thisDay!)
             .map { item in
                 return DayDataModel(itemUid: item.uid,
-                                    day: BehaviorRelay<Date>(value: item.day))
+                                    day: BehaviorRelay<Int>(value: item.day),
+                                    date: BehaviorRelay<Date>(value: item.date))
             }
     }
     
@@ -42,13 +45,22 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag {
                     return self.services.scheduleService.specificSchedules(ofDaySchedule: daySchedule)
                 }
                 .map { results in
-                    let specificItems = results.sorted(byKeyPath: "stTime", ascending: true)
-                    let specificData = specificItems.toArray().map { (item: SpecificScheduleItem) in
-                        return SpecificDataModel(itemUid: item.uid,
-                                                 countries: BehaviorRelay<String>(value: item.country),
-                                                 cities: BehaviorRelay<String>(value: item.city),
-                                                 stTime: BehaviorRelay<Date>(value: item.stTime),
-                                                 fnTime: BehaviorRelay<Date>(value: item.fnTime))
+                        let specificItems = results.sorted(byKeyPath: "stTime", ascending: true)
+                        let specificData = specificItems.toArray().map { (item: SpecificScheduleItem) -> SpecificDataModel in
+                        
+                            let pc = PlaceCategoryRepository(rawValue: item.placeCategory) ?? PlaceCategoryRepository.Error
+                            let ac = ActivityCategoryRepository(rawValue: item.activityCategory) ?? ActivityCategoryRepository.Error
+                            
+                            return SpecificDataModel(itemUid: item.uid,
+                                                     countries: BehaviorRelay<String>(value: item.country),
+                                                     cities: BehaviorRelay<String>(value: item.city),
+                                                     areas: BehaviorRelay<String>(value: item.area),
+                                                     stTime: BehaviorRelay<Date>(value: item.stTime),
+                                                     fnTime: BehaviorRelay<Date>(value: item.fnTime),
+                                                     placeCategory: BehaviorRelay<PlaceCategoryRepository>(value: pc),
+                                                     placeName: BehaviorRelay<String>(value: item.placeName),
+                                                     activityCategory: BehaviorRelay<ActivityCategoryRepository>(value: ac),
+                                                     activityName: BehaviorRelay<String>(value: item.activityName))
                     }
                     
                     return [SpecificSection(model: "Specifics", items: specificData),
@@ -60,4 +72,21 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag {
         self.thisDay = day
     }
     
+    public func createItemOfSpecificSchedule(model: SpecificDataModel) {
+        self.services.scheduleService.getDaySchedule(ofNthDay: thisDay!)
+            .take(1)
+            .subscribe(onNext: { (dayScheduleItem) in
+                self.services.scheduleService.createSpecificSchedule(parent: dayScheduleItem,
+                country: model.countries!.value,
+                city: model.cities!.value,
+                area: model.areas!.value,
+                stTime: model.stTime!.value,
+                fnTime: model.fnTime!.value,
+                placeCategory: model.placeCategory!.value,
+                placeName: model.placeName!.value,
+                activityCategory: model.activityCategory!.value,
+                activityName: model.activityName!.value)
+            })
+            .disposed(by: self.disposeBag)
+    }
 }

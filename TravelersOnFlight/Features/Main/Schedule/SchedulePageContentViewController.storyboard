@@ -39,118 +39,117 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="D7N-UD-TEp">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="243"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="specificCollectionViewCell" id="D7N-UD-TEp" customClass="SpecificListCollectionViewCell" customModule="TravelersOnFlight" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="140"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fPl-Z4-0vM">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="243"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="q0T-k8-SXx">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="OWZ-H2-9kD">
-                                                    <rect key="frame" x="16" y="17" width="114" height="20.5"/>
+                                                    <rect key="frame" x="16" y="17" width="124.5" height="23"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="09:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCt-Xt-LC6">
-                                                            <rect key="frame" x="0.0" y="0.0" width="46.5" height="20.5"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="52" height="23"/>
+                                                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="19"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6O-ey-NJH">
-                                                            <rect key="frame" x="54.5" y="0.0" width="8" height="20.5"/>
+                                                            <rect key="frame" x="60" y="0.0" width="8" height="23"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIh-Dr-gY3">
-                                                            <rect key="frame" x="70.5" y="0.0" width="43.5" height="20.5"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <rect key="frame" x="76" y="0.0" width="48.5" height="23"/>
+                                                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="19"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                 </stackView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="London, England" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Q9-vY-3kl">
-                                                    <rect key="frame" x="226.5" y="17" width="128.5" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="St. James, London" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Q9-vY-3kl">
+                                                    <rect key="frame" x="225" y="19.5" width="115" height="18"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jEM-aa-RIV">
-                                                    <rect key="frame" x="16" y="47.5" width="342" height="187.5"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                    <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cX2-oU-low">
-                                                        <size key="itemSize" width="339" height="100"/>
-                                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                    </collectionViewFlowLayout>
-                                                    <cells>
-                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="iVs-7w-6Kn">
-                                                            <rect key="frame" x="1.5" y="0.0" width="339" height="100"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fZD-wg-XwE">
-                                                                <rect key="frame" x="0.0" y="0.0" width="339" height="100"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
-                                                                <subviews>
-                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="f7d-Y5-6xH">
-                                                                        <rect key="frame" x="10" y="17.5" width="71" height="48"/>
-                                                                        <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@Cafe" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="50p-aG-iu4">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="47" height="20.5"/>
-                                                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
-                                                                                <nil key="textColor"/>
-                                                                                <nil key="highlightedColor"/>
-                                                                            </label>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starbucks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ESh-R1-PZx">
-                                                                                <rect key="frame" x="0.0" y="27.5" width="71" height="20.5"/>
-                                                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="17"/>
-                                                                                <nil key="textColor"/>
-                                                                                <nil key="highlightedColor"/>
-                                                                            </label>
-                                                                        </subviews>
-                                                                    </stackView>
-                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="TPF-8g-Vfc">
-                                                                        <rect key="frame" x="159" y="17.5" width="170" height="48"/>
-                                                                        <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#Drink a cup of coffee" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CgR-Rw-s7j">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="170" height="20.5"/>
-                                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                                <nil key="textColor"/>
-                                                                                <nil key="highlightedColor"/>
-                                                                            </label>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latte 1, Americano 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9OH-MW-PaY">
-                                                                                <rect key="frame" x="0.0" y="27.5" width="146" height="20.5"/>
-                                                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="17"/>
-                                                                                <nil key="textColor"/>
-                                                                                <nil key="highlightedColor"/>
-                                                                            </label>
-                                                                        </subviews>
-                                                                    </stackView>
-                                                                </subviews>
-                                                                <constraints>
-                                                                    <constraint firstItem="f7d-Y5-6xH" firstAttribute="top" secondItem="fZD-wg-XwE" secondAttribute="top" constant="17.5" id="JHO-Bl-FQA"/>
-                                                                    <constraint firstItem="f7d-Y5-6xH" firstAttribute="leading" secondItem="fZD-wg-XwE" secondAttribute="leading" constant="10" id="SbL-JC-b9F"/>
-                                                                    <constraint firstItem="TPF-8g-Vfc" firstAttribute="centerY" secondItem="f7d-Y5-6xH" secondAttribute="centerY" id="dqi-QF-ae2"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="TPF-8g-Vfc" secondAttribute="trailing" constant="10" id="i4j-68-kcb"/>
-                                                                </constraints>
-                                                            </collectionViewCellContentView>
-                                                            <size key="customSize" width="339" height="100"/>
-                                                        </collectionViewCell>
-                                                    </cells>
-                                                </collectionView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@Cafe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fH3-De-rqg">
+                                                    <rect key="frame" x="16" y="62.5" width="49" height="20.5"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starbucks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubk-Tf-V7D">
+                                                    <rect key="frame" x="225" y="64" width="61.5" height="18"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#Drink a cup of coffee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IxU-Rc-bgU">
+                                                    <rect key="frame" x="16" y="100.5" width="167" height="20.5"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 latte, 1 americano" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GaH-qg-Dij">
+                                                    <rect key="frame" x="225" y="102" width="120" height="18"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="3Q9-vY-3kl" firstAttribute="centerY" secondItem="OWZ-H2-9kD" secondAttribute="centerY" id="2ig-7i-kZo"/>
-                                                <constraint firstItem="jEM-aa-RIV" firstAttribute="centerX" secondItem="fPl-Z4-0vM" secondAttribute="centerX" id="44z-rL-ZlM"/>
-                                                <constraint firstItem="jEM-aa-RIV" firstAttribute="leading" secondItem="fPl-Z4-0vM" secondAttribute="leading" constant="16" id="7S9-Bp-pJy"/>
-                                                <constraint firstAttribute="bottom" secondItem="jEM-aa-RIV" secondAttribute="bottom" constant="8" id="7vv-eW-dmz"/>
-                                                <constraint firstItem="OWZ-H2-9kD" firstAttribute="top" secondItem="fPl-Z4-0vM" secondAttribute="top" constant="17" id="E3N-uw-byw"/>
-                                                <constraint firstAttribute="trailing" secondItem="3Q9-vY-3kl" secondAttribute="trailing" constant="19" id="q0P-53-oUf"/>
-                                                <constraint firstItem="OWZ-H2-9kD" firstAttribute="leading" secondItem="fPl-Z4-0vM" secondAttribute="leading" constant="16" id="rs7-cC-ObO"/>
-                                                <constraint firstItem="jEM-aa-RIV" firstAttribute="top" secondItem="OWZ-H2-9kD" secondAttribute="bottom" constant="10" id="y6h-gR-OrL"/>
+                                                <constraint firstItem="IxU-Rc-bgU" firstAttribute="leading" secondItem="q0T-k8-SXx" secondAttribute="leading" constant="16" id="82k-j7-dvt"/>
+                                                <constraint firstItem="IxU-Rc-bgU" firstAttribute="top" secondItem="fH3-De-rqg" secondAttribute="bottom" constant="17.5" id="9lR-hG-dtm"/>
+                                                <constraint firstItem="GaH-qg-Dij" firstAttribute="centerY" secondItem="IxU-Rc-bgU" secondAttribute="centerY" id="DUD-qE-iHg"/>
+                                                <constraint firstItem="ubk-Tf-V7D" firstAttribute="leading" secondItem="q0T-k8-SXx" secondAttribute="leading" constant="225" id="IwT-Je-MwH"/>
+                                                <constraint firstItem="OWZ-H2-9kD" firstAttribute="top" secondItem="q0T-k8-SXx" secondAttribute="top" constant="17" id="Nvb-IB-1aW"/>
+                                                <constraint firstItem="fH3-De-rqg" firstAttribute="top" secondItem="OWZ-H2-9kD" secondAttribute="bottom" constant="22.5" id="Oa1-LO-ipm"/>
+                                                <constraint firstItem="ubk-Tf-V7D" firstAttribute="centerY" secondItem="fH3-De-rqg" secondAttribute="centerY" id="RJr-mH-zhg"/>
+                                                <constraint firstItem="OWZ-H2-9kD" firstAttribute="leading" secondItem="q0T-k8-SXx" secondAttribute="leading" constant="16" id="aHU-FW-vCf"/>
+                                                <constraint firstItem="fH3-De-rqg" firstAttribute="leading" secondItem="q0T-k8-SXx" secondAttribute="leading" constant="16" id="jTk-Ac-hh2"/>
+                                                <constraint firstItem="3Q9-vY-3kl" firstAttribute="leading" secondItem="q0T-k8-SXx" secondAttribute="leading" constant="225" id="nZ8-Tx-OYP"/>
+                                                <constraint firstItem="GaH-qg-Dij" firstAttribute="leading" secondItem="q0T-k8-SXx" secondAttribute="leading" constant="225" id="pSn-p0-2z9"/>
+                                                <constraint firstAttribute="bottom" secondItem="IxU-Rc-bgU" secondAttribute="bottom" constant="19" id="pjb-pp-QTF"/>
+                                                <constraint firstItem="3Q9-vY-3kl" firstAttribute="centerY" secondItem="OWZ-H2-9kD" secondAttribute="centerY" id="tP2-dU-2M7"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="374" height="243"/>
+                                        <size key="customSize" width="374" height="140"/>
+                                        <connections>
+                                            <outlet property="specificActivityCategory" destination="IxU-Rc-bgU" id="uPO-4p-8ZY"/>
+                                            <outlet property="specificActivityName" destination="GaH-qg-Dij" id="B69-6y-CKw"/>
+                                            <outlet property="specificAreaAndCity" destination="3Q9-vY-3kl" id="ekL-XZ-ScC"/>
+                                            <outlet property="specificFnTime" destination="nIh-Dr-gY3" id="Y06-Dh-JJb"/>
+                                            <outlet property="specificPlaceCategory" destination="fH3-De-rqg" id="aWm-Y3-AYf"/>
+                                            <outlet property="specificPlaceName" destination="ubk-Tf-V7D" id="9Vn-0z-23y"/>
+                                            <outlet property="specificStTime" destination="DCt-Xt-LC6" id="ASe-PU-Mam"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="newSpecificCollectionViewCell" id="eoU-9s-shC" customClass="NewSpecificListCollectionViewCell" customModule="TravelersOnFlight" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="150" width="374" height="150"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="mzh-wt-lam">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="150"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+ ADD NEW TIMELINE SCHEDULE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQV-fb-Xy7">
+                                                    <rect key="frame" x="65" y="65" width="244" height="20.5"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="oQV-fb-Xy7" firstAttribute="centerY" secondItem="mzh-wt-lam" secondAttribute="centerY" id="4se-wq-3Ul"/>
+                                                <constraint firstItem="oQV-fb-Xy7" firstAttribute="centerX" secondItem="mzh-wt-lam" secondAttribute="centerX" id="DQf-2U-RJx"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="374" height="150"/>
+                                        <connections>
+                                            <outlet property="specificAddInfo" destination="oQV-fb-Xy7" id="dyR-S8-czn"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -168,6 +167,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sd1-IB-DHT"/>
                     </view>
+                    <connections>
+                        <outlet property="dateAndDay" destination="9aL-GQ-lzB" id="buI-Qw-XPZ"/>
+                        <outlet property="dayTitle" destination="Gpn-ds-y2D" id="ijL-27-hFX"/>
+                        <outlet property="specificsCollectionView" destination="Vwc-pE-8Cs" id="J66-4E-i75"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vVj-NC-hQU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

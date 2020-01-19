@@ -54,13 +54,6 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
     }
     
     public func selectToSchedule(travelData: TravelDataModel) {
-//        getTravelItemFromTravelDate(travelData: travelData)
-//            .asObservable()
-//            .unwrap()
-//            .subscribe(onNext: { travelItem in
-//                self.steps.accept(TravelStep.travelIsSelected(withTravel: travelItem))
-//            })
-//            .disposed(by: self.disposeBag)
         self.steps.accept(TravelStep.travelIsSelected(withTravelData: travelData))
     }
     
@@ -71,6 +64,5 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
                                                  stDate: model.stDate!.value,
                                                  fnDate: model.fnDate!.value,
                                                  eTheme: model.theme!.value)
-        // TODO : Move to the created travel -> schedule
     }
 }
