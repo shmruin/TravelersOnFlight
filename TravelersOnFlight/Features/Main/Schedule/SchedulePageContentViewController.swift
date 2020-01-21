@@ -67,7 +67,7 @@ class SchedulePageContentViewController: UIViewController, StoryboardBased, View
                 return cell
             } else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "specificCollectionViewCell", for: indexPath) as! SpecificListCollectionViewCell
-                cell.configure(viewController: self!, with: item, superViewModel: self!.viewModel)
+                cell.configure(viewController: self!, with: item, superViewModel: self!.viewModel, onComplete: self!.viewModel.updateItemOfSpecificSchedule(specificTargetId:sourceModel:))
                 cell.layer.borderColor = UIColor.gray.cgColor
                 cell.layer.borderWidth = 1
                 return cell

@@ -44,71 +44,39 @@ class SpecificDataModel {
         return dateFormatter
     }
     
-    func makeStTime() -> String {
+    func makeStTime() -> Observable<String> {
         let dateFormatter = timeDateFormatterHHmm()
         
-        if let res = self.stTime?.value {
-            return dateFormatter.string(from: res)
-        } else {
-            print("#ERROR - makeStTime something is nil")
-            return "*stTime Error *"
-        }
+        return stTime!.asObservable().map { dateFormatter.string(from: $0) }
     }
     
-    func makeFnTime() -> String {
+    func makeFnTime() -> Observable<String> {
         let dateFormatter = timeDateFormatterHHmm()
         
-        if let res = self.fnTime?.value {
-            return dateFormatter.string(from: res)
-        } else {
-            print("#ERROR - makeFnTime something is nil")
-            return "*fnTime Error *"
-        }
+        return fnTime!.asObservable().map { dateFormatter.string(from: $0) }
     }
     
-    func makeAreaAndCity() -> String {
-        if let area = areas?.value, let city = cities?.value {
-            return area + ", " + city
-        } else {
-            print("#ERROR - makeAreaAndCity something is nil")
-            return "*area and city Error *"
-        }
+    func makeAreaAndCity() -> Observable<String> {
+        return Observable
+            .combineLatest(areas!.asObservable(), cities!.asObservable(), resultSelector: { (a, b) in
+                return a + ", " + b
+            })
     }
     
-    func makePlaceCategory() -> String {
-        if let pc = placeCategory?.value {
-            return "@ " + pc.rawValue
-        } else {
-            print("#ERROR - makePlaceCategory something is nil")
-            return "*placeCategory Error *"
-        }
+    func makePlaceCategory() -> Observable<String> {
+        return placeCategory!.asObservable().map { "@ " + $0.rawValue }
     }
     
-    func makePlaceName() -> String {
-        if let pn = placeName?.value {
-            return pn
-        } else {
-            print("#ERROR - makePlaceName something is nil")
-            return "*placeName Error *"
-        }
+    func makePlaceName() -> Observable<String> {
+        return placeName!.asObservable()
     }
     
-    func makeActivityCategory() -> String {
-        if let ac = activityCategory?.value {
-            return "# " + ac.rawValue
-        } else {
-            print("#ERROR - makeActivityCategory something is nil")
-            return "*activityCategory Error *"
-        }
+    func makeActivityCategory() -> Observable<String> {
+        return activityCategory!.asObservable().map { "# " + $0.rawValue }
     }
     
-    func makeActivityName() -> String {
-        if let an = activityName?.value {
-            return an
-        } else {
-            print("#ERROR - makeActivityName something is nil")
-            return "*activityName Error *"
-        }
+    func makeActivityName() -> Observable<String> {
+        return activityName!.asObservable()
     }
 }
 

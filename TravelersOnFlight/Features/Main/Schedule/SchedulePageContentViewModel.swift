@@ -89,4 +89,22 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
             })
             .disposed(by: self.disposeBag)
     }
+    
+    public func updateItemOfSpecificSchedule(specificTargetId: String, sourceModel: SpecificDataModel) {
+        self.services.scheduleService.getSpecificSchedule(specificScheduleUid: specificTargetId)
+            .take(1)
+            .subscribe(onNext: { (specificScheduleItem) in
+                self.services.scheduleService.updateSpecificSchedule(specificSchedule: specificScheduleItem,
+                                                                     country: sourceModel.countries!.value,
+                                                                     city: sourceModel.cities!.value,
+                                                                     area: sourceModel.areas!.value,
+                                                                     stTime: sourceModel.stTime!.value,
+                                                                     fnTime: sourceModel.fnTime!.value,
+                                                                     placeCategory: sourceModel.placeCategory!.value,
+                                                                     placeName: sourceModel.placeName!.value,
+                                                                     activityCategory: sourceModel.activityCategory!.value,
+                                                                     activityName: sourceModel.activityName!.value)
+            })
+            .disposed(by: self.disposeBag)
+    }
 }

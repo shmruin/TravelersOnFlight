@@ -38,15 +38,36 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
     }
     
-    func configure(viewController: UIViewController, with item: SpecificDataModel, superViewModel: SchedulePageContentViewModel) {
-        self.specificStTime.text = item.makeStTime()
-        self.specificFnTime.text = item.makeFnTime()
-        self.specificAreaAndCity.text = item.makeAreaAndCity()
-        self.specificPlaceCategory.text = item.makePlaceCategory()
-        self.specificPlaceName.text = item.makePlaceName()
-        self.specificActivityCategory.text = item.makeActivityCategory()
-        self.specificActivityName.text = item.makeActivityName()
+    func configure(viewController: UIViewController, with item: SpecificDataModel, superViewModel: SchedulePageContentViewModel, onComplete: @escaping (String, SpecificDataModel) -> ()) {
         
+        item.makeStTime()
+            .bind(to: specificStTime.rx.text)
+            .disposed(by: rx.disposeBag)
+        
+        item.makeFnTime()
+            .bind(to: specificFnTime.rx.text)
+            .disposed(by: rx.disposeBag)
+        
+        item.makeAreaAndCity()
+            .bind(to: specificAreaAndCity.rx.text)
+            .disposed(by: rx.disposeBag)
+        
+        item.makePlaceCategory()
+            .bind(to: specificPlaceCategory.rx.text)
+            .disposed(by: rx.disposeBag)
+        
+        item.makePlaceName()
+            .bind(to: specificPlaceName.rx.text)
+            .disposed(by: rx.disposeBag)
+        
+        item.makeActivityCategory()
+            .bind(to: specificActivityCategory.rx.text)
+            .disposed(by: rx.disposeBag)
+        
+        item.makeActivityName()
+            .bind(to: specificActivityName.rx.text)
+            .disposed(by: rx.disposeBag)
+            
         var tStDate = Date()
         var tFnDate = Date()
         var tArea = ""
@@ -83,10 +104,14 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
                 }
             }
             .subscribe(onNext: { _ in
-                // TODO : Write to real model
                 print("Time alert activate")
                 print(tStDate.timeString(ofStyle: .full))
                 print(tFnDate.timeString(ofStyle: .full))
+                
+                item.stTime?.accept(tStDate)
+                item.fnTime?.accept(tFnDate)
+                
+                onComplete(item.itemUid, item)
             })
             .disposed(by: rx.disposeBag)
         
@@ -118,10 +143,16 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
                 }
             }
             .subscribe(onNext: { _ in
-                // TODO : Write to real model
                 print("City & area alert activate")
                 print(tCity)
                 print(tArea)
+                
+                // TODO : Later, if location select, then country also be changed
+                
+                item.cities?.accept(tCity)
+                item.areas?.accept(tArea)
+                
+                onComplete(item.itemUid, item)
             })
             .disposed(by: rx.disposeBag)
         
@@ -152,10 +183,14 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
                 }
             }
             .subscribe(onNext: { _ in
-                // TODO : Write to real model
                 print("Place category & place name alert activate")
                 print(tPlaceCategory.rawValue)
                 print(tPlaceName)
+                
+                item.placeCategory?.accept(tPlaceCategory)
+                item.placeName?.accept(tPlaceName)
+                
+                onComplete(item.itemUid, item)
             })
             .disposed(by: rx.disposeBag)
         
@@ -186,10 +221,14 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
             }
         }
         .subscribe(onNext: { _ in
-            // TODO : Write to real model
             print("Activity category & activity name alert activate")
             print(tActivityCategory.rawValue)
             print(tActivityName)
+            
+            item.activityCategory?.accept(tActivityCategory)
+            item.activityName?.accept(tActivityName)
+            
+            onComplete(item.itemUid, item)
         })
         .disposed(by: rx.disposeBag)
         
