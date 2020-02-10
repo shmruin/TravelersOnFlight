@@ -15,6 +15,11 @@ protocol HasScheduleService {
     var scheduleService: ScheduleService { get }
 }
 
+protocol HasTravelScheduleService {
+    var travelService: TravelService { get }
+    var scheduleService: ScheduleService { get }
+}
+
 private let disposeBag = DisposeBag()
 
 class ScheduleService: ScheduleServiceType {
@@ -24,21 +29,17 @@ class ScheduleService: ScheduleServiceType {
         // Dummy data
         do {
             // create travel schedule
-            let realmTravelSchedule = withRealmDraft(RealmDraft.TravelSchedule)
-            if realmTravelSchedule.objects(TravelScheduleItem.self).count == 0 {
+            let realmTravelSchedule = withRealmDraft(RealmDraft.DaySchedule)
+            if realmTravelSchedule.objects(DayScheduleItem.self).count == 0 {
                 guard let thisTravel = DummyTravelItem else {
                     print("#Error - DummyTravelItem is nil!")
                     return
                 }
                 
-                // Travel Schedule
-                self.createTravelSchedule(parent: thisTravel)
-                    .flatMapLatest { res -> Observable<DayScheduleItem> in
-                        // Day Schedule
-                        return self.createDaySchedule(parent: res, day: 1, date: Date())
-                    }
+                // Create dummy day schedule
+                self.createDaySchedule(parent: thisTravel, day: 1, date: Date())
                     .flatMapLatest { res -> Observable<SpecificScheduleItem> in
-                        // Specific Schedule
+                        // create dummy specific schedule
                         return self.createSpecificSchedule(parent: res, country: "Japan", city: "Tokyo", area: "Sinjuku", stTime: Date(), fnTime: Date(), placeCategory: PlaceCategoryRepository.Airport, placeName: "Narita Airport", activityCategory: ActivityCategoryRepository.Moving, activityName: "Moving")
                     }
                     .subscribe(onNext: { _ in
@@ -51,24 +52,7 @@ class ScheduleService: ScheduleServiceType {
     }
     
     @discardableResult
-    func createTravelSchedule(parent: TravelItem) -> Observable<TravelScheduleItem> {
-        let result = withRealm(RealmDraft.TravelSchedule, "creating travel schedule") { (realm) -> Observable<TravelScheduleItem> in
-            let travelSchedule = TravelScheduleItem()
-            travelSchedule.parentUid = parent.uid
-            try realm.write {
-                realm.add(travelSchedule)
-            }
-            return .just(travelSchedule)
-            }?
-            .do(onNext: { resTravelSchedule in
-                return self.itemRealtionService.connectToLast(element: resTravelSchedule)
-            })
-        
-        return result ?? .error(ScheduleServiceError.creationFailed(TravelScheduleItem.self))
-    }
-    
-    @discardableResult
-    func createDaySchedule(parent: TravelScheduleItem, day: Int, date: Date) -> Observable<DayScheduleItem> {
+    func createDaySchedule(parent: TravelItem, day: Int, date: Date) -> Observable<DayScheduleItem> {
         let result = withRealm(RealmDraft.DaySchedule, "creating day schedule") { (realm) -> Observable<DayScheduleItem> in
             let daySchedule = DayScheduleItem()
             daySchedule.parentUid = parent.uid
@@ -146,9 +130,8 @@ class ScheduleService: ScheduleServiceType {
     @discardableResult
     func deleteSchedule<T>(schedule: ScheduleItem, scheduleType: T.Type) -> Observable<Void> {
         var draft: RealmDraft
-        if T.self is TravelScheduleItem.Type {
-            draft = RealmDraft.TravelSchedule
-        } else if T.self is DayScheduleItem.Type {
+        
+        if T.self is DayScheduleItem.Type {
             draft = RealmDraft.DaySchedule
         } else {
             draft = RealmDraft.SpecificSchedule
@@ -174,18 +157,6 @@ class ScheduleService: ScheduleServiceType {
 //    func moveSchedule<T>(schedule: ScheduleItem, parent: ScheduleItem, nextToItem: ScheduleItem, scheduleType: T.Type) -> Observable<ScheduleItem> {
 //        // TODO: Level Check is pre-required
 //    }
-    
-    func getTravelSchedule(travelScheduleUid: String) -> Observable<TravelScheduleItem> {
-        let result = withRealm(RealmDraft.TravelSchedule, "getting travel schedule") { (realm) -> Observable<TravelScheduleItem> in
-            let existData = realm.objects(TravelScheduleItem.self).filter("uid = %@", travelScheduleUid)
-            if let data = existData.first {
-                return .just(data)
-            } else {
-                return .error(ScheduleServiceError.itemNotExistOfId(travelScheduleUid))
-            }
-        }
-        return result ?? .error(ScheduleServiceError.gettingFailed)
-    }
     
     func getDaySchedule(dayScheduleUid: String) -> Observable<DayScheduleItem> {
         let result = withRealm(RealmDraft.DaySchedule, "getting day schedule") { (realm) -> Observable<DayScheduleItem> in
@@ -226,30 +197,37 @@ class ScheduleService: ScheduleServiceType {
         return result ?? .error(ScheduleServiceError.gettingFailed)
     }
     
-    func travelSchedules() -> Observable<Results<TravelScheduleItem>> {
-        let result = withRealm(RealmDraft.TravelSchedule, "getting all travel schedules") { (realm) -> Observable<Results<TravelScheduleItem>> in
-            let realm = withRealmDraft(RealmDraft.TravelSchedule)
-            let travelSchedules = realm.objects(TravelScheduleItem.self)
-            return Observable.collection(from: travelSchedules)
-        }
-        return result ?? .empty()
-    }
-    
-    func daySchedules(ofTravelSchedule: ScheduleItem) -> Observable<Results<DayScheduleItem>> {
+    func daySchedules(ofParentScheduleUid: String) -> Observable<Results<DayScheduleItem>> {
         let result = withRealm(RealmDraft.DaySchedule, "getting day schedules of") { (realm) -> Observable<Results<DayScheduleItem>> in
             let realm = withRealmDraft(RealmDraft.DaySchedule)
-            let daySchedules = realm.objects(DayScheduleItem.self).filter("parentUid = %@", ofTravelSchedule.uid)
+            let daySchedules = realm.objects(DayScheduleItem.self).filter("parentUid = %@", ofParentScheduleUid)
             return Observable.collection(from: daySchedules)
         }
         return result ?? .empty()
     }
     
-    func specificSchedules(ofDaySchedule: ScheduleItem) -> Observable<Results<SpecificScheduleItem>> {
+    func specificSchedules(ofParentScheduleUid: String) -> Observable<Results<SpecificScheduleItem>> {
         let result = withRealm(RealmDraft.SpecificSchedule, "getting specific schedules of") { (realm) -> Observable<Results<SpecificScheduleItem>> in
             let realm = withRealmDraft(RealmDraft.SpecificSchedule)
-            let specificSchedules = realm.objects(SpecificScheduleItem.self).filter("parentUid = %@", ofDaySchedule.uid)
+            let specificSchedules = realm.objects(SpecificScheduleItem.self).filter("parentUid = %@", ofParentScheduleUid)
             return Observable.collection(from: specificSchedules)
         }
         return result ?? .empty()
+    }
+    
+    func getLastDay(ofParentUid: String) -> Observable<DayScheduleItem> {
+        if let lastUid = itemRealtionService.getLastUid(parentUid: ofParentUid) {
+            let result = withRealm(RealmDraft.DaySchedule, "getting last day element of travel") { (realm) -> Observable<DayScheduleItem> in
+                let existData = realm.objects(DayScheduleItem.self).filter("uid = %@", lastUid)
+                if let data = existData.first {
+                    return .just(data)
+                } else {
+                    return .error(ScheduleServiceError.itemNotExistOfId(lastUid))
+                }
+            }
+            return result ?? .empty()
+        } else {
+            return .error(ScheduleServiceError.itemIsNil)
+        }
     }
 }

@@ -38,10 +38,6 @@ extension ScheduleItem: IdentifiableType {
     }
 }
 
-class TravelScheduleItem: ScheduleItem {
-    @objc dynamic var level: Int = ScheduleLevel.Travel.rawValue
-}
-
 class DayScheduleItem: ScheduleItem {
     @objc dynamic var level: Int = ScheduleLevel.Day.rawValue
     @objc dynamic var day: Int = 1

@@ -36,10 +36,10 @@ struct TravelService: TravelServiceType {
                         .disposed(by: disposeBag)
                 }
             }
-            let realmRelation = withRealmDraft(RealmDraft.Relation)
-            if realmRelation.objects(ItemRelation.self).count == 0 {
-                itemRealtionService.createRelation(parentUid: RootParentUid)
-            }
+//            let realmRelation = withRealmDraft(RealmDraft.Relation)
+//            if realmRelation.objects(ItemRelation.self).count == 0 {
+//                itemRealtionService.createRelation(parentUid: RootParentUid)
+//            }
         } catch _ {
             print("#ERROR - while init TravelService")
         }

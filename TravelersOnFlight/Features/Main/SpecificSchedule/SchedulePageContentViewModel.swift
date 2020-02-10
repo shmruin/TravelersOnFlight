@@ -24,14 +24,15 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
     let steps = PublishRelay<Step>()
     var services: Services!
     
-    let thisDay: Int? 
+    let thisDayUid: String?
     
     var dayItem: Observable<DayDataModel> {
-        return self.services.scheduleService.getDaySchedule(ofNthDay: thisDay!)
+        return self.services.scheduleService.getDaySchedule(dayScheduleUid: thisDayUid!)
             .map { item in
                 return DayDataModel(itemUid: item.uid,
                                     day: BehaviorRelay<Int>(value: item.day),
-                                    date: BehaviorRelay<Date>(value: item.date))
+                                    date: BehaviorRelay<Date>(value: item.date),
+                                    description: BehaviorRelay<String>(value: ""))
             }
     }
     
@@ -42,7 +43,7 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
                     return self.services.scheduleService.getDaySchedule(dayScheduleUid: item.itemUid)
                 }
                 .flatMapLatest { daySchedule -> Observable<Results<SpecificScheduleItem>> in
-                    return self.services.scheduleService.specificSchedules(ofDaySchedule: daySchedule)
+                    return self.services.scheduleService.specificSchedules(ofParentScheduleUid: daySchedule.uid)
                 }
                 .map { results in
                         let specificItems = results.sorted(byKeyPath: "stTime", ascending: true)
@@ -68,12 +69,12 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
                 }
     }
 
-    init(day: Int) {
-        self.thisDay = day
+    init(thisDayUid: String) {
+        self.thisDayUid = thisDayUid
     }
     
     public func createItemOfSpecificSchedule(model: SpecificDataModel) {
-        self.services.scheduleService.getDaySchedule(ofNthDay: thisDay!)
+        self.services.scheduleService.getDaySchedule(dayScheduleUid: thisDayUid!)
             .take(1)
             .subscribe(onNext: { (dayScheduleItem) in
                 self.services.scheduleService.createSpecificSchedule(parent: dayScheduleItem,

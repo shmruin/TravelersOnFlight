@@ -13,18 +13,19 @@ import RxRealm
 
 struct ItemRelationService: ItemRelationServiceType {
     @discardableResult
-    func createRelation(parentUid: String) -> Observable<Void> {
-        let result = withRealm(RealmDraft.Relation, "creating") { (realm) -> Observable<Void> in
-            let existData = realm.objects(ItemRelation.self).filter("parentUid = %@", parentUid)
+    func createRelation<T>(element: T) -> Observable<T> where T : Relationable {
+        let result = withRealm(RealmDraft.Relation, "creating") { (realm) -> Observable<T> in
+            let existData = realm.objects(ItemRelation.self).filter("parentUid = %@", element.parentUid)
             if let _ = existData.first {
                 return .error(RelationServiceError.duplicatedCreation)
             } else {
                 let relation = ItemRelation()
-                relation.parentUid = parentUid
+                relation.parentUid = element.parentUid
+                relation.siblingsUidList.append(element.uid)
                 try realm.write {
                     realm.add(relation)
                 }
-                return .empty()
+                return .just(element)
             }
         }
         return result ?? .error(RelationServiceError.creationFailed)
@@ -94,11 +95,23 @@ struct ItemRelationService: ItemRelationServiceType {
                 return .just(element)
             } else {
 //                return .error(RelationServiceError.parentNotExist)
-                _ = createRelation(parentUid: element.parentUid)
+                _ = createRelation(element: element)
                 return .just(element)
             }
         }
         return result ?? .error(RelationServiceError.connectionToLastFailed)
+    }
+    
+    func getLastUid(parentUid: String) -> String? {
+        return withRealm(RealmDraft.Relation, "get last uid of relation") { (realm) -> String? in
+            let existData = realm.objects(ItemRelation.self).filter("parentUid = %@", parentUid)
+            if let data = existData.first {
+                let elementList = data.siblingsUidList
+                return elementList.last ?? nil
+            } else {
+                return nil
+            }
+        } ?? nil
     }
     
     @discardableResult

@@ -27,7 +27,7 @@ class NewSpecificListCollectionViewCell: UICollectionViewCell {
         let newCitiy = recentModel.cities!.value
         let newArea = recentModel.areas!.value
         let newStTime = recentModel.fnTime!.value
-        let newFnTime = addOneHour(targetDate: recentModel.fnTime!.value)
+        let newFnTime = Common.increaseOneDateFeature(targetDate: recentModel.fnTime!.value, feature: .hour, value: 1)
         
         print(newCountry)
         print(newCitiy)
@@ -44,12 +44,5 @@ class NewSpecificListCollectionViewCell: UICollectionViewCell {
                                                       activityCategory: BehaviorRelay<ActivityCategoryRepository>(value: ActivityCategoryRepository.Select),
                                                       activityName: BehaviorRelay<String>(value: ""))
         onComplete(newSpecificComponents)
-    }
-    
-    private func addOneHour(targetDate: Date) -> Date {
-        let calendar = Calendar.current
-        let date = calendar.date(byAdding: .hour, value: 1, to: targetDate)
-        
-        return date!
     }
 }

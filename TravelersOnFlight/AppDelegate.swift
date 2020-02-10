@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
-struct AppServices: HasTravelService, HasScheduleService {
+struct AppServices: HasTravelService, HasScheduleService, HasTravelScheduleService {
     let travelService: TravelService
     let scheduleService: ScheduleService
 }

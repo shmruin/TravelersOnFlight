@@ -42,7 +42,7 @@ class TravelFlow: Flow {
         case .travelScreenIsRequired:
             return navigateToTravelScreen()
         case .travelIsSelected(let travel):
-            return navigateToScheduleScreen(with: travel)
+            return navigateToDayScehduleScreen(with: travel)
         default:
             return .none
         }
@@ -55,14 +55,13 @@ class TravelFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewController.viewModel))
     }
     
-    private func navigateToScheduleScreen(with travel: TravelDataModel) -> FlowContributors {
-        let scheduleFlow = ScheduleFlow(withServices: self.services, withTitle: travel.makeTravelTitle())
+    private func navigateToDayScehduleScreen(with travel: TravelDataModel) -> FlowContributors {
+        let dayScheduleFlow = DayScheduleFlow(withServices: self.services)
         
-        Flows.whenReady(flow1: scheduleFlow) { [unowned self] root in
+        Flows.whenReady(flow1: dayScheduleFlow) { [unowned self] root in
             self.rootViewController.present(root, animated: true, completion: nil)
         }
         
-        return .one(flowContributor: .contribute(withNextPresentable: scheduleFlow,
-                                                 withNextStepper: OneStepper(withSingleStep: TravelStep.scheduleScreenIsRequired(withDay: 1))))
+        return .one(flowContributor: .contribute(withNextPresentable: dayScheduleFlow, withNextStepper: OneStepper(withSingleStep: TravelStep.dayScheduleScreenIsRequired(withTravel: travel))))
     }
 }

@@ -22,35 +22,32 @@ class ScheduleFlow: Flow {
 
     private let services: AppServices
     
-    var screenTitle: String = "Schedules"
-    
-    init(withServices services: AppServices, withTitle title: String) {
+    init(withServices services: AppServices) {
         self.services = services
-        self.screenTitle = title
     }
     
     deinit {
         print("\(type(of: self)): \(#function)")
     }
     
-    func makeTitle(view: UIViewController) {
-        view.title = screenTitle
+    func makeTitle(view: UIViewController, title: String = "") {
+        view.title = title
     }
     
     func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? TravelStep else { return .none }
         
         switch step {
-        case .scheduleScreenIsRequired(let day):
-            return navigateToFirstScheduleScreen(day: day)
+        case .speicificScheduleScreenIsRequired(let day):
+            return navigateToFirstSpecificScheduleScreen(day: day)
         default:
             return .none
         }
     }
     
-    private func navigateToFirstScheduleScreen(day: Int) -> FlowContributors {
-        let viewController = SchedulePageContentViewController.instantiate(withViewModel: SchedulePageContentViewModel(day: day), andServices: self.services)
-        makeTitle(view: viewController)
+    private func navigateToFirstSpecificScheduleScreen(day: DayDataModel) -> FlowContributors {
+        let viewController = SchedulePageContentViewController.instantiate(withViewModel: SchedulePageContentViewModel(thisDayUid: day.itemUid), andServices: self.services)
+        makeTitle(view: viewController, title: day.makeDayTitle())
         self.rootViewController.pushViewController(viewController, animated: false)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewController.viewModel))
     }

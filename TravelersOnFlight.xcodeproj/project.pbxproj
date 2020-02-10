@@ -19,7 +19,12 @@
 		A8087F2323141E39004AB052 /* ViewModelBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8087F2223141E39004AB052 /* ViewModelBased.swift */; };
 		A8087F292314248D004AB052 /* TravelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8087F282314248D004AB052 /* TravelListViewController.swift */; };
 		A8087F2B231424ED004AB052 /* TravelListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8087F2A231424ED004AB052 /* TravelListViewModel.swift */; };
-		A815A63C2343B8480062B67F /* ScheduleFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A815A63B2343B8480062B67F /* ScheduleFlow.swift */; };
+		A811BFF923EEB4DD00850BF7 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = A811BFF823EEB4DD00850BF7 /* Common.swift */; };
+		A81593A623E566BD00B0C8ED /* DayTimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81593A523E566BD00B0C8ED /* DayTimelineViewController.swift */; };
+		A81593A823E5670B00B0C8ED /* DayTimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81593A723E5670B00B0C8ED /* DayTimelineViewModel.swift */; };
+		A81593AA23E56E5E00B0C8ED /* DayScheduleFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81593A923E56E5E00B0C8ED /* DayScheduleFlow.swift */; };
+		A81593AC23E5775A00B0C8ED /* DayTimelineViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A81593AB23E5775A00B0C8ED /* DayTimelineViewController.storyboard */; };
+		A815A63C2343B8480062B67F /* SpecificScheduleFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A815A63B2343B8480062B67F /* SpecificScheduleFlow.swift */; };
 		A81AE7552319485800744E8D /* ScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81AE7542319485800744E8D /* ScheduleService.swift */; };
 		A820A40B2362AAF000012DAA /* SchedulePageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A820A40A2362AAF000012DAA /* SchedulePageContentViewController.swift */; };
 		A820A40D2362AB5D00012DAA /* SchedulePageContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A820A40C2362AB5D00012DAA /* SchedulePageContentViewModel.swift */; };
@@ -37,7 +42,6 @@
 		A85BB4F2231192D50060C7EF /* TravelsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85BB4F1231192D50060C7EF /* TravelsService.swift */; };
 		A85BB4F7231193DA0060C7EF /* TravelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85BB4F6231193DA0060C7EF /* TravelItem.swift */; };
 		A85BB4F9231193F80060C7EF /* ScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85BB4F8231193F80060C7EF /* ScheduleItem.swift */; };
-		A85BB4FD2311A5150060C7EF /* TravelsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85BB4FC2311A5150060C7EF /* TravelsRepository.swift */; };
 		A8A1420B2315515800A8BF0D /* TravelListViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8A1420A2315515800A8BF0D /* TravelListViewController.storyboard */; };
 		A8A1420D2315549F00A8BF0D /* TravelTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1420C2315549F00A8BF0D /* TravelTheme.swift */; };
 		A8A1420F23155CEE00A8BF0D /* TravelListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1420E23155CEE00A8BF0D /* TravelListCollectionViewCell.swift */; };
@@ -82,7 +86,12 @@
 		A8087F2223141E39004AB052 /* ViewModelBased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBased.swift; sourceTree = "<group>"; };
 		A8087F282314248D004AB052 /* TravelListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelListViewController.swift; sourceTree = "<group>"; };
 		A8087F2A231424ED004AB052 /* TravelListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelListViewModel.swift; sourceTree = "<group>"; };
-		A815A63B2343B8480062B67F /* ScheduleFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFlow.swift; sourceTree = "<group>"; };
+		A811BFF823EEB4DD00850BF7 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		A81593A523E566BD00B0C8ED /* DayTimelineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTimelineViewController.swift; sourceTree = "<group>"; };
+		A81593A723E5670B00B0C8ED /* DayTimelineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTimelineViewModel.swift; sourceTree = "<group>"; };
+		A81593A923E56E5E00B0C8ED /* DayScheduleFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayScheduleFlow.swift; sourceTree = "<group>"; };
+		A81593AB23E5775A00B0C8ED /* DayTimelineViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DayTimelineViewController.storyboard; sourceTree = "<group>"; };
+		A815A63B2343B8480062B67F /* SpecificScheduleFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificScheduleFlow.swift; sourceTree = "<group>"; };
 		A81AE7542319485800744E8D /* ScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleService.swift; sourceTree = "<group>"; };
 		A820A40A2362AAF000012DAA /* SchedulePageContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulePageContentViewController.swift; sourceTree = "<group>"; };
 		A820A40C2362AB5D00012DAA /* SchedulePageContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulePageContentViewModel.swift; sourceTree = "<group>"; };
@@ -106,7 +115,6 @@
 		A85BB4F1231192D50060C7EF /* TravelsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelsService.swift; sourceTree = "<group>"; };
 		A85BB4F6231193DA0060C7EF /* TravelItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelItem.swift; sourceTree = "<group>"; };
 		A85BB4F8231193F80060C7EF /* ScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleItem.swift; sourceTree = "<group>"; };
-		A85BB4FC2311A5150060C7EF /* TravelsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelsRepository.swift; sourceTree = "<group>"; };
 		A8A1420A2315515800A8BF0D /* TravelListViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TravelListViewController.storyboard; sourceTree = "<group>"; };
 		A8A1420C2315549F00A8BF0D /* TravelTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelTheme.swift; sourceTree = "<group>"; };
 		A8A1420E23155CEE00A8BF0D /* TravelListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelListCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -166,7 +174,8 @@
 				A801FD942312CD730006C340 /* TravelStep.swift */,
 				A8030C8E23126B6F004ECE65 /* AppFlow.swift */,
 				A801FD962312DAED0006C340 /* TravelFlow.swift */,
-				A815A63B2343B8480062B67F /* ScheduleFlow.swift */,
+				A81593A923E56E5E00B0C8ED /* DayScheduleFlow.swift */,
+				A815A63B2343B8480062B67F /* SpecificScheduleFlow.swift */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -190,7 +199,8 @@
 		A8087F25231423EC004AB052 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				A81AE74B231944D800744E8D /* Schedule */,
+				A81593A323E5667300B0C8ED /* DaySchedule */,
+				A81AE74B231944D800744E8D /* SpecificSchedule */,
 				A8087F26231423F7004AB052 /* Travel */,
 			);
 			path = Main;
@@ -217,7 +227,34 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		A81AE74B231944D800744E8D /* Schedule */ = {
+		A811BFF723EEB4C900850BF7 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				A811BFF823EEB4DD00850BF7 /* Common.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		A81593A323E5667300B0C8ED /* DaySchedule */ = {
+			isa = PBXGroup;
+			children = (
+				A81593A423E5668100B0C8ED /* Models */,
+				A81593A523E566BD00B0C8ED /* DayTimelineViewController.swift */,
+				A81593A723E5670B00B0C8ED /* DayTimelineViewModel.swift */,
+				A81593AB23E5775A00B0C8ED /* DayTimelineViewController.storyboard */,
+			);
+			path = DaySchedule;
+			sourceTree = "<group>";
+		};
+		A81593A423E5668100B0C8ED /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A83BD7B6236B4F96006830D2 /* CreateDayDataModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A81AE74B231944D800744E8D /* SpecificSchedule */ = {
 			isa = PBXGroup;
 			children = (
 				A82FA47A23409AE8006E23E7 /* Models */,
@@ -226,7 +263,7 @@
 				A820A40C2362AB5D00012DAA /* SchedulePageContentViewModel.swift */,
 				A820A40E2362AB9600012DAA /* SchedulePageContentViewController.storyboard */,
 			);
-			path = Schedule;
+			path = SpecificSchedule;
 			sourceTree = "<group>";
 		};
 		A81AE74D231945EE00744E8D /* Cells */ = {
@@ -263,6 +300,7 @@
 		A822AC4D230F0A8D00F8E1A0 /* TravelersOnFlight */ = {
 			isa = PBXGroup;
 			children = (
+				A811BFF723EEB4C900850BF7 /* Common */,
 				A8A14210231570E900A8BF0D /* Extensions */,
 				A8087F2123141E28004AB052 /* Protocols */,
 				A8030C8D23126B5F004ECE65 /* Flows */,
@@ -300,7 +338,6 @@
 			isa = PBXGroup;
 			children = (
 				A83BD7B4236B30A9006830D2 /* CreateSpecificModel.swift */,
-				A83BD7B6236B4F96006830D2 /* CreateDayDataModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -325,7 +362,6 @@
 				A8030C8B2312596F004ECE65 /* Category.swift */,
 				A8A1420C2315549F00A8BF0D /* TravelTheme.swift */,
 				A8030C8923125689004ECE65 /* CategoryRepository.swift */,
-				A85BB4FC2311A5150060C7EF /* TravelsRepository.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -466,6 +502,7 @@
 			files = (
 				A822AC59230F0A8E00F8E1A0 /* LaunchScreen.storyboard in Resources */,
 				A822AC56230F0A8E00F8E1A0 /* Assets.xcassets in Resources */,
+				A81593AC23E5775A00B0C8ED /* DayTimelineViewController.storyboard in Resources */,
 				A8A1420B2315515800A8BF0D /* TravelListViewController.storyboard in Resources */,
 				A820A40F2362AB9600012DAA /* SchedulePageContentViewController.storyboard in Resources */,
 			);
@@ -599,13 +636,16 @@
 			files = (
 				A83BD7B7236B4F96006830D2 /* CreateDayDataModel.swift in Sources */,
 				A8FE39C3232B877600AF02CD /* CreateTravelModel.swift in Sources */,
+				A81593A623E566BD00B0C8ED /* DayTimelineViewController.swift in Sources */,
 				A822AC51230F0A8D00F8E1A0 /* ViewController.swift in Sources */,
+				A811BFF923EEB4DD00850BF7 /* Common.swift in Sources */,
 				A8030C8F23126B6F004ECE65 /* AppFlow.swift in Sources */,
 				A820A40B2362AAF000012DAA /* SchedulePageContentViewController.swift in Sources */,
 				A8030C8A23125689004ECE65 /* CategoryRepository.swift in Sources */,
+				A81593AA23E56E5E00B0C8ED /* DayScheduleFlow.swift in Sources */,
 				A82E9CBF2328179100027D47 /* NewTravelListCollectionViewCell.swift in Sources */,
 				A85BB4F7231193DA0060C7EF /* TravelItem.swift in Sources */,
-				A815A63C2343B8480062B67F /* ScheduleFlow.swift in Sources */,
+				A815A63C2343B8480062B67F /* SpecificScheduleFlow.swift in Sources */,
 				A8087F292314248D004AB052 /* TravelListViewController.swift in Sources */,
 				A806EFEF231D6C9E00C071F6 /* ItemRelation.swift in Sources */,
 				A820A40D2362AB5D00012DAA /* SchedulePageContentViewModel.swift in Sources */,
@@ -615,9 +655,9 @@
 				A8A14212231570FD00A8BF0D /* Date.swift in Sources */,
 				A85BB4F9231193F80060C7EF /* ScheduleItem.swift in Sources */,
 				A8087F2B231424ED004AB052 /* TravelListViewModel.swift in Sources */,
-				A85BB4FD2311A5150060C7EF /* TravelsRepository.swift in Sources */,
 				A801FD952312CD730006C340 /* TravelStep.swift in Sources */,
 				A85BB4F2231192D50060C7EF /* TravelsService.swift in Sources */,
+				A81593A823E5670B00B0C8ED /* DayTimelineViewModel.swift in Sources */,
 				A8A1420D2315549F00A8BF0D /* TravelTheme.swift in Sources */,
 				A83BD7B5236B30A9006830D2 /* CreateSpecificModel.swift in Sources */,
 				A8F09C26236D302E001C2198 /* SpecificListCollectionViewCell.swift in Sources */,
