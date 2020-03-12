@@ -78,7 +78,7 @@ class DayTimelineViewController: UIViewController, StoryboardBased, ViewModelBas
                  let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = item.getTupleSectionForm().value
                 
                  cell.timelinePoint = TimelinePoint(color: UIColor.green, filled: false)
-                 cell.timeline.frontColor = UIColor.clear
+                 cell.timeline.frontColor = UIColor.green
                  cell.timeline.backColor = UIColor.clear
                  cell.titleLabel.text = "ADD A NEW DAY"
                  cell.descriptionLabel.text = ""
@@ -107,15 +107,10 @@ class DayTimelineViewController: UIViewController, StoryboardBased, ViewModelBas
                  let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
 
                  var (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = item.getTupleSectionForm().value
-                 var timelineFrontColor = UIColor.clear
-                
-                 if (indexPath.row > 0) {
-    //                     timelineFrontColor = sectionData[indexPath.row - 1].1
-                    timelineFrontColor = UIColor.gray
-                 }
+                 var timelineFrontColor = UIColor.gray
                 
                  if (tableView.numberOfRows(inSection: 0) == indexPath.row + 1) {
-                     timelineBackColor = UIColor.clear
+                    timelineBackColor = UIColor.green
                  }
                 
                  cell.timelinePoint = timelinePoint
@@ -150,6 +145,15 @@ class DayTimelineViewController: UIViewController, StoryboardBased, ViewModelBas
     
     func setTableOptions() {
         dayTimelineTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        
+        let border = CALayer()
+        let width = CGFloat(1.0)
+        border.borderColor = UIColor.darkGray.cgColor
+        border.frame = CGRect(x: 0, y: 0, width:  dayTimelineTableView.frame.size.width, height: 1)
+
+        border.borderWidth = width
+        dayTimelineTableView.layer.addSublayer(border)
+        dayTimelineTableView.layer.masksToBounds = true
     }
     
 //    override func numberOfSections(in tableView: UITableView) -> Int {

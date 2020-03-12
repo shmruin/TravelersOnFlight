@@ -61,6 +61,9 @@ struct TravelService: TravelServiceType {
             return .just(travel)
             }?
             .do(onNext: { resTravel in
+                return self.itemRealtionService.createRelation(element: resTravel)
+            })
+            .do(onNext: { resTravel in
                 return self.itemRealtionService.connectToLast(element: resTravel)
             })
         

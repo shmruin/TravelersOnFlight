@@ -62,10 +62,13 @@ class ScheduleService: ScheduleServiceType {
                 realm.add(daySchedule)
             }
             return .just(daySchedule)
-            }?
-            .do(onNext: { resDaySchedule in
-                return self.itemRealtionService.connectToLast(element: resDaySchedule)
-            })
+        }?
+        .do(onNext: { resDaySchedule in
+            return self.itemRealtionService.createRelation(element: resDaySchedule)
+        })
+        .do(onNext: { resDaySchedule in
+            return self.itemRealtionService.connectToLast(element: resDaySchedule)
+        })
         
         return result ?? .error(ScheduleServiceError.creationFailed(DayScheduleItem.self))
     }
@@ -89,6 +92,9 @@ class ScheduleService: ScheduleServiceType {
             }
             return .just(specificSchedule)
             }?
+            .do(onNext: { resSpecificSchedule in
+                return self.itemRealtionService.createRelation(element: resSpecificSchedule)
+            })
             .do(onNext: { resSpecificSchedule in
                 return self.itemRealtionService.connectToLast(element: resSpecificSchedule)
             })

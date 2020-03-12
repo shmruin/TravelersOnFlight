@@ -29,6 +29,7 @@ class SchedulePageContentViewController: UIViewController, StoryboardBased, View
         configureDataSource()
         bindViewModel()
         layoutSetting()
+        bindScreenTexts()
     }
     
     func bindViewModel() {
@@ -81,5 +82,21 @@ class SchedulePageContentViewController: UIViewController, StoryboardBased, View
         collectionViewLayout?.estimatedItemSize = CGSize(width: specificsCollectionView.bounds.width, height: (collectionViewLayout?.collectionViewContentSize.height)!)
         
         collectionViewLayout?.invalidateLayout()
+    }
+    
+    func bindScreenTexts() {
+        self.viewModel.dayItem
+            .map { item -> String in
+                return "Day " + String(item.day.value)
+            }
+            .bind(to: self.dayTitle.rx.text)
+            .disposed(by: self.rx.disposeBag)
+        
+        self.viewModel.dayItem
+            .map { item -> String in
+                return Common.convertDateFormaterToYYMMDD(item.date.value)
+            }
+            .bind(to: self.dateAndDay.rx.text)
+            .disposed(by: self.rx.disposeBag)
     }
 }

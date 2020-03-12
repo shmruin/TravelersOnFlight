@@ -50,6 +50,7 @@ enum RelationServiceError: Error {
     case connectionFailed
     case disconnectionFailed
     case connectionToLastFailed
+    case connectionToLastFailedOfNotExist
     case siblingIdxNotExist
     case parentNotExist
     case targetElementNotExist

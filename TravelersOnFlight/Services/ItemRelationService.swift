@@ -15,13 +15,12 @@ struct ItemRelationService: ItemRelationServiceType {
     @discardableResult
     func createRelation<T>(element: T) -> Observable<T> where T : Relationable {
         let result = withRealm(RealmDraft.Relation, "creating") { (realm) -> Observable<T> in
-            let existData = realm.objects(ItemRelation.self).filter("parentUid = %@", element.parentUid)
+            let existData = realm.objects(ItemRelation.self).filter("parentUid = %@", element.uid)
             if let _ = existData.first {
                 return .error(RelationServiceError.duplicatedCreation)
             } else {
                 let relation = ItemRelation()
-                relation.parentUid = element.parentUid
-                relation.siblingsUidList.append(element.uid)
+                relation.parentUid = element.uid
                 try realm.write {
                     realm.add(relation)
                 }
@@ -87,16 +86,14 @@ struct ItemRelationService: ItemRelationServiceType {
         let result = withRealm(RealmDraft.Relation, "connecting to last") { (realm) -> Observable<T> in
             let existData = realm.objects(ItemRelation.self).filter("parentUid = %@", element.parentUid)
             if let data = existData.first {
-                let addedList = data.siblingsUidList
-                addedList.append(element.uid)
                 try realm.write {
-                    data.siblingsUidList = addedList
+                    data.siblingsUidList.append(element.uid)
                 }
                 return .just(element)
             } else {
-//                return .error(RelationServiceError.parentNotExist)
-                _ = createRelation(element: element)
-                return .just(element)
+//                _ = createRelation(element: element)
+//                return .just(element)
+                return .error(RelationServiceError.connectionToLastFailedOfNotExist)
             }
         }
         return result ?? .error(RelationServiceError.connectionToLastFailed)

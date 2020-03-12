@@ -26,7 +26,7 @@ class DayTimelineViewModel: ServicesViewModel, Stepper, HasDisposeBag {
     var collectionItems: Observable<[DaySection]> {
         return self.services.scheduleService.daySchedules(ofParentScheduleUid: thisTravelUid!)
             .map { results in
-                let dayItems = results.sorted(byKeyPath: "day", ascending: false)
+                let dayItems = results.sorted(byKeyPath: "day", ascending: true)
                 let dayData = dayItems.toArray().map { (item: DayScheduleItem) in
                     return DayDataModel(itemUid: item.uid,
                                         day: BehaviorRelay<Int>(value: item.day),
@@ -52,10 +52,13 @@ class DayTimelineViewModel: ServicesViewModel, Stepper, HasDisposeBag {
             .flatMapLatest { travelItem in
                 return self.services.scheduleService.getLastDay(ofParentUid: travelItem.uid).map { (travelItem, $0) }
             }
-            .subscribe(onNext: { item in
-                self.services.scheduleService.createDaySchedule(parent: item.0,
-                                                                day: item.1.day + 1,
-                                                                date: Common.increaseOneDateFeature(targetDate: item.1.date, feature: .day, value: 1))
+            .flatMapLatest { item in
+                return self.services.scheduleService.createDaySchedule(parent: item.0,
+                                                                       day: item.1.day + 1,
+                                                                       date: Common.increaseOneDateFeature(targetDate: item.1.date, feature: .day, value: 1))
+            }
+            .subscribe(onNext: { _ in
+                
             })
             .disposed(by: self.disposeBag)
     }

@@ -15,4 +15,11 @@ class Common {
         
         return date!
     }
+    
+    static func convertDateFormaterToYYMMDD(_ date: Date) -> String {
+        let format = DateFormatter()
+        format.dateFormat = "yy.MM.dd"
+        let formattedDate = format.string(from: date)
+        return formattedDate
+    }
 }

@@ -63,6 +63,13 @@ class TravelListViewController: UIViewController, StoryboardBased, ViewModelBase
                 cell.layer.borderColor = UIColor.gray.cgColor
                 cell.layer.borderWidth = 1
                 cell.configure(with: item)
+                
+                if let bgImage = self!.setBackgroundImg(item.theme!.value) {
+                    cell.travelBackgroundImage.image = bgImage
+                } else {
+                    print("#ERROR - No background Image for this cell theme")
+                }
+                
                 return cell
             }
         })
@@ -72,5 +79,30 @@ class TravelListViewController: UIViewController, StoryboardBased, ViewModelBase
         let collectionViewLayout = travelsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
         collectionViewLayout?.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 14, right: 0)
         collectionViewLayout?.invalidateLayout()
+    }
+    
+    func setBackgroundImg(_ theme: TravelTheme) -> UIImage? {
+        switch theme {
+        case .AlwaysGood:
+            return UIImage(named: "alwaysGoodTheme")
+        case .DreamsComeTrue:
+            return UIImage(named: "dreamsComeTrueTheme")
+        case .JustWonderful:
+            return UIImage(named: "justWonderfulTheme")
+        case .Lonely:
+            return UIImage(named: "lonelyTheme")
+        case .LookingForHappiness:
+            return UIImage(named: "lookingForHappinessTheme")
+        case .Unexpected:
+            return UIImage(named: "defaultTheme")
+        case .Vacation:
+            return UIImage(named: "vacationTheme")
+        case .WithFamily:
+            return UIImage(named: "withFamilyTheme")
+        case .WithFriends:
+            return UIImage(named: "withFriendsTheme")
+        default:
+            return UIImage(named: "defaultTheme")
+        }
     }
 }
