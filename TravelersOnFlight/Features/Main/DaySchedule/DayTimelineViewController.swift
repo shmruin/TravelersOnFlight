@@ -77,12 +77,13 @@ class DayTimelineViewController: UIViewController, StoryboardBased, ViewModelBas
 
                  let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = item.getTupleSectionForm().value
                 
-                 cell.timelinePoint = TimelinePoint(color: UIColor.green, filled: false)
-                 cell.timeline.frontColor = UIColor.green
+                 cell.timelinePoint = TimelinePoint(color: UIColor.black, filled: false)
+                 cell.timeline.frontColor = UIColor.gray
                  cell.timeline.backColor = UIColor.clear
                  cell.titleLabel.text = "ADD A NEW DAY"
                  cell.descriptionLabel.text = ""
                  cell.lineInfoLabel.text = lineInfo
+                 cell.bubbleColor = UIColor.green
 
                  if let thumbnails = thumbnails {
                      cell.viewsInStackView = thumbnails.map { thumbnail in
@@ -109,13 +110,9 @@ class DayTimelineViewController: UIViewController, StoryboardBased, ViewModelBas
                  var (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = item.getTupleSectionForm().value
                  var timelineFrontColor = UIColor.gray
                 
-                 if (tableView.numberOfRows(inSection: 0) == indexPath.row + 1) {
-                    timelineBackColor = UIColor.green
-                 }
-                
                  cell.timelinePoint = timelinePoint
                  cell.timeline.frontColor = timelineFrontColor
-                 cell.timeline.backColor = timelineBackColor
+                 cell.timeline.backColor = UIColor.gray
                  cell.titleLabel.text = title
                  cell.descriptionLabel.text = description
                  cell.lineInfoLabel.text = lineInfo
@@ -138,7 +135,7 @@ class DayTimelineViewController: UIViewController, StoryboardBased, ViewModelBas
                 
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
 
-                 return cell
+                return cell
             }
         })
     }
