@@ -77,13 +77,23 @@ class TravelDataModel {
         }
     }
     
-    func makeTravelDates() -> String {
-        if let dt = fnDate?.value {
-            let stringDate = dt.formatString(with: "yy.MM.dd")
-            return "\(stringDate)"
+    func makeTravelDates(_ stFn: OrderOfTravelDate) -> String {
+        if stFn == .End {
+            if let dt = fnDate?.value {
+                let stringDate = dt.formatString(with: "yy.MM.dd")
+                return "\(stringDate)"
+            } else {
+                print("#ERROR - makeTravelDates something is nil")
+                return "*Date Error*"
+            }
         } else {
-            print("#ERROR - makeTravelDates something is nil")
-            return "*Date Error*"
+            if let dt = stDate?.value {
+                let stringDate = dt.formatString(with: "yy.MM.dd")
+                return "\(stringDate)"
+            } else {
+                print("#ERROR - makeTravelDates something is nil")
+                return "*Date Error*"
+            }
         }
     }
 }
@@ -101,7 +111,7 @@ extension TravelDataModel: Equatable {
 }
 
 // Use for 'new' section
-let DummyTravelData = TravelDataModel(itemUid: TravelItem.makeUid(),
+let DummyTravelData = TravelDataModel(itemUid: Common.makeUid(),
                                       countries: BehaviorRelay<[String]>(value: [""]),
                                       cities: BehaviorRelay<[String]>(value: [""]),
                                       theme: BehaviorRelay<TravelTheme>(value: TravelTheme.Unexpected),

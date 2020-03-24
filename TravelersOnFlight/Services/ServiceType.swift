@@ -12,7 +12,6 @@ import RealmSwift
 
 enum RealmDraft: String {
     case Travel = "travel.realm"
-    case TravelSchedule = "travelSchedule.realm"
     case DaySchedule = "daySchedule.realm"
     case SpecificSchedule = "specificSchedule.realm"
     case PlaceSchedule = "placeSchedule.realm"
@@ -134,7 +133,7 @@ protocol ScheduleServiceType: RealmServiceType {
 
     func specificSchedules(ofParentScheduleUid: String) -> Observable<Results<SpecificScheduleItem>>
     
-    func getLastDay(ofParentUid: String) -> Observable<DayScheduleItem>
+    func getLastDay(ofParentUid: String) -> Observable<DayScheduleItem?>
 }
 
 protocol ItemRelationServiceType: RealmServiceType {

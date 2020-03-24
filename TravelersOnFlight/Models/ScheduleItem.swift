@@ -26,10 +26,6 @@ class ScheduleItem: Object, Relationable {
     override class func primaryKey() -> String? {
         return "uid"
     }
-    
-    static func makeUid() -> String {
-        return UUID().uuidString
-    }
 }
 
 extension ScheduleItem: IdentifiableType {

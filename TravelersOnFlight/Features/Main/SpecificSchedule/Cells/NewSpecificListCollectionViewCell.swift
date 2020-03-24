@@ -33,7 +33,7 @@ class NewSpecificListCollectionViewCell: UICollectionViewCell {
         print(newCitiy)
         print(newArea)
         
-        let newSpecificComponents = SpecificDataModel(itemUid: ScheduleItem.makeUid(),
+        let newSpecificComponents = SpecificDataModel(itemUid: Common.makeUid(),
                                                       countries: BehaviorRelay<String>(value: newCountry),
                                                       cities: BehaviorRelay<String>(value: newCitiy),
                                                       areas: BehaviorRelay<String>(value: newArea),

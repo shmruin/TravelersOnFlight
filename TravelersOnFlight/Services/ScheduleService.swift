@@ -221,19 +221,21 @@ class ScheduleService: ScheduleServiceType {
         return result ?? .empty()
     }
     
-    func getLastDay(ofParentUid: String) -> Observable<DayScheduleItem> {
+    func getLastDay(ofParentUid: String) -> Observable<DayScheduleItem?> {
         if let lastUid = itemRealtionService.getLastUid(parentUid: ofParentUid) {
-            let result = withRealm(RealmDraft.DaySchedule, "getting last day element of travel") { (realm) -> Observable<DayScheduleItem> in
+            let result = withRealm(RealmDraft.DaySchedule, "getting last day element of travel") { (realm) -> Observable<DayScheduleItem?> in
                 let existData = realm.objects(DayScheduleItem.self).filter("uid = %@", lastUid)
                 if let data = existData.first {
                     return .just(data)
                 } else {
-                    return .error(ScheduleServiceError.itemNotExistOfId(lastUid))
+                    // error; day exist but it's nil
+                    return .error(ScheduleServiceError.itemIsNil)
                 }
             }
             return result ?? .empty()
         } else {
-            return .error(ScheduleServiceError.itemIsNil)
+            // return nil refers to day 0; this is not an error
+            return .just(nil)
         }
     }
 }

@@ -29,7 +29,7 @@ struct TravelService: TravelServiceType {
             let realmTravel = withRealmDraft(RealmDraft.Travel)
             if realmTravel.objects(TravelItem.self).count == 0 {
                 [(Date(), Date(), TravelTheme.getDefault())].forEach {
-                    let res = self.createTravel(uid: TravelItem.makeUid(), countries: ["Japan"], cities: ["Tokyo"], stDate: $0.0, fnDate: $0.1, eTheme: $0.2)
+                    let res = self.createTravel(uid: Common.makeUid(), countries: ["Japan"], cities: ["Tokyo"], stDate: $0.0, fnDate: $0.1, eTheme: $0.2)
                     res.subscribe(onNext: { val in
                         DummyTravelItem = val
                         })

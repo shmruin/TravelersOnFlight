@@ -50,7 +50,7 @@ extension DayDataModel: Equatable {
     }
 }
 
-let dummyDayData = DayDataModel(itemUid: TravelItem.makeUid(),
+let dummyDayData = DayDataModel(itemUid: Common.makeUid(),
                                 day: BehaviorRelay<Int>(value: 0),
                                 date: BehaviorRelay<Date>(value: Date()),
                                 description: BehaviorRelay<String>(value: ""))

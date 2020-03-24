@@ -93,7 +93,7 @@ extension SpecificDataModel: Equatable {
 }
 
 // Use for 'new' section
-let DummySpecificData = SpecificDataModel(itemUid: TravelItem.makeUid(),
+let DummySpecificData = SpecificDataModel(itemUid: Common.makeUid(),
                                           countries: BehaviorRelay<String>(value: ""),
                                           cities: BehaviorRelay<String>(value: ""),
                                           areas: BehaviorRelay<String>(value: ""),

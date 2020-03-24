@@ -25,6 +25,7 @@
 		A81593AA23E56E5E00B0C8ED /* DayScheduleFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81593A923E56E5E00B0C8ED /* DayScheduleFlow.swift */; };
 		A81593AC23E5775A00B0C8ED /* DayTimelineViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A81593AB23E5775A00B0C8ED /* DayTimelineViewController.storyboard */; };
 		A815A63C2343B8480062B67F /* SpecificScheduleFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A815A63B2343B8480062B67F /* SpecificScheduleFlow.swift */; };
+		A8172EBD2428B1C400507FCD /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8172EBC2428B1C400507FCD /* Enums.swift */; };
 		A81AE7552319485800744E8D /* ScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81AE7542319485800744E8D /* ScheduleService.swift */; };
 		A820A40B2362AAF000012DAA /* SchedulePageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A820A40A2362AAF000012DAA /* SchedulePageContentViewController.swift */; };
 		A820A40D2362AB5D00012DAA /* SchedulePageContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A820A40C2362AB5D00012DAA /* SchedulePageContentViewModel.swift */; };
@@ -92,6 +93,7 @@
 		A81593A923E56E5E00B0C8ED /* DayScheduleFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayScheduleFlow.swift; sourceTree = "<group>"; };
 		A81593AB23E5775A00B0C8ED /* DayTimelineViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DayTimelineViewController.storyboard; sourceTree = "<group>"; };
 		A815A63B2343B8480062B67F /* SpecificScheduleFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificScheduleFlow.swift; sourceTree = "<group>"; };
+		A8172EBC2428B1C400507FCD /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		A81AE7542319485800744E8D /* ScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleService.swift; sourceTree = "<group>"; };
 		A820A40A2362AAF000012DAA /* SchedulePageContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulePageContentViewController.swift; sourceTree = "<group>"; };
 		A820A40C2362AB5D00012DAA /* SchedulePageContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulePageContentViewModel.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				A811BFF823EEB4DD00850BF7 /* Common.swift */,
+				A8172EBC2428B1C400507FCD /* Enums.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -656,6 +659,7 @@
 				A85BB4F9231193F80060C7EF /* ScheduleItem.swift in Sources */,
 				A8087F2B231424ED004AB052 /* TravelListViewModel.swift in Sources */,
 				A801FD952312CD730006C340 /* TravelStep.swift in Sources */,
+				A8172EBD2428B1C400507FCD /* Enums.swift in Sources */,
 				A85BB4F2231192D50060C7EF /* TravelsService.swift in Sources */,
 				A81593A823E5670B00B0C8ED /* DayTimelineViewModel.swift in Sources */,
 				A8A1420D2315549F00A8BF0D /* TravelTheme.swift in Sources */,

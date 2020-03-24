@@ -64,5 +64,9 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
                                                  stDate: model.stDate!.value,
                                                  fnDate: model.fnDate!.value,
                                                  eTheme: model.theme!.value)
+            .subscribe(onNext: { _ in
+                print("Travel created")
+            })
+            .disposed(by: self.disposeBag)
     }
 }

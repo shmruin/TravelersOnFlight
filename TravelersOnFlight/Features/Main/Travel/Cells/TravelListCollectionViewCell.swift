@@ -24,8 +24,8 @@ class TravelListCollectionViewCell: UICollectionViewCell {
  
         self.travelTitle.text = item.makeTravelTitle()
         self.travelSummary.text = item.makeTravelSummary()
-        self.travelStDate.text = item.makeTravelDates()
-        self.travelFnDate.text = item.makeTravelDates()
+        self.travelStDate.text = item.makeTravelDates(.First)
+        self.travelFnDate.text = item.makeTravelDates(.End)
     }
     
     override func prepareForReuse() {

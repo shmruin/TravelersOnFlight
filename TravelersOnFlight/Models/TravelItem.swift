@@ -18,20 +18,15 @@ import RxDataSources
 class TravelItem: Object, Relationable {
     @objc dynamic var uid: String = ""
     @objc dynamic var parentUid: String = RootParentUid
-    dynamic var countries: List<String> = List<String>()
-    dynamic var cities: List<String> = List<String>()
+    let countries = List<String>()
+    let cities = List<String>()
     @objc dynamic var stDate: Date = Date()
     @objc dynamic var fnDate: Date = Date()
     @objc dynamic var theme: String = TravelTheme.getDefault().rawValue
     
-    override class func primaryKey() -> String? {
+    override static func primaryKey() -> String? {
         return "uid"
     }
-    
-    static func makeUid() -> String {
-        return UUID().uuidString
-    }
-
 }
 
 extension TravelItem: IdentifiableType {

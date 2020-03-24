@@ -76,24 +76,27 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
     public func createItemOfSpecificSchedule(model: SpecificDataModel) {
         self.services.scheduleService.getDaySchedule(dayScheduleUid: thisDayUid!)
             .take(1)
-            .subscribe(onNext: { (dayScheduleItem) in
+            .flatMap { dayScheduleItem -> Observable<SpecificScheduleItem> in
                 self.services.scheduleService.createSpecificSchedule(parent: dayScheduleItem,
-                country: model.countries!.value,
-                city: model.cities!.value,
-                area: model.areas!.value,
-                stTime: model.stTime!.value,
-                fnTime: model.fnTime!.value,
-                placeCategory: model.placeCategory!.value,
-                placeName: model.placeName!.value,
-                activityCategory: model.activityCategory!.value,
-                activityName: model.activityName!.value)
+                                                                    country: model.countries!.value,
+                                                                    city: model.cities!.value,
+                                                                    area: model.areas!.value,
+                                                                    stTime: model.stTime!.value,
+                                                                    fnTime: model.fnTime!.value,
+                                                                    placeCategory: model.placeCategory!.value,
+                                                                    placeName: model.placeName!.value,
+                                                                    activityCategory: model.activityCategory!.value,
+                                                                    activityName: model.activityName!.value)
+            }
+            .subscribe({ _ in
+                print("Specific schedule created")
             })
             .disposed(by: self.disposeBag)
     }
     
     public func updateItemOfSpecificSchedule(specificTargetId: String, sourceModel: SpecificDataModel) {
         self.services.scheduleService.getSpecificSchedule(specificScheduleUid: specificTargetId)
-            .flatMapLatest { specificScheduleItem in
+            .flatMap { specificScheduleItem -> Observable<SpecificScheduleItem> in
                 return self.services.scheduleService.updateSpecificSchedule(specificSchedule: specificScheduleItem,
                                                                             country: sourceModel.countries!.value,
                                                                             city: sourceModel.cities!.value,
@@ -105,8 +108,8 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
                                                                             activityCategory: sourceModel.activityCategory!.value,
                                                                             activityName: sourceModel.activityName!.value)
             }
-            .subscribe(onNext: { _ in
-            
+            .subscribe({ _ in
+                print("Specific schedule updated")
             })
             .disposed(by: self.disposeBag)
     }

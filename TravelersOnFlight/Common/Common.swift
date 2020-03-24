@@ -22,4 +22,9 @@ class Common {
         let formattedDate = format.string(from: date)
         return formattedDate
     }
+    
+    static func makeUid() -> String {
+        return UUID().uuidString
+    }
+
 }

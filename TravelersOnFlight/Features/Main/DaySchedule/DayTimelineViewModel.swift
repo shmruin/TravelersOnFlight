@@ -49,16 +49,24 @@ class DayTimelineViewModel: ServicesViewModel, Stepper, HasDisposeBag {
     
     public func createItemOfDayScehdule() {
         self.services.travelService.getTravel(travelUid: thisTravelUid!)
-            .flatMapLatest { travelItem in
+            .flatMap { travelItem -> Observable<(TravelItem, DayScheduleItem?)> in
                 return self.services.scheduleService.getLastDay(ofParentUid: travelItem.uid).map { (travelItem, $0) }
             }
-            .flatMapLatest { item in
-                return self.services.scheduleService.createDaySchedule(parent: item.0,
-                                                                       day: item.1.day + 1,
-                                                                       date: Common.increaseOneDateFeature(targetDate: item.1.date, feature: .day, value: 1))
+            .flatMap { item -> Observable<DayScheduleItem> in
+                if let existDay = item.1 {
+                    print("create recent day")
+                    return self.services.scheduleService.createDaySchedule(parent: item.0,
+                                                            day: existDay.day + 1,
+                                                            date: Common.increaseOneDateFeature(targetDate: existDay.date, feature: .day, value: 1))
+                } else {
+                    print("create new day")
+                    return self.services.scheduleService.createDaySchedule(parent: item.0,
+                                                                           day: 1,
+                                                                           date: item.0.stDate)
+                }
             }
-            .subscribe(onNext: { _ in
-                
+            .subscribe({ _ in
+                print("Day schedule created")
             })
             .disposed(by: self.disposeBag)
     }
