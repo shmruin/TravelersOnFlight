@@ -110,8 +110,10 @@ extension TravelDataModel: Equatable {
     }
 }
 
+let DummyTravelUid = Common.makeUid()
+
 // Use for 'new' section
-let DummyTravelData = TravelDataModel(itemUid: Common.makeUid(),
+let DummyTravelData = TravelDataModel(itemUid: DummyTravelUid,
                                       countries: BehaviorRelay<[String]>(value: [""]),
                                       cities: BehaviorRelay<[String]>(value: [""]),
                                       theme: BehaviorRelay<TravelTheme>(value: TravelTheme.Unexpected),

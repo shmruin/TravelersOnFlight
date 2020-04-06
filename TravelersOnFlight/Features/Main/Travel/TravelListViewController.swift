@@ -62,7 +62,7 @@ class TravelListViewController: UIViewController, StoryboardBased, ViewModelBase
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "travelCollectionViewCell", for: indexPath) as! TravelListCollectionViewCell
                 cell.layer.borderColor = UIColor.gray.cgColor
                 cell.layer.borderWidth = 1
-                cell.configure(with: item)
+                cell.configure(viewController: self!, with: item, onDelete: self!.deleteCell)
                 
                 if let bgImage = self!.setBackgroundImg(item.theme!.value) {
                     cell.travelBackgroundImage.image = bgImage
@@ -73,6 +73,10 @@ class TravelListViewController: UIViewController, StoryboardBased, ViewModelBase
                 return cell
             }
         })
+    }
+    
+    func deleteCell(_ targetModel: TravelDataModel) {
+        
     }
     
     func layoutSetting() {

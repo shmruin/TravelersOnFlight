@@ -41,7 +41,7 @@ class SchedulePageContentViewController: UIViewController, StoryboardBased, View
             .subscribe(onNext: { [unowned self] indexPath in
                 let specific = try! self.dataSource.model(at: indexPath) as! SpecificDataModel
                 if specific.itemUid != DummySpecificData.itemUid {
-                    // TODO : Something with touch cell event?
+                    // Nothing with specific schedule touch event
                 } else {
                     let realValueNums = self.specificsCollectionView.numberOfItems(inSection: 0)
                     var prevSpecific = specific

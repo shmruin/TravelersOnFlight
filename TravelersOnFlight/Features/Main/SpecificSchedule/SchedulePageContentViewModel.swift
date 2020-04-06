@@ -29,6 +29,11 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
     var dayItem: Observable<DayDataModel> {
         return self.services.scheduleService.getDaySchedule(dayScheduleUid: thisDayUid!)
             .map { item in
+                
+                // Set initial dummy date for creating schedule later (start with +1 hour)
+                DummySpecificData.stTime?.accept(Common.setDateAtHM(targetDate: item.date, hour: 6, minutes: 0))
+                DummySpecificData.fnTime?.accept(Common.setDateAtHM(targetDate: item.date, hour: 7, minutes: 0))
+                
                 return DayDataModel(itemUid: item.uid,
                                     day: BehaviorRelay<Int>(value: item.day),
                                     date: BehaviorRelay<Date>(value: item.date),

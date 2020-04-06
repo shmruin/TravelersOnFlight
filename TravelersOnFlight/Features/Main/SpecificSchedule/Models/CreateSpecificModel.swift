@@ -59,7 +59,11 @@ class SpecificDataModel {
     func makeAreaAndCity() -> Observable<String> {
         return Observable
             .combineLatest(areas!.asObservable(), cities!.asObservable(), resultSelector: { (a, b) in
-                return a + ", " + b
+                if a == "" && b == "" {
+                    return "@ Area, @ City"
+                } else {
+                    return a + ", " + b
+                }
             })
     }
     
@@ -92,14 +96,16 @@ extension SpecificDataModel: Equatable {
     }
 }
 
+let DummySpecificUid = Common.makeUid()
+
 // Use for 'new' section
-let DummySpecificData = SpecificDataModel(itemUid: Common.makeUid(),
+let DummySpecificData = SpecificDataModel(itemUid: DummySpecificUid,
                                           countries: BehaviorRelay<String>(value: ""),
                                           cities: BehaviorRelay<String>(value: ""),
                                           areas: BehaviorRelay<String>(value: ""),
                                           stTime: BehaviorRelay<Date>(value: Date()),
                                           fnTime: BehaviorRelay<Date>(value: Date()),
-                                          placeCategory: BehaviorRelay<PlaceCategoryRepository>(value: PlaceCategoryRepository.Airport),
+                                          placeCategory: BehaviorRelay<PlaceCategoryRepository>(value: PlaceCategoryRepository.Select),
                                           placeName: BehaviorRelay<String>(value: ""),
-                                          activityCategory: BehaviorRelay<ActivityCategoryRepository>(value: ActivityCategoryRepository.Eating),
+                                          activityCategory: BehaviorRelay<ActivityCategoryRepository>(value: ActivityCategoryRepository.Select),
                                           activityName: BehaviorRelay<String>(value: ""))

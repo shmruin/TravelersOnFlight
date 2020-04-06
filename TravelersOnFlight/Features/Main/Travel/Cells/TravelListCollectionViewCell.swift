@@ -18,14 +18,22 @@ class TravelListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var travelStDate: UILabel!
     @IBOutlet weak var travelFnDate: UILabel!
     @IBOutlet weak var travelBackgroundImage: UIImageView!
+    @IBOutlet weak var travelDeleteBtn: UIButton!
     
-    func configure(with item: TravelDataModel) {
-        // TODO : Long press to change info - with action parameter
- 
+    func configure(viewController: UIViewController, with item: TravelDataModel, onDelete: @escaping (TravelDataModel) -> ()) {
         self.travelTitle.text = item.makeTravelTitle()
         self.travelSummary.text = item.makeTravelSummary()
         self.travelStDate.text = item.makeTravelDates(.First)
         self.travelFnDate.text = item.makeTravelDates(.End)
+        
+        travelDeleteBtn
+            .rx
+            .tap
+            .subscribe(onNext: {
+                onDelete(item)
+            })
+            .disposed(by: rx.disposeBag)
+            
     }
     
     override func prepareForReuse() {

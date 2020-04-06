@@ -27,11 +27,11 @@ class NewSpecificListCollectionViewCell: UICollectionViewCell {
         let newCitiy = recentModel.cities!.value
         let newArea = recentModel.areas!.value
         let newStTime = recentModel.fnTime!.value
+        let newPlaceCategory = recentModel.placeCategory!.value
+        let newActivityCategory = recentModel.activityCategory!.value
+        
         let newFnTime = Common.increaseOneDateFeature(targetDate: recentModel.fnTime!.value, feature: .hour, value: 1)
         
-        print(newCountry)
-        print(newCitiy)
-        print(newArea)
         
         let newSpecificComponents = SpecificDataModel(itemUid: Common.makeUid(),
                                                       countries: BehaviorRelay<String>(value: newCountry),
@@ -39,9 +39,9 @@ class NewSpecificListCollectionViewCell: UICollectionViewCell {
                                                       areas: BehaviorRelay<String>(value: newArea),
                                                       stTime: BehaviorRelay<Date>(value: newStTime),
                                                       fnTime: BehaviorRelay<Date>(value: newFnTime),
-                                                      placeCategory: BehaviorRelay<PlaceCategoryRepository>(value: PlaceCategoryRepository.Select),
+                                                      placeCategory: BehaviorRelay<PlaceCategoryRepository>(value: newPlaceCategory),
                                                       placeName: BehaviorRelay<String>(value: ""),
-                                                      activityCategory: BehaviorRelay<ActivityCategoryRepository>(value: ActivityCategoryRepository.Select),
+                                                      activityCategory: BehaviorRelay<ActivityCategoryRepository>(value: newActivityCategory),
                                                       activityName: BehaviorRelay<String>(value: ""))
         onComplete(newSpecificComponents)
     }
