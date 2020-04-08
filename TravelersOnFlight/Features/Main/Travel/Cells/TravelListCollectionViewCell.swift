@@ -10,6 +10,7 @@ import UIKit
 import Action
 import RxSwift
 import NSObject_Rx
+import RLBAlertsPickers
 
 class TravelListCollectionViewCell: UICollectionViewCell {
     
@@ -30,7 +31,13 @@ class TravelListCollectionViewCell: UICollectionViewCell {
             .rx
             .tap
             .subscribe(onNext: {
-                onDelete(item)
+                let alert = UIAlertController(title: "Wanna delete this travel?", message: "It cannot be undoable!", preferredStyle: .alert)
+                alert.addAction(title: "OK", style: .default) { (action) in
+                    onDelete(item)
+                }
+                alert.addAction(title: "Cancel", style: .cancel)
+                
+                viewController.present(alert, animated: true, completion: nil)
             })
             .disposed(by: rx.disposeBag)
             

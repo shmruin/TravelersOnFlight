@@ -24,7 +24,7 @@ class DayTimelineViewModel: ServicesViewModel, Stepper, HasDisposeBag {
     var thisTravelUid: String? = nil
     
     var collectionItems: Observable<[DaySection]> {
-        return self.services.scheduleService.daySchedules(ofParentScheduleUid: thisTravelUid!)
+        return self.services.scheduleService.daySchedules(ofParentTravelUid: thisTravelUid!)
             .map { results in
                 let dayItems = results.sorted(byKeyPath: "day", ascending: true)
                 let dayData = dayItems.toArray().map { (item: DayScheduleItem) in

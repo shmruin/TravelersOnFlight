@@ -11,12 +11,13 @@ import RxSwift
 import RealmSwift
 
 enum RealmDraft: String {
-    case Travel = "travel.realm"
-    case DaySchedule = "daySchedule.realm"
-    case SpecificSchedule = "specificSchedule.realm"
-    case PlaceSchedule = "placeSchedule.realm"
-    case ActivitySchedule = "activitySchedule.realm"
-    case Relation = "relation.realm"
+    case TravelersOnFlight = "travelersOnFlight.realm"
+//    case Travel = "travel.realm"
+//    case DaySchedule = "daySchedule.realm"
+//    case SpecificSchedule = "specificSchedule.realm"
+//    case PlaceSchedule = "placeSchedule.realm"
+//    case ActivitySchedule = "activitySchedule.realm"
+//    case Relation = "relation.realm"
 }
 
 enum CommonRealmError: Error {
@@ -34,13 +35,14 @@ enum TravelServiceError: Error {
 
 enum ScheduleServiceError: Error {
     case itemIsNil
+    case itemIsEmpty
     case itemNotExistOfId(String)
     case itemNotExistOfCondition
     case gettingFailed
+    case gettingLastDayFailed
     case creationFailed(ScheduleItem.Type)
     case updateFailed(ScheduleItem)
     case deletionFailed(ScheduleItem)
-    case moveFailed(ScheduleItem)
 }
 
 enum RelationServiceError: Error {
@@ -96,9 +98,6 @@ protocol TravelServiceType: RealmServiceType {
     @discardableResult
     func updateTravel(travel: TravelItem, stDate: Date, fnDate: Date, eTheme: TravelTheme) -> Observable<TravelItem>
     
-    @discardableResult
-    func moveTravel(travel: TravelItem, parent: TravelItem, nextToItem: TravelItem) -> Observable<TravelItem>
-    
     func getTravel(travelUid: String) -> Observable<TravelItem>
     
     func travels() -> Observable<Results<TravelItem>>
@@ -118,10 +117,7 @@ protocol ScheduleServiceType: RealmServiceType {
     func updateSpecificSchedule(specificSchedule: SpecificScheduleItem, country: String, city: String, area: String, stTime: Date, fnTime: Date, placeCategory: PlaceCategoryRepository, placeName: String, activityCategory: ActivityCategoryRepository, activityName: String) -> Observable<SpecificScheduleItem>
 
     @discardableResult
-    func deleteSchedule<T>(schedule: ScheduleItem, scheduleType: T.Type) -> Observable<Void>
-
-//    @discardableResult
-//    func moveSchedule<T>(schedule: ScheduleItem, parent: ScheduleItem, nextToItem: ScheduleItem, scheduleType: T.Type) -> Observable<ScheduleItem>
+    func deleteSchedule(schedule: ScheduleItem) -> Observable<Void>
     
     func getDaySchedule(dayScheduleUid: String) -> Observable<DayScheduleItem>
     
@@ -129,28 +125,28 @@ protocol ScheduleServiceType: RealmServiceType {
     
     func getSpecificSchedule(specificScheduleUid: String) -> Observable<SpecificScheduleItem>
 
-    func daySchedules(ofParentScheduleUid: String) -> Observable<Results<DayScheduleItem>>
+    func daySchedules(ofParentTravelUid: String) -> Observable<Results<DayScheduleItem>>
 
     func specificSchedules(ofParentScheduleUid: String) -> Observable<Results<SpecificScheduleItem>>
     
     func getLastDay(ofParentUid: String) -> Observable<DayScheduleItem?>
 }
 
-protocol ItemRelationServiceType: RealmServiceType {
-    @discardableResult
-    func createRelation<T: Relationable>(element: T) -> Observable<T>
-    
-    @discardableResult
-    func connectRelation<T: Relationable>(element: T, parent: T, nextToSibling: T) -> Observable<T>
-    
-    @discardableResult
-    func disconnectRelation<T: Relationable>(element: T) -> Observable<Void>
-    
-    @discardableResult
-    func connectToLast<T: Relationable>(element: T) -> Observable<T>
-    
-    func getLastUid(parentUid: String) -> String?
-    
-    @discardableResult
-    func checkIfExist(parentUid: String) -> Bool
-}
+//protocol ItemRelationServiceType: RealmServiceType {
+//    @discardableResult
+//    func createRelation<T: Relationable>(element: T) -> Observable<T>
+//
+//    @discardableResult
+//    func connectRelation<T: Relationable>(element: T, parent: T, nextToSibling: T) -> Observable<T>
+//
+//    @discardableResult
+//    func disconnectRelation<T: Relationable>(element: T) -> Observable<Void>
+//
+//    @discardableResult
+//    func connectToLast<T: Relationable>(element: T) -> Observable<T>
+//
+//    func getLastUid(parentUid: String) -> String?
+//
+//    @discardableResult
+//    func checkIfExist(parentUid: String) -> Bool
+//}

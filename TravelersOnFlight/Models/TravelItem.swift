@@ -23,6 +23,7 @@ class TravelItem: Object, Relationable {
     @objc dynamic var stDate: Date = Date()
     @objc dynamic var fnDate: Date = Date()
     @objc dynamic var theme: String = TravelTheme.getDefault().rawValue
+    let dayItems = List<DayScheduleItem>()
     
     override static func primaryKey() -> String? {
         return "uid"

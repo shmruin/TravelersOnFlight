@@ -69,4 +69,15 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
             })
             .disposed(by: self.disposeBag)
     }
+    
+    public func deleteItemOfTravel(model: TravelDataModel) {
+        self.services.travelService.getTravel(travelUid: model.itemUid)
+            .flatMapLatest { travelItem in
+                return self.services.travelService.deleteTravel(travel: travelItem)
+            }
+            .subscribe(onNext: {
+                print("Travel is deleted")
+            })
+            .disposed(by: self.disposeBag)
+    }
 }

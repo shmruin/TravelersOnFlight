@@ -38,6 +38,7 @@
 		A822AC6F230F0A8E00F8E1A0 /* TravelersOnFlightUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822AC6E230F0A8E00F8E1A0 /* TravelersOnFlightUITests.swift */; };
 		A828B98C231EB68400411483 /* ItemRelationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A828B98B231EB68400411483 /* ItemRelationService.swift */; };
 		A82E9CBF2328179100027D47 /* NewTravelListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82E9CBE2328179100027D47 /* NewTravelListCollectionViewCell.swift */; };
+		A8312291243E20ED00A2AEB1 /* Realm+CascadeDeleting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8312290243E20ED00A2AEB1 /* Realm+CascadeDeleting.swift */; };
 		A83BD7B5236B30A9006830D2 /* CreateSpecificModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83BD7B4236B30A9006830D2 /* CreateSpecificModel.swift */; };
 		A83BD7B7236B4F96006830D2 /* CreateDayDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83BD7B6236B4F96006830D2 /* CreateDayDataModel.swift */; };
 		A85BB4F2231192D50060C7EF /* TravelsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85BB4F1231192D50060C7EF /* TravelsService.swift */; };
@@ -112,6 +113,7 @@
 		A822AC70230F0A8E00F8E1A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A828B98B231EB68400411483 /* ItemRelationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRelationService.swift; sourceTree = "<group>"; };
 		A82E9CBE2328179100027D47 /* NewTravelListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTravelListCollectionViewCell.swift; sourceTree = "<group>"; };
+		A8312290243E20ED00A2AEB1 /* Realm+CascadeDeleting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Realm+CascadeDeleting.swift"; sourceTree = "<group>"; };
 		A83BD7B4236B30A9006830D2 /* CreateSpecificModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSpecificModel.swift; sourceTree = "<group>"; };
 		A83BD7B6236B4F96006830D2 /* CreateDayDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDayDataModel.swift; sourceTree = "<group>"; };
 		A85BB4F1231192D50060C7EF /* TravelsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelsService.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 			children = (
 				A811BFF823EEB4DD00850BF7 /* Common.swift */,
 				A8172EBC2428B1C400507FCD /* Enums.swift */,
+				A8312290243E20ED00A2AEB1 /* Realm+CascadeDeleting.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -640,6 +643,7 @@
 				A83BD7B7236B4F96006830D2 /* CreateDayDataModel.swift in Sources */,
 				A8FE39C3232B877600AF02CD /* CreateTravelModel.swift in Sources */,
 				A81593A623E566BD00B0C8ED /* DayTimelineViewController.swift in Sources */,
+				A8312291243E20ED00A2AEB1 /* Realm+CascadeDeleting.swift in Sources */,
 				A822AC51230F0A8D00F8E1A0 /* ViewController.swift in Sources */,
 				A811BFF923EEB4DD00850BF7 /* Common.swift in Sources */,
 				A8030C8F23126B6F004ECE65 /* AppFlow.swift in Sources */,

@@ -38,6 +38,7 @@ class DayScheduleItem: ScheduleItem {
     @objc dynamic var level: Int = ScheduleLevel.Day.rawValue
     @objc dynamic var day: Int = 1
     @objc dynamic var date: Date = Date()
+    let specificItems = List<SpecificScheduleItem>()
 }
 
 class SpecificScheduleItem: ScheduleItem {
