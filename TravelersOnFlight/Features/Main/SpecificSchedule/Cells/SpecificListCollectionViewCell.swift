@@ -38,7 +38,8 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
     }
     
-    func configure(viewController: UIViewController, with item: SpecificDataModel, superViewModel: SchedulePageContentViewModel, onComplete: @escaping (String, SpecificDataModel) -> ()) {
+    func configure(viewController: UIViewController, with item: SpecificDataModel, superViewModel: SchedulePageContentViewModel,
+                   onComplete: @escaping (String, SpecificDataModel) -> (), onDelete: @escaping (SpecificDataModel) -> ()) {
         
         item.makeStTime()
             .bind(to: specificStTime.rx.text)
@@ -147,7 +148,7 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
                 print(tCity)
                 print(tArea)
                 
-                // TODO : Later, if location select, then country also be changed
+                // TODO : Upgrade feature - selection this would be done with world map screen & select
                 
                 item.cities?.accept(tCity)
                 item.areas?.accept(tArea)
@@ -231,6 +232,22 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
             onComplete(item.itemUid, item)
         })
         .disposed(by: rx.disposeBag)
+        
+        
+        self
+            .rx
+            .longPressGesture()
+            .when(.began)
+            .subscribe(onNext: { _ in
+                let alert = UIAlertController(title: "Wanna delete this specific schedule?", message: "It cannot be undoable!", preferredStyle: .alert)
+                alert.addAction(title: "OK", style: .default) { (action) in
+                    onDelete(item)
+                }
+                alert.addAction(title: "Cancel", style: .cancel)
+                
+                viewController.present(alert, animated: true, completion: nil)
+            })
+            .disposed(by: rx.disposeBag)
         
     }
     

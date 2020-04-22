@@ -68,7 +68,9 @@ class SchedulePageContentViewController: UIViewController, StoryboardBased, View
                 return cell
             } else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "specificCollectionViewCell", for: indexPath) as! SpecificListCollectionViewCell
-                cell.configure(viewController: self!, with: item, superViewModel: self!.viewModel, onComplete: self!.viewModel.updateItemOfSpecificSchedule(specificTargetId:sourceModel:))
+                cell.configure(viewController: self!, with: item, superViewModel: self!.viewModel,
+                               onComplete: self!.viewModel.updateItemOfSpecificSchedule(specificTargetId:sourceModel:),
+                               onDelete: self!.viewModel.deleteItemOfSpecificSchedule(model:))
                 cell.layer.borderColor = UIColor.gray.cgColor
                 cell.layer.borderWidth = 1
                 return cell
@@ -94,7 +96,8 @@ class SchedulePageContentViewController: UIViewController, StoryboardBased, View
         
         self.viewModel.dayItem
             .map { item -> String in
-                return Common.convertDateFormaterToYYMMDD(item.date.value)
+                return Common.convertDateFormaterToYYMMDD(item.date.value) + " (" +
+                    WeekDayEng[Calendar.current.component(.weekday, from: item.date.value)] + ")"
             }
             .bind(to: self.dateAndDay.rx.text)
             .disposed(by: self.rx.disposeBag)

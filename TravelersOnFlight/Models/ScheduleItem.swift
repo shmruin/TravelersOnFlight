@@ -11,12 +11,8 @@ import RealmSwift
 import RxDataSources
 
 enum ScheduleLevel: Int {
-    case Travel = 0
-    case Day
-    case Location
+    case Day = 0
     case Specific
-    case Place
-    case Activity
 }
 
 class ScheduleItem: Object, Relationable {
@@ -36,7 +32,6 @@ extension ScheduleItem: IdentifiableType {
 
 class DayScheduleItem: ScheduleItem {
     @objc dynamic var level: Int = ScheduleLevel.Day.rawValue
-    @objc dynamic var day: Int = 1
     @objc dynamic var date: Date = Date()
     let specificItems = List<SpecificScheduleItem>()
 }

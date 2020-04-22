@@ -14,6 +14,8 @@ import RxDataSources
 import RxCocoa
 import RxRealm
 import TimelineTableViewCell
+import NSObject_Rx
+
 
 class DayTimelineViewController: UIViewController, StoryboardBased, ViewModelBased  {
     
@@ -22,24 +24,8 @@ class DayTimelineViewController: UIViewController, StoryboardBased, ViewModelBas
     var viewModel: DayTimelineViewModel!
     var dataSource: RxTableViewSectionedAnimatedDataSource<DaySection>!
     
-    // TimelinePoint, Timeline back color, title, description, lineInfo(total hours), thumbnails(activity icons), illustration(Remove Icon)
-    let data:[Int: [(TimelinePoint, UIColor, String, String, String?, [String]?, String?)]] = [0:[
-            (TimelinePoint(), UIColor.black, "Day 1", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Remove"),
-            (TimelinePoint(), UIColor.black, "Day 2", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Remove"),
-            (TimelinePoint(), UIColor.black, "Day 3", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "150 mins", ["Apple"], "Remove"),
-            (TimelinePoint(), UIColor.clear, "Day 4", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Remove")
-        ], 1:[
-            (TimelinePoint(), UIColor.clear, "ADD A NEW DAY", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Remove")
-        ]]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-//         self.navigationItem.rightBarButtonItem = self.editButtonItem()
 
         let bundle = Bundle(for: TimelineTableViewCell.self)
         let nibUrl = bundle.url(forResource: "TimelineTableViewCell", withExtension: "bundle")
@@ -64,7 +50,38 @@ class DayTimelineViewController: UIViewController, StoryboardBased, ViewModelBas
                 if dayItem.itemUid != dummyDayData.itemUid {
                     self.viewModel.selectToSpecificSchedule(dayData: dayItem)
                 } else {
-                    self.viewModel.createItemOfDayScehdule()
+                    /**
+                     * Add or Insert day to day timeline - insert should be diversed with add in case that days are not serialized
+                     */
+                    Common.alertOptionPicker(viewController: self, title: "Appending Day Type?", message: "", options: [AddDayOption.Insert, AddDayOption.New])
+                        .filter { result in
+                            if let res = result.1 {
+                                if res == AddDayOption.New {
+                                    self.viewModel.createItemOfDayScehdule()
+                                    print("Day Created")
+                                    return false
+                                } else {
+                                    return true
+                                }
+                            } else {
+                                return false
+                            }
+                        }
+                        .flatMapLatest { _ in
+                            return Common.alertDateSelect(viewController: self, dateOrder: .First)
+                        }
+                        .filter { result in
+                            if let res = result.1 {
+                                self.viewModel.insertItemOfDaySchedule(res, onFailure: self.failureAlert)
+                                return true
+                            } else {
+                                return false
+                            }
+                        }
+                    .subscribe(onNext: { _ in
+                        print("Day Created")
+                    })
+                    .disposed(by: self.rx.disposeBag)
                 }
             })
             .disposed(by: self.rx.disposeBag)
@@ -74,32 +91,30 @@ class DayTimelineViewController: UIViewController, StoryboardBased, ViewModelBas
         dataSource = RxTableViewSectionedAnimatedDataSource<DaySection>(configureCell: { [weak self] dataSource, tableView, indexPath, item -> UITableViewCell in
             if item.itemUid == dummyDayData.itemUid {
                  let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
-
-                 let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = item.getTupleSectionForm().value
                 
                  cell.timelinePoint = TimelinePoint(color: UIColor.black, filled: false)
                  cell.timeline.frontColor = UIColor.gray
                  cell.timeline.backColor = UIColor.clear
                  cell.titleLabel.text = "ADD A NEW DAY"
                  cell.descriptionLabel.text = ""
-                 cell.lineInfoLabel.text = lineInfo
+                 cell.lineInfoLabel.text = nil
                  cell.bubbleColor = UIColor.green
 
-                 if let thumbnails = thumbnails {
-                     cell.viewsInStackView = thumbnails.map { thumbnail in
-                         return UIImageView(image: UIImage(named: thumbnail))
-                     }
-                 }
-                 else {
+//                 if let thumbnails = thumbnails {
+//                     cell.viewsInStackView = thumbnails.map { thumbnail in
+//                         return UIImageView(image: UIImage(named: thumbnail))
+//                     }
+//                 }
+//                 else {
                      cell.viewsInStackView = []
-                 }
+//                 }
 
-                 if let illustration = illustration {
-                     cell.illustrationImageView.image = UIImage(named: illustration)
-                 }
-                 else {
+//                 if let illustration = illustration {
+//                     cell.illustrationImageView.image = UIImage(named: illustration)
+//                 }
+//                 else {
                      cell.illustrationImageView.image = nil
-                 }
+//                 }
                 
                  cell.selectionStyle = UITableViewCell.SelectionStyle.none
 
@@ -107,33 +122,66 @@ class DayTimelineViewController: UIViewController, StoryboardBased, ViewModelBas
             } else {
                  let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
 
-                 var (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = item.getTupleSectionForm().value
-                 var timelineFrontColor = UIColor.gray
+                 let timelineFrontColor = UIColor.gray
                 
-                 cell.timelinePoint = timelinePoint
+                 cell.timelinePoint = TimelinePoint()
                  cell.timeline.frontColor = timelineFrontColor
                  cell.timeline.backColor = UIColor.gray
-                 cell.titleLabel.text = title
-                 cell.descriptionLabel.text = description
-                 cell.lineInfoLabel.text = lineInfo
-
-                 if let thumbnails = thumbnails {
-                     cell.viewsInStackView = thumbnails.map { thumbnail in
-                         return UIImageView(image: UIImage(named: thumbnail))
+                 cell.descriptionLabel.text = item.description.value
+                 cell.lineInfoLabel.text = Common.convertDateFormaterToYYMMDD(item.date.value)
+                
+                /**
+                 * Day observer as delete makes day label changed
+                 */
+                 item.day
+                    .asObservable()
+                    .map {
+                        print("binding!! = " + String($0))
+                        return  "Day " + String($0)
                      }
-                 }
-                 else {
-                     cell.viewsInStackView = []
-                 }
+                    .bind(to: cell.titleLabel.rx.text)
+                    .disposed(by: item.disposeBag)
 
-                 if let illustration = illustration {
-                     cell.illustrationImageView.image = UIImage(named: illustration)
-                 }
-                 else {
+//                 if let thumbnails = thumbnails {
+//                     cell.viewsInStackView = thumbnails.map { thumbnail in
+//                         return UIImageView(image: UIImage(named: thumbnail))
+//                     }
+//                 }
+//                 else {
+                     cell.viewsInStackView = []
+//                 }
+
+//                 if let illustration = illustration {
+//                     cell.illustrationImageView.image = UIImage(named: illustration)
+//                 }
+//                 else {
                      cell.illustrationImageView.image = nil
-                 }
+//                 }
                 
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
+                
+                /**
+                * Cell long press to delete - capture datasource with indexPath
+                */
+                cell
+                .rx
+                .longPressGesture()
+                .when(.began)
+                .subscribe(onNext: { [weak dataSource] _ in
+                    let alert = UIAlertController(title: "Wanna delete this day schedule?", message: "It cannot be undoable!", preferredStyle: .alert)
+                    alert.addAction(title: "OK", style: .default) { (action) in
+                        if let model = dataSource?.sectionModels[0].items[indexPath.row] {
+                            print(model.itemUid)
+                            self!.viewModel.deleteItemOfDaySchedule(model: model)
+                        } else {
+                            print("dataSource of cell longPressGuesture is nil")
+                        }
+                    }
+                    alert.addAction(title: "Cancel", style: .cancel)
+
+                    self!.present(alert, animated: true, completion: nil)
+                })
+                .disposed(by: cell.disposeBag)
 
                 return cell
             }
@@ -153,67 +201,11 @@ class DayTimelineViewController: UIViewController, StoryboardBased, ViewModelBas
         dayTimelineTableView.layer.masksToBounds = true
     }
     
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//         // #warning Incomplete implementation, return the number of sections
-//         return data.count
-//     }
-//
-//     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//         // #warning Incomplete implementation, return the number of rows
-//         guard let sectionData = data[section] else {
-//             return 0
-//         }
-//         return sectionData.count
-//     }
-//
-//     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//         return "Day " + String(describing: section + 1)
-//     }
-//
-//     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//         let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
-//
-//         // Configure the cell...
-//         guard let sectionData = data[indexPath.section] else {
-//             return cell
-//         }
-//
-//         let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = sectionData[indexPath.row]
-//         var timelineFrontColor = UIColor.clear
-//         if (indexPath.row > 0) {
-//             timelineFrontColor = sectionData[indexPath.row - 1].1
-//         }
-//         cell.timelinePoint = timelinePoint
-//         cell.timeline.frontColor = timelineFrontColor
-//         cell.timeline.backColor = timelineBackColor
-//         cell.titleLabel.text = title
-//         cell.descriptionLabel.text = description
-//         cell.lineInfoLabel.text = lineInfo
-//
-//         if let thumbnails = thumbnails {
-//             cell.viewsInStackView = thumbnails.map { thumbnail in
-//                 return UIImageView(image: UIImage(named: thumbnail))
-//             }
-//         }
-//         else {
-//             cell.viewsInStackView = []
-//         }
-//
-//         if let illustration = illustration {
-//             cell.illustrationImageView.image = UIImage(named: illustration)
-//         }
-//         else {
-//             cell.illustrationImageView.image = nil
-//         }
-//
-//         return cell
-//     }
-//
-//     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//         guard let sectionData = data[indexPath.section] else {
-//             return
-//         }
-//
-//         print(sectionData[indexPath.row])
-//     }
+    func failureAlert() {
+        let alert = UIAlertController(title: "Insert day failed", message: "That day already exists!", preferredStyle: .alert)
+        alert.addAction(title: "OK", style: .default)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+
 }

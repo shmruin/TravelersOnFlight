@@ -181,4 +181,26 @@ class Common {
             return Disposables.create()
         }
     }
+    
+    static func alertOptionPicker(viewController: UIViewController, title: String, message: String, options: [AddDayOption]) -> Observable<(UIAlertController, AddDayOption?)> {
+        return Observable.create { observer in
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+            
+            for option in options {
+                alert.addAction(image: nil, title: option.rawValue, style: .default, isEnabled: true) { (action) in
+                    observer.onNext((alert, option))
+                    observer.onCompleted()
+                }
+            }
+            
+            alert.addAction(title: "Cancel", style:.cancel) { (action) in
+                observer.onNext((alert, nil))
+                observer.onCompleted()
+            }
+            
+            viewController.present(alert, animated: true, completion: nil)
+            observer.onNext((alert, nil))
+            return Disposables.create()
+        }
+    }
 }

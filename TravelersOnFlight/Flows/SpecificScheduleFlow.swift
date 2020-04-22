@@ -47,7 +47,7 @@ class ScheduleFlow: Flow {
     
     private func navigateToFirstSpecificScheduleScreen(day: DayDataModel) -> FlowContributors {
         let viewController = SchedulePageContentViewController.instantiate(withViewModel: SchedulePageContentViewModel(thisDayUid: day.itemUid), andServices: self.services)
-        makeTitle(view: viewController, title: day.makeDayTitle())
+        makeTitle(view: viewController, title: "Day " + String(day.day.value))
         self.rootViewController.pushViewController(viewController, animated: false)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewController.viewModel))
     }

@@ -12,3 +12,10 @@ enum OrderOfTravelDate: String {
     case First = "first"
     case End = "end"
 }
+
+enum AddDayOption: String {
+    case Insert = "Insert a day"
+    case New = "Add a day to last"
+}
+
+let WeekDayEng = ["","Sun","Mon","Tue","Wed","Thu","Fri","Sat"]

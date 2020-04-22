@@ -25,6 +25,7 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
     var services: Services!
     
     let thisDayUid: String?
+    var dayBehaviorDict: [String : BehaviorRelay<Int>] = [:]
     
     var dayItem: Observable<DayDataModel> {
         return self.services.scheduleService.getDaySchedule(dayScheduleUid: thisDayUid!)
@@ -35,7 +36,7 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
                 DummySpecificData.fnTime?.accept(Common.setDateAtHM(targetDate: item.date, hour: 7, minutes: 0))
                 
                 return DayDataModel(itemUid: item.uid,
-                                    day: BehaviorRelay<Int>(value: item.day),
+                                    day: self.getDayForModel(item),
                                     date: BehaviorRelay<Date>(value: item.date),
                                     description: BehaviorRelay<String>(value: ""))
             }
@@ -78,6 +79,32 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
         self.thisDayUid = thisDayUid
     }
     
+    private func getDayForModel(_ daySchedule: DayScheduleItem) -> BehaviorRelay<Int> {
+        
+        var newDayRelay: BehaviorRelay<Int>? = nil
+        
+        if let dayRelay = dayBehaviorDict[daySchedule.uid] {
+            print("already exist!")
+            newDayRelay = dayRelay
+        } else {
+            newDayRelay = BehaviorRelay<Int>(value: 0)
+            dayBehaviorDict[daySchedule.uid] = newDayRelay
+        }
+        
+        self.services.scheduleService.getNthOfDaySchedule(daySchedule: daySchedule)
+        .subscribe(onNext: { res in
+            if let res = res {
+                newDayRelay!.accept(res)
+                print(res)
+            } else {
+                fatalError("#ERROR - cannot find day of this day schedule")
+            }
+        })
+        .disposed(by: self.disposeBag)
+        
+        return newDayRelay!
+    }
+    
     public func createItemOfSpecificSchedule(model: SpecificDataModel) {
         self.services.scheduleService.getDaySchedule(dayScheduleUid: thisDayUid!)
             .take(1)
@@ -115,6 +142,17 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
             }
             .subscribe({ _ in
                 print("Specific schedule updated")
+            })
+            .disposed(by: self.disposeBag)
+    }
+    
+    public func deleteItemOfSpecificSchedule(model: SpecificDataModel) {
+        self.services.scheduleService.getSpecificSchedule(specificScheduleUid: model.itemUid)
+            .flatMapLatest { specificItem in
+                return self.services.scheduleService.deleteSchedule(schedule: specificItem)
+            }
+            .subscribe(onNext: {
+                print("Specific schedule is deleted")
             })
             .disposed(by: self.disposeBag)
     }

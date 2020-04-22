@@ -22,25 +22,53 @@ class DayTimelineViewModel: ServicesViewModel, Stepper, HasDisposeBag {
     var services: Services!
     
     var thisTravelUid: String? = nil
+    var dayBehaviorDict: [String : BehaviorRelay<Int>] = [:]
     
     var collectionItems: Observable<[DaySection]> {
         return self.services.scheduleService.daySchedules(ofParentTravelUid: thisTravelUid!)
             .map { results in
-                let dayItems = results.sorted(byKeyPath: "day", ascending: true)
-                let dayData = dayItems.toArray().map { (item: DayScheduleItem) in
+                let dayItems = results.sorted(byKeyPath: "date", ascending: true)
+                let dayData = dayItems.toArray().map { (item: DayScheduleItem) -> DayDataModel in
+                    
                     return DayDataModel(itemUid: item.uid,
-                                        day: BehaviorRelay<Int>(value: item.day),
+                                        day: self.getDayForModel(item),
                                         date: BehaviorRelay<Date>(value: item.date),
                                         description: BehaviorRelay<String>(value: ""))
                 }
                 
                 return [DaySection(model: "Days", items: dayData),
                         DaySection(model: "NewDay", items: [dummyDayData])]
-            }
+        }
     }
     
     init(thisTravelUid: String) {
         self.thisTravelUid = thisTravelUid
+    }
+    
+    private func getDayForModel(_ daySchedule: DayScheduleItem) -> BehaviorRelay<Int> {
+        
+        var newDayRelay: BehaviorRelay<Int>? = nil
+        
+        if let dayRelay = dayBehaviorDict[daySchedule.uid] {
+            print("already exist!")
+            newDayRelay = dayRelay
+        } else {
+            newDayRelay = BehaviorRelay<Int>(value: 0)
+        }
+        
+        self.services.scheduleService.getNthOfDaySchedule(daySchedule: daySchedule)
+        .subscribe(onNext: { res in
+            if let res = res {
+                newDayRelay!.accept(res)
+                print(res)
+            } else {
+                fatalError("#ERROR - cannot find day of this day schedule")
+            }
+        })
+        .disposed(by: self.disposeBag)
+        
+        dayBehaviorDict[daySchedule.uid] = newDayRelay
+        return newDayRelay!
     }
     
     func selectToSpecificSchedule(dayData: DayDataModel) {
@@ -56,17 +84,47 @@ class DayTimelineViewModel: ServicesViewModel, Stepper, HasDisposeBag {
                 if let existDay = item.1 {
                     print("create recent day")
                     return self.services.scheduleService.createDaySchedule(parent: item.0,
-                                                            day: existDay.day + 1,
                                                             date: Common.increaseOneDateFeature(targetDate: existDay.date, feature: .day, value: 1))
                 } else {
                     print("create new day")
                     return self.services.scheduleService.createDaySchedule(parent: item.0,
-                                                                           day: 1,
                                                                            date: item.0.stDate)
                 }
             }
             .subscribe({ _ in
                 print("Day schedule created")
+            })
+            .disposed(by: self.disposeBag)
+    }
+    
+    public func insertItemOfDaySchedule(_ date: Date, onFailure: @escaping ()->()) {
+        self.services.travelService.getTravel(travelUid: thisTravelUid!)
+        .flatMap { travelItem -> Observable<DayScheduleItem?> in
+                print("insert a day")
+                return self.services.scheduleService.insertDayScheduleToParent(parent: travelItem, date: date)
+        }
+        .subscribe(onNext: { res in
+            if res != nil {
+                print("Day schedule inserted")
+            } else {
+                onFailure()
+                print("Day insertion fail - it aleady exists!")
+            }
+        })
+        .disposed(by: self.disposeBag)
+    }
+    
+    public func deleteItemOfDaySchedule(model: DayDataModel) {
+        self.services.scheduleService.getDaySchedule(dayScheduleUid: model.itemUid)
+            .flatMapLatest { dayItem -> Observable<Void> in
+                print(dayItem.uid)
+                print("!!!")
+                self.dayBehaviorDict[dayItem.uid] = nil
+                return self.services.scheduleService.deleteSchedule(schedule: dayItem)
+            }
+            .subscribe({ _ in
+                print("Day schedule is deleted")
+                print(self.dayBehaviorDict)
             })
             .disposed(by: self.disposeBag)
     }

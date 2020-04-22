@@ -19,7 +19,6 @@ class TravelListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var travelStDate: UILabel!
     @IBOutlet weak var travelFnDate: UILabel!
     @IBOutlet weak var travelBackgroundImage: UIImageView!
-    @IBOutlet weak var travelDeleteBtn: UIButton!
     
     func configure(viewController: UIViewController, with item: TravelDataModel, onDelete: @escaping (TravelDataModel) -> ()) {
         self.travelTitle.text = item.makeTravelTitle()
@@ -27,19 +26,20 @@ class TravelListCollectionViewCell: UICollectionViewCell {
         self.travelStDate.text = item.makeTravelDates(.First)
         self.travelFnDate.text = item.makeTravelDates(.End)
         
-        travelDeleteBtn
-            .rx
-            .tap
-            .subscribe(onNext: {
-                let alert = UIAlertController(title: "Wanna delete this travel?", message: "It cannot be undoable!", preferredStyle: .alert)
-                alert.addAction(title: "OK", style: .default) { (action) in
-                    onDelete(item)
-                }
-                alert.addAction(title: "Cancel", style: .cancel)
-                
-                viewController.present(alert, animated: true, completion: nil)
-            })
-            .disposed(by: rx.disposeBag)
+        self
+        .rx
+        .longPressGesture()
+        .when(.began)
+        .subscribe(onNext: { _ in
+            let alert = UIAlertController(title: "Wanna delete this travel?", message: "It cannot be undoable!", preferredStyle: .alert)
+            alert.addAction(title: "OK", style: .default) { (action) in
+                onDelete(item)
+            }
+            alert.addAction(title: "Cancel", style: .cancel)
+            
+            viewController.present(alert, animated: true, completion: nil)
+        })
+        .disposed(by: rx.disposeBag)
             
     }
     
