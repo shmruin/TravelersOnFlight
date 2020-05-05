@@ -84,7 +84,6 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
         var newDayRelay: BehaviorRelay<Int>? = nil
         
         if let dayRelay = dayBehaviorDict[daySchedule.uid] {
-            print("already exist!")
             newDayRelay = dayRelay
         } else {
             newDayRelay = BehaviorRelay<Int>(value: 0)

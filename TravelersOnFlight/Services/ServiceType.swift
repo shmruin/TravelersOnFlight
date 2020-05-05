@@ -21,6 +21,7 @@ enum TravelServiceError: Error {
     case updateFailed(TravelItem)
     case deletionFailed(TravelItem)
     case moveFailed(TravelItem)
+    case getNumCountriesAndCitiesOfTravelFailed
 }
 
 enum ScheduleServiceError: Error {
@@ -82,17 +83,22 @@ extension RealmServiceType {
 
 protocol TravelServiceType: RealmServiceType {
     @discardableResult
-    func createTravel(uid: String, countries: [String], cities: [String], stDate: Date, fnDate: Date, eTheme: TravelTheme) -> Observable<TravelItem>
+    func createTravel(uid: String, countries: [String], cities: [String], stDate: Date?, fnDate: Date?, eTheme: TravelTheme) -> Observable<TravelItem>
     
     @discardableResult
-    func deleteTravel(travel: TravelItem) -> Observable<Void>
+    func deleteTravel(travel: TravelItem) -> Observable<String>
     
     @discardableResult
-    func updateTravel(travel: TravelItem, stDate: Date, fnDate: Date, eTheme: TravelTheme) -> Observable<TravelItem>
+    func updateTravel(travel: TravelItem, eTheme: TravelTheme) -> Observable<TravelItem>
     
     func getTravel(travelUid: String) -> Observable<TravelItem>
     
     func travels() -> Observable<Results<TravelItem>>
+    
+    func bindTravelToSummary(travelUid: String,
+            summaryFunc: @escaping ((_ nDay: Int, _ nCountry: Int, _ nCity: Int) -> String),
+            label: UILabel,
+            disposeBag: DisposeBag)
 }
 
 protocol ScheduleServiceType: RealmServiceType {

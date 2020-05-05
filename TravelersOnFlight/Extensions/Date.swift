@@ -56,4 +56,8 @@ extension Date {
     func isEqualDay(_ component: Calendar.Component, as date: Date) -> Bool {
         return self.compare(with: date, only: component) == 0
     }
+    
+    func distanceIntOf(targetDate: Date) -> Int {
+        return abs(Calendar.current.dateComponents([.day], from: self, to: targetDate).day!)
+    }
 }

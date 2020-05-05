@@ -1,7 +1,6 @@
 //
 //  Realm+CascadeDeleting.swift
 //  TravelersOnFlight
-//  Refers to krodak/Realm+CascadeDeleting.swift
 //
 //  Created by ruin09 on 09/04/2020.
 //  Copyright © 2020 ruin09. All rights reserved.
@@ -10,6 +9,10 @@
 import RealmSwift
 import Realm
 
+/**
+ * Refers to krodak/Realm+CascadeDeleting.swift
+ *  Recursive removal to atomic property level of realm
+ */
 protocol CascadeDeleting: class {
     func delete<S: Sequence>(_ objects: S, cascading: Bool) where S.Iterator.Element: Object
     func delete<Entity: Object>(_ entity: Entity, cascading: Bool)

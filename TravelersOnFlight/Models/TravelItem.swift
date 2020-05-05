@@ -20,8 +20,7 @@ class TravelItem: Object, Relationable {
     @objc dynamic var parentUid: String = RootParentUid
     let countries = List<String>()
     let cities = List<String>()
-    @objc dynamic var stDate: Date = Date()
-    @objc dynamic var fnDate: Date = Date()
+    @objc var createdDate: Date = Date()
     @objc dynamic var theme: String = TravelTheme.getDefault().rawValue
     let dayItems = List<DayScheduleItem>()
     

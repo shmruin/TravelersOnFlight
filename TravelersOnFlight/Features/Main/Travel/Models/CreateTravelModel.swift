@@ -10,17 +10,36 @@ import Foundation
 import RxSwift
 import RxCocoa
 import RxDataSources
+import NSObject_Rx
 
-class TravelDataModel {
+class TravelDataModel: HasDisposeBag {
     var itemUid: String
-    var countries: BehaviorRelay<[String]>?
-    var cities: BehaviorRelay<[String]>?
-    var theme: BehaviorRelay<TravelTheme>?
-    var stDate: BehaviorRelay<Date>?
-    var fnDate: BehaviorRelay<Date>?
+    var countries = BehaviorRelay<[String]>(value: [])
+    var cities = BehaviorRelay<[String]>(value: [])
+    var theme = BehaviorRelay<TravelTheme>(value: TravelTheme.getDefault())
+    var stDate = BehaviorRelay<Date?>(value: nil)
+    var fnDate = BehaviorRelay<Date?>(value: nil)
     
-    init(itemUid: String, countries: BehaviorRelay<[String]>, cities: BehaviorRelay<[String]>,
-         theme: BehaviorRelay<TravelTheme>, stDate: BehaviorRelay<Date>, fnDate: BehaviorRelay<Date>) {
+    var dataSource: Observable<TravelItem>?
+    
+    var travelTitleObservable: Observable<String> {
+        return Observable.combineLatest(stDate.asObservable(),
+                 cities.asObservable(),
+                 theme.asObservable())
+        .map { (date, cities, theme)  in
+            return "\(date?.formatMonth ?? "-"), \(cities.first ?? "-"), \(theme)"
+        }
+    }
+    
+    /**
+     * Init for new travel
+     */
+    init(itemUid: String,
+         countries: BehaviorRelay<[String]>,
+         cities: BehaviorRelay<[String]>,
+         theme: BehaviorRelay<TravelTheme>,
+         stDate: BehaviorRelay<Date?>,
+         fnDate: BehaviorRelay<Date?>) {
         self.itemUid = itemUid
         self.countries = countries
         self.cities = cities
@@ -29,72 +48,33 @@ class TravelDataModel {
         self.fnDate = fnDate
     }
     
-    func stDateToStringYYMMDD() -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy.MM.dd"
+    /**
+     * init for model binding
+     */
+    init(itemUid: String, dataSource: Observable<TravelItem>?) {
+        self.itemUid = itemUid
+        self.dataSource = dataSource
         
-        if let res = self.stDate?.value {
-            return dateFormatter.string(from: res)
-        } else {
-            print("#ERROR - TravelCreateData stDate is nil")
-            return nil
-        }
-    }
-    
-    func fnDateToStringYYMMDD() -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy.MM.dd"
+        _ = dataSource?.map { Array($0.countries) }.bind(to: countries)
+        _ = dataSource?.map { Array($0.cities) }.bind(to: cities)
+        _ = dataSource?.map { TravelTheme(rawValue: $0.theme) ?? TravelTheme.getDefault() }.bind(to: theme)
+        _ = dataSource?.map { $0.dayItems.first?.date ?? nil }.bind(to: stDate)
+        _ = dataSource?.map { $0.dayItems.last?.date ?? nil }.bind(to: fnDate)
         
-        if let res = self.fnDate?.value {
-            return dateFormatter.string(from: res)
-        } else {
-            print("#ERROR - TravelCreateData fnDate is nil")
-            return nil
-        }
+        dataSource?
+            .subscribe(onNext: { _ in
+                print("Travel Data Model of \(itemUid) on next called")
+            })
+            .disposed(by: self.disposeBag)
+        
     }
-    
-    func makeTravelTitle() -> String {
-        if let fc = cities?.value.first, let st = stDate?.value, let th = theme?.value {
-            return "\(st.formatMonth), \(fc), \(th)"
-        } else {
-            print("#ERROR - makeTravelTitle something is nil")
-            return "*Title Error*"
-        }
-    }
-    
-    func makeTravelSummary() -> String {
-        if let st = stDate?.value, let fn = fnDate?.value, let nCountries = countries?.value.count, let nCities = countries?.value.count {
-            let days = fn.days(sinceDate: st)!
-            
-            let suffixDays = days > 1 ? "days" : "day"
-            let suffixCountries = nCountries > 1 ? "countries" : "country"
-            let suffixCities = nCities > 1 ? "cities" : "city"
-            
-            return "\(days) \(suffixDays) on \(nCountries) \(suffixCountries), \(nCities) \(suffixCities)"
-        } else {
-            print("#ERROR - makeTravelSummary something is nil")
-            return "*Summary Error *"
-        }
-    }
-    
-    func makeTravelDates(_ stFn: OrderOfTravelDate) -> String {
-        if stFn == .End {
-            if let dt = fnDate?.value {
-                let stringDate = dt.formatString(with: "yy.MM.dd")
-                return "\(stringDate)"
-            } else {
-                print("#ERROR - makeTravelDates something is nil")
-                return "*Date Error*"
-            }
-        } else {
-            if let dt = stDate?.value {
-                let stringDate = dt.formatString(with: "yy.MM.dd")
-                return "\(stringDate)"
-            } else {
-                print("#ERROR - makeTravelDates something is nil")
-                return "*Date Error*"
-            }
-        }
+        
+    func makeTravelSummary(_ nDay: Int, _ nCountry: Int, _ nCity: Int) -> String {
+        let suffixDays = nDay > 1 ? "days" : "day"
+        let suffixCountries = nCountry > 1 ? "countries" : "country"
+        let suffixCities = nCity > 1 ? "cities" : "city"
+        
+        return "\(nDay) \(suffixDays) on \(nCountry) \(suffixCountries), \(nCity) \(suffixCities)"
     }
 }
 
@@ -113,9 +93,4 @@ extension TravelDataModel: Equatable {
 let DummyTravelUid = Common.makeUid()
 
 // Use for 'new' section
-let DummyTravelData = TravelDataModel(itemUid: DummyTravelUid,
-                                      countries: BehaviorRelay<[String]>(value: [""]),
-                                      cities: BehaviorRelay<[String]>(value: [""]),
-                                      theme: BehaviorRelay<TravelTheme>(value: TravelTheme.Unexpected),
-                                      stDate: BehaviorRelay<Date>(value: Date()),
-                                      fnDate: BehaviorRelay<Date>(value: Date()))
+let DummyTravelData = TravelDataModel(itemUid: DummyTravelUid, dataSource: nil)

@@ -15,14 +15,9 @@ protocol HasScheduleService {
     var scheduleService: ScheduleService { get }
 }
 
-protocol HasTravelScheduleService {
-    var travelService: TravelService { get }
-    var scheduleService: ScheduleService { get }
-}
-
 private let disposeBag = DisposeBag()
 
-class ScheduleService: ScheduleServiceType {
+struct ScheduleService: ScheduleServiceType {
     
     init() { }
     

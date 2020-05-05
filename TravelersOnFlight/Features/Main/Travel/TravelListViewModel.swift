@@ -11,6 +11,7 @@ import RxSwift
 import RxSwiftExt
 import RxDataSources
 import RxCocoa
+import RxRealm
 import NSObject_Rx
 
 typealias TravelSection = AnimatableSectionModel<String, TravelDataModel>
@@ -24,14 +25,11 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
     var collectionItems: Observable<[TravelSection]> {
         return self.services.travelService.travels()
             .map { results in
-                let travelItems = results.sorted(byKeyPath: "stDate", ascending: false)
-                let travelData = travelItems.toArray().map { (item: TravelItem) in
+                let travelItems = results.sorted(byKeyPath: "createdDate", ascending: false)
+                let travelData = travelItems.toArray().map { (item: TravelItem) -> TravelDataModel in
+                    
                     return TravelDataModel(itemUid: item.uid,
-                                           countries: BehaviorRelay<[String]>(value: item.countries.toArray()),
-                                           cities: BehaviorRelay<[String]>(value: item.cities.toArray()),
-                                           theme: BehaviorRelay<TravelTheme>(value: TravelTheme(rawValue: item.theme)!),
-                                           stDate: BehaviorRelay<Date>(value: item.stDate),
-                                           fnDate: BehaviorRelay<Date>(value: item.fnDate))
+                                           dataSource: self.services.travelService.getTravel(travelUid: item.uid))
                 }
                 
                 return [TravelSection(model: "Travels", items: travelData),
@@ -59,11 +57,11 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
     
     public func createItemOfTravel(model: TravelDataModel) {
         self.services.travelService.createTravel(uid: model.itemUid,
-                                                 countries: model.countries!.value,
-                                                 cities: model.cities!.value,
-                                                 stDate: model.stDate!.value,
-                                                 fnDate: model.fnDate!.value,
-                                                 eTheme: model.theme!.value)
+                                                 countries: model.countries.value,
+                                                 cities: model.cities.value,
+                                                 stDate: model.stDate.value,
+                                                 fnDate: model.fnDate.value,
+                                                 eTheme: model.theme.value)
             .subscribe(onNext: { _ in
                 print("Travel created")
             })
@@ -75,9 +73,19 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
             .flatMapLatest { travelItem in
                 return self.services.travelService.deleteTravel(travel: travelItem)
             }
-            .subscribe(onNext: {
+            .subscribe(onNext: { deletedUid in
                 print("Travel is deleted")
             })
             .disposed(by: self.disposeBag)
+    }
+    
+    public func getSummaryForm(model: TravelDataModel,
+                               summaryFunc: @escaping ((_ nDay: Int, _ nCountry: Int, _ nCity: Int) -> String),
+                               label: UILabel,
+                               disposeBag: DisposeBag) {
+        self.services.travelService.bindTravelToSummary(travelUid: model.itemUid,
+                                                        summaryFunc: summaryFunc,
+                                                        label: label,
+                                                        disposeBag: disposeBag)
     }
 }

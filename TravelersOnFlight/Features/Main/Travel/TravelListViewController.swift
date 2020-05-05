@@ -62,9 +62,11 @@ class TravelListViewController: UIViewController, StoryboardBased, ViewModelBase
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "travelCollectionViewCell", for: indexPath) as! TravelListCollectionViewCell
                 cell.layer.borderColor = UIColor.gray.cgColor
                 cell.layer.borderWidth = 1
-                cell.configure(viewController: self!, with: item, onDelete: self!.viewModel.deleteItemOfTravel(model:))
+                cell.configure(viewController: self!, with: item,
+                               summaryObservable: self!.viewModel.getSummaryForm(model:summaryFunc:label:disposeBag:),
+                               onDelete: self!.viewModel.deleteItemOfTravel(model:))
                 
-                if let bgImage = self!.setBackgroundImg(item.theme!.value) {
+                if let bgImage = self!.setBackgroundImg(item.theme.value) {
                     cell.travelBackgroundImage.image = bgImage
                 } else {
                     print("#ERROR - No background Image for this cell theme")

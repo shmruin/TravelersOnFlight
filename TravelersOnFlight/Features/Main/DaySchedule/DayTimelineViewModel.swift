@@ -16,7 +16,7 @@ import NSObject_Rx
 typealias DaySection = AnimatableSectionModel<String, DayDataModel>
 
 class DayTimelineViewModel: ServicesViewModel, Stepper, HasDisposeBag {
-    typealias Services = HasTravelScheduleService
+    typealias Services = HasTravelService
 
     let steps = PublishRelay<Step>()
     var services: Services!
@@ -50,7 +50,6 @@ class DayTimelineViewModel: ServicesViewModel, Stepper, HasDisposeBag {
         var newDayRelay: BehaviorRelay<Int>? = nil
         
         if let dayRelay = dayBehaviorDict[daySchedule.uid] {
-            print("already exist!")
             newDayRelay = dayRelay
         } else {
             newDayRelay = BehaviorRelay<Int>(value: 0)
@@ -88,7 +87,7 @@ class DayTimelineViewModel: ServicesViewModel, Stepper, HasDisposeBag {
                 } else {
                     print("create new day")
                     return self.services.scheduleService.createDaySchedule(parent: item.0,
-                                                                           date: item.0.stDate)
+                                                                           date: Date())
                 }
             }
             .subscribe({ _ in
