@@ -20,7 +20,9 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var specificStTime: UILabel!
     @IBOutlet weak var specificFnTime: UILabel!
-    @IBOutlet weak var specificAreaAndCity: UILabel!
+    @IBOutlet weak var specificArea: UILabel!
+    @IBOutlet weak var specificCity: UILabel!
+    @IBOutlet weak var specificCountry: UILabel!
     @IBOutlet weak var specificPlaceCategory: UILabel!
     @IBOutlet weak var specificPlaceName: UILabel!
     @IBOutlet weak var specificActivityCategory: UILabel!
@@ -49,8 +51,16 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
             .bind(to: specificFnTime.rx.text)
             .disposed(by: rx.disposeBag)
         
-        item.makeAreaAndCity()
-            .bind(to: specificAreaAndCity.rx.text)
+        item.makeArea()
+            .bind(to: specificArea.rx.text)
+            .disposed(by: rx.disposeBag)
+        
+        item.makeCity()
+            .bind(to: specificCity.rx.text)
+            .disposed(by: rx.disposeBag)
+        
+        item.makeCountry()
+            .bind(to: specificCountry.rx.text)
             .disposed(by: rx.disposeBag)
         
         item.makePlaceCategory()
@@ -73,9 +83,10 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
         var tFnDate = Date()
         var tArea = ""
         var tCity = ""
-        var tPlaceCategory = PlaceCategoryRepository.Error
+        var tCountry = ""
+        var tPlaceCategory = PlaceCategoryRepository.None
         var tPlaceName = ""
-        var tActivityCategory = ActivityCategoryRepository.Error
+        var tActivityCategory = ActivityCategoryRepository.None
         var tActivityName = ""
         
         // Add tap actions to modify inner info
@@ -116,8 +127,35 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
             })
             .disposed(by: rx.disposeBag)
         
-        // Tap specificAreaAndCity - Change Area and City
-        specificAreaAndCity
+        // Tap specificCountry - Change Country
+        specificCountry
+            .rx
+            .tapGesture()
+            .when(.recognized)
+            .flatMapLatest { _ in
+                return self.addTapSpecificCountrySelect(viewController: viewController)
+            }
+            .filter { result in
+                if let res = result {
+                    tCountry = res
+                    return true
+                } else {
+                    return false
+                }
+            }
+            .subscribe(onNext: { _ in
+                print("Country alert activate")
+                print(tCountry)
+                
+                item.countries?.accept(tCountry)
+                
+                onComplete(item.itemUid, item)
+            })
+            .disposed(by: rx.disposeBag)
+            
+        
+        // Tap specificCity - Change City
+        specificCity
             .rx
             .tapGesture()
             .when(.recognized)
@@ -132,6 +170,21 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
                     return false
                 }
             }
+            .subscribe(onNext: { _ in
+                print("City alert activate")
+                print(tCity)
+                
+                item.cities?.accept(tCity)
+                
+                onComplete(item.itemUid, item)
+            })
+            .disposed(by: rx.disposeBag)
+        
+        // Tap specificArea - Change Area
+        specificArea
+            .rx
+            .tapGesture()
+            .when(.recognized)
             .flatMapLatest { _ in
                 return self.addTapSpecificLocationSelect(viewController: viewController, title: "Area of this Schedule?", message: "", placeHolder: "Wrtie the area")
             }
@@ -144,13 +197,9 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
                 }
             }
             .subscribe(onNext: { _ in
-                print("City & area alert activate")
-                print(tCity)
+                print("Area alert activate")
                 print(tArea)
                 
-                // TODO : Upgrade feature - selection this would be done with world map screen & select
-                
-                item.cities?.accept(tCity)
                 item.areas?.accept(tArea)
                 
                 onComplete(item.itemUid, item)
@@ -162,7 +211,7 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
         Observable.merge(specificPlaceCategory.rx.tapGesture().when(.recognized),
                          specificPlaceName.rx.tapGesture().when(.recognized))
             .flatMapLatest { _ in
-                return self.addTapSpecificCategorySelect(viewController: viewController, title: "Select the place category", message: "", categories: PlaceCategoryRepository.allCases)
+                return self.addTapSpecificCategorySelect(viewController: viewController, title: "Select the place category", message: "", categories: PlaceCategoryRepository.userCases)
             }
             .filter { result in
                 if let res = result {
@@ -200,7 +249,7 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
         Observable.merge(specificActivityCategory.rx.tapGesture().when(.recognized),
                      specificActivityName.rx.tapGesture().when(.recognized))
         .flatMapLatest { _ in
-            return self.addTapSpecificCategorySelect(viewController: viewController, title: "Select the activity category", message: "", categories: ActivityCategoryRepository.allCases)
+            return self.addTapSpecificCategorySelect(viewController: viewController, title: "Select the activity category", message: "", categories: ActivityCategoryRepository.userCases)
         }
         .filter { result in
             if let res = result {
@@ -276,7 +325,26 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    // TODO : Location should be map based alert
+    private func addTapSpecificCountrySelect(viewController: UIViewController) -> Observable<String?> {
+        return Observable.create { observer in
+            let alert = UIAlertController(title: "Country of this Schedule?", message: "", preferredStyle: .actionSheet)
+
+            alert.addLocalePicker(type: .country, selection: { (localeInfo) in
+                observer.onNext(localeInfo?.country)
+                observer.onCompleted()
+            })
+
+            alert.addAction(title: "Cancel", style: .cancel) { (action) in
+                observer.onNext(nil)
+                observer.onCompleted()
+            }
+
+            viewController.present(alert, animated: true, completion: nil)
+            observer.onNext(nil)
+            return Disposables.create()
+        }
+    }
+    
     private func addTapSpecificLocationSelect(viewController: UIViewController, title: String, message: String, placeHolder: String) -> Observable<String?> {
         return Observable.create { observer in
             let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)

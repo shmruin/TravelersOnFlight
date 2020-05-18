@@ -56,19 +56,32 @@ class SpecificDataModel {
         return fnTime!.asObservable().map { dateFormatter.string(from: $0) }
     }
     
-    func makeAreaAndCity() -> Observable<String> {
-        return Observable
-            .combineLatest(areas!.asObservable(), cities!.asObservable(), resultSelector: { (a, b) in
-                if a == "" && b == "" {
-                    return "@ Area, @ City"
-                } else {
-                    return a + ", " + b
+    func makeArea() -> Observable<String> {
+        return areas!
+                .asObservable()
+                .map { res in
+                    return "🖼\(res)"
                 }
-            })
+    }
+    
+    func makeCity() -> Observable<String> {
+        return cities!
+                .asObservable()
+                .map { res in
+                    return "🏙\(res)"
+                }
+    }
+    
+    func makeCountry() -> Observable<String> {
+        return countries!
+                .asObservable()
+                .map { res in
+                    return Common.getFlag(countryName: res)
+                }
     }
     
     func makePlaceCategory() -> Observable<String> {
-        return placeCategory!.asObservable().map { "@ " + $0.rawValue }
+        return placeCategory!.asObservable().map { $0.rawValue }
     }
     
     func makePlaceName() -> Observable<String> {
@@ -76,7 +89,7 @@ class SpecificDataModel {
     }
     
     func makeActivityCategory() -> Observable<String> {
-        return activityCategory!.asObservable().map { "# " + $0.rawValue }
+        return activityCategory!.asObservable().map { $0.rawValue }
     }
     
     func makeActivityName() -> Observable<String> {

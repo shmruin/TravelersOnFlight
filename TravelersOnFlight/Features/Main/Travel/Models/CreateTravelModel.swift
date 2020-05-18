@@ -31,6 +31,30 @@ class TravelDataModel: HasDisposeBag {
         }
     }
     
+    var travelSummaryObservable: Observable<String> {
+        return Observable.combineLatest(stDate.asObservable(),
+                                        fnDate.asObservable(),
+                                        countries.asObservable(),
+                                        cities.asObservable())
+            .map { (stDate, fnDate, countries, cities) in
+                var nDay = 0
+                
+                if let sDate = stDate, let fDate = fnDate {
+                    nDay = sDate.distanceIntOf(targetDate: fDate) + 1
+                } else {
+                    print("#ERROR - stDate or fnDate is nil")
+                }
+                let nCountry = countries.count
+                let nCity = cities.count
+                
+                let suffixDays = nDay > 1 ? "days" : "day"
+                let suffixCountries = nCountry > 1 ? "countries" : "country"
+                let suffixCities = nCity > 1 ? "cities" : "city"
+                
+                return "\(nDay) \(suffixDays) on \(nCountry) \(suffixCountries), \(nCity) \(suffixCities)"
+            }
+    }
+    
     /**
      * Init for new travel
      */
@@ -55,11 +79,11 @@ class TravelDataModel: HasDisposeBag {
         self.itemUid = itemUid
         self.dataSource = dataSource
         
-        _ = dataSource?.map { Array($0.countries) }.bind(to: countries)
-        _ = dataSource?.map { Array($0.cities) }.bind(to: cities)
-        _ = dataSource?.map { TravelTheme(rawValue: $0.theme) ?? TravelTheme.getDefault() }.bind(to: theme)
-        _ = dataSource?.map { $0.dayItems.first?.date ?? nil }.bind(to: stDate)
-        _ = dataSource?.map { $0.dayItems.last?.date ?? nil }.bind(to: fnDate)
+        _ = dataSource?.catchErrorJustComplete().map { Array($0.countries) }.bind(to: countries)
+        _ = dataSource?.catchErrorJustComplete().map { Array($0.cities) }.bind(to: cities)
+        _ = dataSource?.catchErrorJustComplete().map { TravelTheme(rawValue: $0.theme) ?? TravelTheme.getDefault() }.bind(to: theme)
+        _ = dataSource?.catchErrorJustComplete().map { $0.dayItems.first?.date ?? nil }.bind(to: stDate)
+        _ = dataSource?.catchErrorJustComplete().map { $0.dayItems.last?.date ?? nil }.bind(to: fnDate)
         
         dataSource?
             .subscribe(onNext: { _ in
@@ -67,14 +91,6 @@ class TravelDataModel: HasDisposeBag {
             })
             .disposed(by: self.disposeBag)
         
-    }
-        
-    func makeTravelSummary(_ nDay: Int, _ nCountry: Int, _ nCity: Int) -> String {
-        let suffixDays = nDay > 1 ? "days" : "day"
-        let suffixCountries = nCountry > 1 ? "countries" : "country"
-        let suffixCities = nCity > 1 ? "cities" : "city"
-        
-        return "\(nDay) \(suffixDays) on \(nCountry) \(suffixCountries), \(nCity) \(suffixCities)"
     }
 }
 

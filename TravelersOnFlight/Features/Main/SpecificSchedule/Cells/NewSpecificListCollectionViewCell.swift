@@ -27,8 +27,8 @@ class NewSpecificListCollectionViewCell: UICollectionViewCell {
         let newCitiy = recentModel.cities!.value
         let newArea = recentModel.areas!.value
         let newStTime = recentModel.fnTime!.value
-        let newPlaceCategory = recentModel.placeCategory!.value
-        let newActivityCategory = recentModel.activityCategory!.value
+        let newPlaceCategory = PlaceCategoryRepository.Select
+        let newActivityCategory = ActivityCategoryRepository.Select
         
         let newFnTime = Common.increaseOneDateFeature(targetDate: recentModel.fnTime!.value, feature: .hour, value: 1)
         

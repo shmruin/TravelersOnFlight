@@ -91,14 +91,9 @@ protocol TravelServiceType: RealmServiceType {
     @discardableResult
     func updateTravel(travel: TravelItem, eTheme: TravelTheme) -> Observable<TravelItem>
     
-    func getTravel(travelUid: String) -> Observable<TravelItem>
+    func getTravelFromObject(travelUid: String) -> Observable<TravelItem>
     
     func travels() -> Observable<Results<TravelItem>>
-    
-    func bindTravelToSummary(travelUid: String,
-            summaryFunc: @escaping ((_ nDay: Int, _ nCountry: Int, _ nCity: Int) -> String),
-            label: UILabel,
-            disposeBag: DisposeBag)
 }
 
 protocol ScheduleServiceType: RealmServiceType {

@@ -35,6 +35,39 @@ class Common {
     static func makeUid() -> String {
         return UUID().uuidString
     }
+    
+    static func getFlag(countryName: String) -> String {
+        if let path = Bundle.main.path(forResource: "CountryCodes", ofType: "json") {
+            do {
+                  let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                  let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+                  if let jsonResult = jsonResult as? Array<Any> {
+                     for jsonObject in jsonResult {
+                         guard let countryObj = jsonObject as? Dictionary<String, Any> else { continue }
+                         guard let country = countryObj["name"] as? String,
+                             let code = countryObj["code"] as? String,
+                             let phoneCode = countryObj["dial_code"] as? String else {
+                                 continue
+                         }
+                        if country == countryName {
+                            let base : UInt32 = 127397
+                            var s = ""
+                            for v in code.unicodeScalars {
+                                s.unicodeScalars.append(UnicodeScalar(base + v.value)!)
+                            }
+                            return s
+                        }
+                     }
+                  }
+              } catch {
+                   print("#ERROR - JSON Parsing Failed!")
+              }
+        } else {
+            print("#ERROR - Country flag url not found!")
+        }
+        
+        return String("")
+    }
 
     static func alertMonthSelect(viewController: UIViewController) -> Observable<(UIAlertController, String?)> {
         return Observable.create { observer in

@@ -90,6 +90,7 @@ class DayTimelineViewModel: ServicesViewModel, Stepper, HasDisposeBag {
                                                                            date: Date())
                 }
             }
+            .take(1)
             .subscribe({ _ in
                 print("Day schedule created")
             })
@@ -102,6 +103,7 @@ class DayTimelineViewModel: ServicesViewModel, Stepper, HasDisposeBag {
                 print("insert a day")
                 return self.services.scheduleService.insertDayScheduleToParent(parent: travelItem, date: date)
         }
+        .take(1)
         .subscribe(onNext: { res in
             if res != nil {
                 print("Day schedule inserted")
@@ -117,10 +119,10 @@ class DayTimelineViewModel: ServicesViewModel, Stepper, HasDisposeBag {
         self.services.scheduleService.getDaySchedule(dayScheduleUid: model.itemUid)
             .flatMapLatest { dayItem -> Observable<Void> in
                 print(dayItem.uid)
-                print("!!!")
                 self.dayBehaviorDict[dayItem.uid] = nil
                 return self.services.scheduleService.deleteSchedule(schedule: dayItem)
             }
+            .take(1)
             .subscribe({ _ in
                 print("Day schedule is deleted")
                 print(self.dayBehaviorDict)

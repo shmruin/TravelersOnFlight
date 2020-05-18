@@ -20,18 +20,20 @@ class TravelListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var travelFnDate: UILabel!
     @IBOutlet weak var travelBackgroundImage: UIImageView!
     
-    func configure(viewController: UIViewController, with item: TravelDataModel,
-                   summaryObservable: @escaping (TravelDataModel,
-                                                @escaping ((_ nDay: Int, _ nCountry: Int, _ nCity: Int) -> String),
-                                                UILabel,
-                                                DisposeBag) -> (),
-                   onDelete: @escaping (TravelDataModel) -> ()) {
+    func configure(viewController: UIViewController, with item: TravelDataModel, onDelete: @escaping (TravelDataModel) -> ()) {
         
         /**
          * Title observable binded to text label
          */
         item.travelTitleObservable
             .bind(to: self.travelTitle.rx.text)
+            .disposed(by: rx.disposeBag)
+        
+        /**
+        * Ssummary observable binded to text label
+        */
+        item.travelSummaryObservable
+            .bind(to: self.travelSummary.rx.text)
             .disposed(by: rx.disposeBag)
         
         /**
@@ -63,11 +65,8 @@ class TravelListCollectionViewCell: UICollectionViewCell {
         .bind(to: self.travelFnDate.rx.text)
         .disposed(by: rx.disposeBag)
         
-        /**
-         * Ssummary observable binded to text label
-         */
-        summaryObservable(item, item.makeTravelSummary(_:_:_:), travelSummary, rx.disposeBag)
         
+        // Long press to delete travel
         self
         .rx
         .longPressGesture()

@@ -69,15 +69,32 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="St. James, London" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Q9-vY-3kl">
-                                                    <rect key="frame" x="225" y="19.5" width="120" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="120" id="PdI-Zo-iZs"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ntb-d3-dVN">
+                                                    <rect key="frame" x="200" y="19.5" width="147.5" height="18"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="St. James" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Q9-vY-3kl">
+                                                            <rect key="frame" x="0.0" y="0.0" width="59.5" height="18"/>
+                                                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="London" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbw-0C-64o">
+                                                            <rect key="frame" x="69.5" y="0.0" width="48" height="18"/>
+                                                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🇬🇧" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6zr-Gv-7Yx">
+                                                            <rect key="frame" x="127.5" y="0.0" width="20" height="18"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="20" id="GtV-MS-WfN"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@Cafe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fH3-De-rqg">
                                                     <rect key="frame" x="16" y="62.5" width="170" height="20.5"/>
                                                     <constraints>
@@ -116,8 +133,10 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="Ntb-d3-dVN" firstAttribute="leading" secondItem="DCt-Xt-LC6" secondAttribute="trailing" constant="132" id="04B-9S-Eoj"/>
                                                 <constraint firstItem="IxU-Rc-bgU" firstAttribute="leading" secondItem="q0T-k8-SXx" secondAttribute="leading" constant="16" id="82k-j7-dvt"/>
                                                 <constraint firstItem="IxU-Rc-bgU" firstAttribute="top" secondItem="fH3-De-rqg" secondAttribute="bottom" constant="17.5" id="9lR-hG-dtm"/>
+                                                <constraint firstItem="Ntb-d3-dVN" firstAttribute="centerY" secondItem="DCt-Xt-LC6" secondAttribute="centerY" id="C3t-fJ-qdh"/>
                                                 <constraint firstItem="GaH-qg-Dij" firstAttribute="centerY" secondItem="IxU-Rc-bgU" secondAttribute="centerY" id="DUD-qE-iHg"/>
                                                 <constraint firstItem="ubk-Tf-V7D" firstAttribute="leading" secondItem="q0T-k8-SXx" secondAttribute="leading" constant="225" id="IwT-Je-MwH"/>
                                                 <constraint firstItem="OWZ-H2-9kD" firstAttribute="top" secondItem="q0T-k8-SXx" secondAttribute="top" constant="17" id="Nvb-IB-1aW"/>
@@ -125,17 +144,18 @@
                                                 <constraint firstItem="ubk-Tf-V7D" firstAttribute="centerY" secondItem="fH3-De-rqg" secondAttribute="centerY" id="RJr-mH-zhg"/>
                                                 <constraint firstItem="OWZ-H2-9kD" firstAttribute="leading" secondItem="q0T-k8-SXx" secondAttribute="leading" constant="16" id="aHU-FW-vCf"/>
                                                 <constraint firstItem="fH3-De-rqg" firstAttribute="leading" secondItem="q0T-k8-SXx" secondAttribute="leading" constant="16" id="jTk-Ac-hh2"/>
-                                                <constraint firstItem="3Q9-vY-3kl" firstAttribute="leading" secondItem="q0T-k8-SXx" secondAttribute="leading" constant="225" id="nZ8-Tx-OYP"/>
                                                 <constraint firstItem="GaH-qg-Dij" firstAttribute="leading" secondItem="q0T-k8-SXx" secondAttribute="leading" constant="225" id="pSn-p0-2z9"/>
                                                 <constraint firstAttribute="bottom" secondItem="IxU-Rc-bgU" secondAttribute="bottom" constant="19" id="pjb-pp-QTF"/>
-                                                <constraint firstItem="3Q9-vY-3kl" firstAttribute="centerY" secondItem="OWZ-H2-9kD" secondAttribute="centerY" id="tP2-dU-2M7"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ntb-d3-dVN" secondAttribute="trailing" constant="10" id="s3v-lk-aPB"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="374" height="140"/>
                                         <connections>
                                             <outlet property="specificActivityCategory" destination="IxU-Rc-bgU" id="uPO-4p-8ZY"/>
                                             <outlet property="specificActivityName" destination="GaH-qg-Dij" id="B69-6y-CKw"/>
-                                            <outlet property="specificAreaAndCity" destination="3Q9-vY-3kl" id="ekL-XZ-ScC"/>
+                                            <outlet property="specificArea" destination="3Q9-vY-3kl" id="ekL-XZ-ScC"/>
+                                            <outlet property="specificCity" destination="hbw-0C-64o" id="ENk-jD-5wR"/>
+                                            <outlet property="specificCountry" destination="6zr-Gv-7Yx" id="5qb-hi-c40"/>
                                             <outlet property="specificFnTime" destination="nIh-Dr-gY3" id="Y06-Dh-JJb"/>
                                             <outlet property="specificPlaceCategory" destination="fH3-De-rqg" id="aWm-Y3-AYf"/>
                                             <outlet property="specificPlaceName" destination="ubk-Tf-V7D" id="9Vn-0z-23y"/>

@@ -55,8 +55,8 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
                         let specificItems = results.sorted(byKeyPath: "stTime", ascending: true)
                         let specificData = specificItems.toArray().map { (item: SpecificScheduleItem) -> SpecificDataModel in
                         
-                            let pc = PlaceCategoryRepository(rawValue: item.placeCategory) ?? PlaceCategoryRepository.Error
-                            let ac = ActivityCategoryRepository(rawValue: item.activityCategory) ?? ActivityCategoryRepository.Error
+                            let pc = PlaceCategoryRepository(rawValue: item.placeCategory) ?? PlaceCategoryRepository.None
+                            let ac = ActivityCategoryRepository(rawValue: item.activityCategory) ?? ActivityCategoryRepository.None
                             
                             return SpecificDataModel(itemUid: item.uid,
                                                      countries: BehaviorRelay<String>(value: item.country),
@@ -119,6 +119,7 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
                                                                     activityCategory: model.activityCategory!.value,
                                                                     activityName: model.activityName!.value)
             }
+            .take(1)
             .subscribe({ _ in
                 print("Specific schedule created")
             })

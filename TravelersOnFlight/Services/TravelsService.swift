@@ -23,23 +23,8 @@ var SharedSubScheduleService = ScheduleService()
 private let disposeBag = DisposeBag()
 
 struct TravelService: TravelServiceType {
-    init() {
-        // Dummy test data
-        do {
-            let realmTravel = withRealmDraft(RealmDraft.TravelersOnFlight)
-            if realmTravel.objects(TravelItem.self).count == 0 {
-                [(Date(), Date(), TravelTheme.getDefault())].forEach {
-                    let res = self.createTravel(uid: Common.makeUid(), countries: ["Japan"], cities: ["Tokyo"], stDate: $0.0, fnDate: $0.1, eTheme: $0.2)
-                    res.subscribe(onNext: { val in
-                        DummyTravelItem = val
-                        })
-                        .disposed(by: disposeBag)
-                }
-            }
-        } catch _ {
-            print("#ERROR - while init TravelService")
-        }
-    }
+    
+    init() { }
     
     @discardableResult
     func createTravel(uid: String, countries: [String], cities: [String], stDate: Date?, fnDate: Date?, eTheme: TravelTheme) -> Observable<TravelItem> {
@@ -91,6 +76,18 @@ struct TravelService: TravelServiceType {
     }
     
     func getTravel(travelUid: String) -> Observable<TravelItem> {
+        let result = withRealm(RealmDraft.TravelersOnFlight, "getting a travel") { (realm) -> Observable<TravelItem> in
+            let existData = realm.objects(TravelItem.self).filter("uid = %@", travelUid)
+            if let data = existData.first {
+                return .just(data)
+            } else {
+                return .error(TravelServiceError.itemNotExistOfId(travelUid))
+            }
+        }
+        return result ?? .error(TravelServiceError.gettingFailed)
+    }
+    
+    func getTravelFromObject(travelUid: String) -> Observable<TravelItem> {
         let realm = withRealmDraft(RealmDraft.TravelersOnFlight)
         if let travel = realm.objects(TravelItem.self).filter("uid = %@", travelUid).first {
             return Observable.from(object: travel)
@@ -107,22 +104,5 @@ struct TravelService: TravelServiceType {
             return Observable.collection(from: travels)
         }
         return result ?? .empty()
-    }
-    
-    func bindTravelToSummary(travelUid: String,
-                             summaryFunc: @escaping ((_ nDay: Int, _ nCountry: Int, _ nCity: Int) -> String),
-                             label: UILabel,
-                             disposeBag: DisposeBag) {
-        let realm = withRealmDraft(RealmDraft.TravelersOnFlight)
-        if let travel = realm.objects(TravelItem.self).filter("uid = %@", travelUid).first {
-            Observable.from(object: travel, emitInitialValue: true, properties: ["countries", "cities", "dayItems"])
-            .map { travel -> String in
-                return summaryFunc(travel.dayItems.count, travel.countries.count, travel.cities.count)
-            }
-            .bind(to: label.rx.text)
-            .disposed(by: disposeBag)
-        } else {
-            print("#ERROR - travel item is nil")
-        }
     }
 }

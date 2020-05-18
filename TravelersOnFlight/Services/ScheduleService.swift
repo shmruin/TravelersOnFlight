@@ -124,7 +124,7 @@ struct ScheduleService: ScheduleServiceType {
             * Check duplicatied day
             */
             for item in parent.dayItems {
-                if item.date.isEqualDay(.day, as: date) {
+                if item.date.compareTo(date: date, toGranularity: .day) == .orderedSame {
                     return .just(nil)
                 }
             }

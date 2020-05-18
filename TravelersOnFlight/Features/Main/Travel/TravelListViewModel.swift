@@ -29,7 +29,7 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
                 let travelData = travelItems.toArray().map { (item: TravelItem) -> TravelDataModel in
                     
                     return TravelDataModel(itemUid: item.uid,
-                                           dataSource: self.services.travelService.getTravel(travelUid: item.uid))
+                                           dataSource: self.services.travelService.getTravelFromObject(travelUid: item.uid))
                 }
                 
                 return [TravelSection(model: "Travels", items: travelData),
@@ -38,18 +38,6 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
     }
     
     init() { }
-    
-    public func getTravelItemFromTravelDate(travelData: TravelDataModel) -> BehaviorRelay<TravelItem?> {
-        let result = BehaviorRelay<TravelItem?>(value: nil)
-        self.services.travelService.getTravel(travelUid: travelData.itemUid)
-            .share()
-            .subscribe(onNext: { travel in
-                result.accept(travel)
-            })
-            .disposed(by: self.disposeBag)
-        
-        return result
-    }
     
     public func selectToSchedule(travelData: TravelDataModel) {
         self.steps.accept(TravelStep.travelIsSelected(withTravelData: travelData))
@@ -62,6 +50,7 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
                                                  stDate: model.stDate.value,
                                                  fnDate: model.fnDate.value,
                                                  eTheme: model.theme.value)
+            .take(1)
             .subscribe(onNext: { _ in
                 print("Travel created")
             })
@@ -70,6 +59,7 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
     
     public func deleteItemOfTravel(model: TravelDataModel) {
         self.services.travelService.getTravel(travelUid: model.itemUid)
+            .take(1)
             .flatMapLatest { travelItem in
                 return self.services.travelService.deleteTravel(travel: travelItem)
             }
@@ -77,15 +67,5 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
                 print("Travel is deleted")
             })
             .disposed(by: self.disposeBag)
-    }
-    
-    public func getSummaryForm(model: TravelDataModel,
-                               summaryFunc: @escaping ((_ nDay: Int, _ nCountry: Int, _ nCity: Int) -> String),
-                               label: UILabel,
-                               disposeBag: DisposeBag) {
-        self.services.travelService.bindTravelToSummary(travelUid: model.itemUid,
-                                                        summaryFunc: summaryFunc,
-                                                        label: label,
-                                                        disposeBag: disposeBag)
     }
 }
