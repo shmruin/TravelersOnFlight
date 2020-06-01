@@ -62,6 +62,7 @@ class TravelListViewController: UIViewController, StoryboardBased, ViewModelBase
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "travelCollectionViewCell", for: indexPath) as! TravelListCollectionViewCell
                 cell.layer.borderColor = UIColor.gray.cgColor
                 cell.layer.borderWidth = 1
+                cell.travelBackgroundImage.contentMode = .scaleAspectFill
                 cell.configure(viewController: self!, with: item, onDelete: self!.viewModel.deleteItemOfTravel(model:))
                 
                 if let bgImage = self!.setBackgroundImg(item.theme.value) {
@@ -78,6 +79,8 @@ class TravelListViewController: UIViewController, StoryboardBased, ViewModelBase
     func layoutSetting() {
         let collectionViewLayout = travelsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
         collectionViewLayout?.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 14, right: 0)
+        collectionViewLayout?.estimatedItemSize = CGSize(width: travelsCollectionView.bounds.width, height: 150)
+        
         collectionViewLayout?.invalidateLayout()
     }
     

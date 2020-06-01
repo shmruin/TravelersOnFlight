@@ -27,17 +27,32 @@ struct TravelService: TravelServiceType {
     init() { }
     
     @discardableResult
-    func createTravel(uid: String, countries: [String], cities: [String], stDate: Date?, fnDate: Date?, eTheme: TravelTheme) -> Observable<TravelItem> {
+    func createTravel(uid: String, country: String, city: String, stDate: Date?, fnDate: Date?, eTheme: TravelTheme) -> Observable<TravelItem> {
         let result = withRealm(RealmDraft.TravelersOnFlight, "creating travel") { (realm) -> Observable<TravelItem> in
             let travel = TravelItem()
             travel.uid = uid
-            travel.countries.append(objectsIn: countries)
-            travel.cities.append(objectsIn: cities)
             travel.theme = eTheme.rawValue
             
             if let stDate = stDate, let fnDate = fnDate {
                 (0...stDate.distanceIntOf(targetDate: fnDate)).forEach { (distance) in
-                    SharedSubScheduleService.createDaySchedule(parent: travel, date: Common.increaseOneDateFeature(targetDate: stDate, feature: .day, value: distance))
+                    if distance == 0 { // First day scheudle have to create the initial specific schedule in it
+                        SharedSubScheduleService
+                            .createDaySchedule(parent: travel, date: Common.increaseOneDateFeature(targetDate: stDate, feature: .day, value: distance))
+                            .flatMapLatest { dayItem in
+                                return SharedSubScheduleService.createSpecificSchedule(parent: dayItem,
+                                                                                       country: country,
+                                                                                       city: city,
+                                                                                       area: "",
+                                                                                       stTime: Common.setDateAtHM(targetDate: dayItem.date, hour: 7, minutes: 0),
+                                                                                       fnTime: Common.setDateAtHM(targetDate: dayItem.date, hour: 8, minutes: 0),
+                                                                                       placeCategory: PlaceCategoryRepository.Select,
+                                                                                       placeName: "",
+                                                                                       activityCategory: ActivityCategoryRepository.Select,
+                                                                                       activityName: "")
+                            }
+                    } else {
+                        SharedSubScheduleService.createDaySchedule(parent: travel, date: Common.increaseOneDateFeature(targetDate: stDate, feature: .day, value: distance))
+                    }
                 }
             }
             
@@ -97,12 +112,55 @@ struct TravelService: TravelServiceType {
         return .error(TravelServiceError.gettingFailed)
     }
     
+    func getCountriesFromObject(travelUid: String) -> Observable<[String]> {
+        let realm = withRealmDraft(RealmDraft.TravelersOnFlight)
+        if let travel = realm.objects(TravelItem.self).filter("uid = %@", travelUid).first {
+            return Observable.from(object: travel)
+                            .map { travelItem in
+                                return Array(travelItem.dayItems).reduce(into: []) { (res, dayScheduleItem) in
+                                    res += Array(dayScheduleItem.specificItems).map { $0.country }
+                                    _ = Array(Set(res))
+                                }
+                            }
+        } else {
+            print("#ERROR - travel item is nil")
+        }
+        return .error(TravelServiceError.gettingFailed)
+    }
+    
+    func getCitiesFromObject(travelUid: String) -> Observable<[String]> {
+        let realm = withRealmDraft(RealmDraft.TravelersOnFlight)
+        if let travel = realm.objects(TravelItem.self).filter("uid = %@", travelUid).first {
+            return Observable.from(object: travel)
+                            .map { travelItem in
+                                return Array(travelItem.dayItems).reduce(into: []) { (res, dayScheduleItem) in
+                                    res += Array(dayScheduleItem.specificItems).map { $0.city }
+                                    _ = Array(Set(res))
+                                }
+                            }
+        } else {
+            print("#ERROR - travel item is nil")
+        }
+        return .error(TravelServiceError.gettingFailed)
+    }
+    
     func travels() -> Observable<Results<TravelItem>> {
         let result = withRealm(RealmDraft.TravelersOnFlight, "getting all travels") { (realm) -> Observable<Results<TravelItem>> in
-            let realm = withRealmDraft(RealmDraft.TravelersOnFlight)
             let travels = realm.objects(TravelItem.self)
             return Observable.collection(from: travels)
         }
         return result ?? .empty()
+    }
+    
+    func getDaysOfTravel(travelUid: String) -> Observable<Int> {
+        let realm = withRealmDraft(RealmDraft.TravelersOnFlight)
+        if let travel = realm.objects(TravelItem.self).filter("uid = %@", travelUid).first {
+            return Observable
+                        .from(object: travel)
+                        .map { res in res.dayItems.count }
+        } else {
+            print("#ERROR - travel item is nil")
+        }
+        return .error(TravelServiceError.gettingFailed)
     }
 }

@@ -60,7 +60,11 @@ class SpecificDataModel {
         return areas!
                 .asObservable()
                 .map { res in
-                    return "🖼\(res)"
+                    if res.isEmpty {
+                        return "🖼Area"
+                    } else {
+                        return "🖼\(res)"
+                    }
                 }
     }
     
@@ -68,7 +72,11 @@ class SpecificDataModel {
         return cities!
                 .asObservable()
                 .map { res in
-                    return "🏙\(res)"
+                    if res.isEmpty {
+                        return "🏙City"
+                    } else {
+                        return "🏙\(res)"
+                    }
                 }
     }
     
@@ -76,7 +84,11 @@ class SpecificDataModel {
         return countries!
                 .asObservable()
                 .map { res in
-                    return Common.getFlag(countryName: res)
+                    if res.isEmpty {
+                        return "🗺Country"
+                    } else {
+                        return Common.getFlag(countryName: res)
+                    }
                 }
     }
     

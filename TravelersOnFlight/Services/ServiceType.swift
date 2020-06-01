@@ -83,7 +83,7 @@ extension RealmServiceType {
 
 protocol TravelServiceType: RealmServiceType {
     @discardableResult
-    func createTravel(uid: String, countries: [String], cities: [String], stDate: Date?, fnDate: Date?, eTheme: TravelTheme) -> Observable<TravelItem>
+    func createTravel(uid: String, country: String, city: String, stDate: Date?, fnDate: Date?, eTheme: TravelTheme) -> Observable<TravelItem>
     
     @discardableResult
     func deleteTravel(travel: TravelItem) -> Observable<String>
@@ -91,9 +91,17 @@ protocol TravelServiceType: RealmServiceType {
     @discardableResult
     func updateTravel(travel: TravelItem, eTheme: TravelTheme) -> Observable<TravelItem>
     
+    func getTravel(travelUid: String) -> Observable<TravelItem>
+    
     func getTravelFromObject(travelUid: String) -> Observable<TravelItem>
     
+    func getCountriesFromObject(travelUid: String) -> Observable<[String]>
+    
+    func getCitiesFromObject(travelUid: String) -> Observable<[String]>
+    
     func travels() -> Observable<Results<TravelItem>>
+    
+    func getDaysOfTravel(travelUid: String) -> Observable<Int>
 }
 
 protocol ScheduleServiceType: RealmServiceType {

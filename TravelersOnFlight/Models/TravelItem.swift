@@ -18,8 +18,6 @@ import RxDataSources
 class TravelItem: Object, Relationable {
     @objc dynamic var uid: String = ""
     @objc dynamic var parentUid: String = RootParentUid
-    let countries = List<String>()
-    let cities = List<String>()
     @objc var createdDate: Date = Date()
     @objc dynamic var theme: String = TravelTheme.getDefault().rawValue
     let dayItems = List<DayScheduleItem>()

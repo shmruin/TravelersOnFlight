@@ -20,7 +20,9 @@ class TravelDataModel: HasDisposeBag {
     var stDate = BehaviorRelay<Date?>(value: nil)
     var fnDate = BehaviorRelay<Date?>(value: nil)
     
-    var dataSource: Observable<TravelItem>?
+    var travelDataSource: Observable<TravelItem>?
+    var countryDataSource: Observable<[String]>?
+    var cityDataSource: Observable<[String]>?
     
     var travelTitleObservable: Observable<String> {
         return Observable.combineLatest(stDate.asObservable(),
@@ -75,21 +77,27 @@ class TravelDataModel: HasDisposeBag {
     /**
      * init for model binding
      */
-    init(itemUid: String, dataSource: Observable<TravelItem>?) {
+    init(itemUid: String,
+         travelDataSource: Observable<TravelItem>?,
+         countryDataSource: Observable<[String]>?,
+         cityDataSource: Observable<[String]>?) {
+        
         self.itemUid = itemUid
-        self.dataSource = dataSource
+        self.travelDataSource = travelDataSource
+        self.countryDataSource = countryDataSource
+        self.cityDataSource = cityDataSource
         
-        _ = dataSource?.catchErrorJustComplete().map { Array($0.countries) }.bind(to: countries)
-        _ = dataSource?.catchErrorJustComplete().map { Array($0.cities) }.bind(to: cities)
-        _ = dataSource?.catchErrorJustComplete().map { TravelTheme(rawValue: $0.theme) ?? TravelTheme.getDefault() }.bind(to: theme)
-        _ = dataSource?.catchErrorJustComplete().map { $0.dayItems.first?.date ?? nil }.bind(to: stDate)
-        _ = dataSource?.catchErrorJustComplete().map { $0.dayItems.last?.date ?? nil }.bind(to: fnDate)
+        _ = countryDataSource?.catchErrorJustComplete().bind(to: countries)
+        _ = cityDataSource?.catchErrorJustComplete().bind(to: cities)
+        _ = travelDataSource?.catchErrorJustComplete().map { TravelTheme(rawValue: $0.theme) ?? TravelTheme.getDefault() }.bind(to: theme)
+        _ = travelDataSource?.catchErrorJustComplete().map { $0.dayItems.first?.date ?? nil }.bind(to: stDate)
+        _ = travelDataSource?.catchErrorJustComplete().map { $0.dayItems.last?.date ?? nil }.bind(to: fnDate)
         
-        dataSource?
-            .subscribe(onNext: { _ in
-                print("Travel Data Model of \(itemUid) on next called")
-            })
-            .disposed(by: self.disposeBag)
+//        travelDataSource?
+//            .subscribe(onNext: { _ in
+//                print("Travel Data Model of \(itemUid) on next called")
+//            })
+//            .disposed(by: self.disposeBag)
         
     }
 }
@@ -109,4 +117,4 @@ extension TravelDataModel: Equatable {
 let DummyTravelUid = Common.makeUid()
 
 // Use for 'new' section
-let DummyTravelData = TravelDataModel(itemUid: DummyTravelUid, dataSource: nil)
+let DummyTravelData = TravelDataModel(itemUid: DummyTravelUid, travelDataSource: nil, countryDataSource: nil, cityDataSource: nil)

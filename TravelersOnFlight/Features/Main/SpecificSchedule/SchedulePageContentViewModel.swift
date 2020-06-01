@@ -140,6 +140,7 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
                                                                             activityCategory: sourceModel.activityCategory!.value,
                                                                             activityName: sourceModel.activityName!.value)
             }
+            .take(1)
             .subscribe({ _ in
                 print("Specific schedule updated")
             })
@@ -151,6 +152,7 @@ class SchedulePageContentViewModel: ServicesViewModel, Stepper, HasDisposeBag, r
             .flatMapLatest { specificItem in
                 return self.services.scheduleService.deleteSchedule(schedule: specificItem)
             }
+            .take(1)
             .subscribe(onNext: {
                 print("Specific schedule is deleted")
             })

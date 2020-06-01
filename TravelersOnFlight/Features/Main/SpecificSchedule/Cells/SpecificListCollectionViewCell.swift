@@ -12,7 +12,6 @@ import RxSwift
 import RxDataSources
 import RxGesture
 import RxCocoa
-import NSObject_Rx
 import RLBAlertsPickers
 
 
@@ -28,6 +27,8 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var specificActivityCategory: UILabel!
     @IBOutlet weak var specificActivityName: UILabel!
     
+    var disposeBag = DisposeBag()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -38,6 +39,7 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
     
     func configure(viewController: UIViewController, with item: SpecificDataModel, superViewModel: SchedulePageContentViewModel,
@@ -45,39 +47,39 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
         
         item.makeStTime()
             .bind(to: specificStTime.rx.text)
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         item.makeFnTime()
             .bind(to: specificFnTime.rx.text)
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         item.makeArea()
             .bind(to: specificArea.rx.text)
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         item.makeCity()
             .bind(to: specificCity.rx.text)
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         item.makeCountry()
             .bind(to: specificCountry.rx.text)
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         item.makePlaceCategory()
             .bind(to: specificPlaceCategory.rx.text)
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         item.makePlaceName()
             .bind(to: specificPlaceName.rx.text)
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         item.makeActivityCategory()
             .bind(to: specificActivityCategory.rx.text)
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         item.makeActivityName()
             .bind(to: specificActivityName.rx.text)
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
             
         var tStDate = Date()
         var tFnDate = Date()
@@ -125,7 +127,7 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
                 
                 onComplete(item.itemUid, item)
             })
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         // Tap specificCountry - Change Country
         specificCountry
@@ -151,7 +153,7 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
                 
                 onComplete(item.itemUid, item)
             })
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
             
         
         // Tap specificCity - Change City
@@ -178,7 +180,7 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
                 
                 onComplete(item.itemUid, item)
             })
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         // Tap specificArea - Change Area
         specificArea
@@ -204,7 +206,7 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
                 
                 onComplete(item.itemUid, item)
             })
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         
         // Tap specificPlaceCategory, specificPlaceCategory - Change places
@@ -242,7 +244,7 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
                 
                 onComplete(item.itemUid, item)
             })
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         
         // Tap specificActivityCategory, specificActivityCategory - CHange actions
@@ -280,7 +282,7 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
             
             onComplete(item.itemUid, item)
         })
-        .disposed(by: rx.disposeBag)
+        .disposed(by: disposeBag)
         
         
         self
@@ -296,7 +298,7 @@ class SpecificListCollectionViewCell: UICollectionViewCell {
                 
                 viewController.present(alert, animated: true, completion: nil)
             })
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
     }
     

@@ -9,8 +9,8 @@
 import UIKit
 import Action
 import RxSwift
-import NSObject_Rx
 import RLBAlertsPickers
+import Foundation
 
 class TravelListCollectionViewCell: UICollectionViewCell {
     
@@ -20,6 +20,8 @@ class TravelListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var travelFnDate: UILabel!
     @IBOutlet weak var travelBackgroundImage: UIImageView!
     
+    var disposeBag = DisposeBag()
+    
     func configure(viewController: UIViewController, with item: TravelDataModel, onDelete: @escaping (TravelDataModel) -> ()) {
         
         /**
@@ -27,14 +29,14 @@ class TravelListCollectionViewCell: UICollectionViewCell {
          */
         item.travelTitleObservable
             .bind(to: self.travelTitle.rx.text)
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         /**
         * Ssummary observable binded to text label
         */
         item.travelSummaryObservable
             .bind(to: self.travelSummary.rx.text)
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         /**
          * Date observable binded to text label
@@ -50,7 +52,7 @@ class TravelListCollectionViewCell: UICollectionViewCell {
                 }
             }
             .bind(to: self.travelStDate.rx.text)
-            .disposed(by: rx.disposeBag)
+        .disposed(by: disposeBag)
         
         item.fnDate
         .asObservable()
@@ -63,7 +65,7 @@ class TravelListCollectionViewCell: UICollectionViewCell {
             }
         }
         .bind(to: self.travelFnDate.rx.text)
-        .disposed(by: rx.disposeBag)
+        .disposed(by: disposeBag)
         
         
         // Long press to delete travel
@@ -75,16 +77,22 @@ class TravelListCollectionViewCell: UICollectionViewCell {
             let alert = UIAlertController(title: "Wanna delete this travel?", message: "It cannot be undoable!", preferredStyle: .alert)
             alert.addAction(title: "OK", style: .default) { (action) in
                 onDelete(item)
+                print("Item Count: " + String(CFGetRetainCount(item)))
             }
             alert.addAction(title: "Cancel", style: .cancel)
             
             viewController.present(alert, animated: true, completion: nil)
         })
-        .disposed(by: rx.disposeBag)
+        .disposed(by: disposeBag)
             
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
+    
+    deinit {
+        print("Deinit this cell")
     }
 }

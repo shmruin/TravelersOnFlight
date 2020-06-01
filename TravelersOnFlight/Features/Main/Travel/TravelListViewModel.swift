@@ -29,7 +29,9 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
                 let travelData = travelItems.toArray().map { (item: TravelItem) -> TravelDataModel in
                     
                     return TravelDataModel(itemUid: item.uid,
-                                           dataSource: self.services.travelService.getTravelFromObject(travelUid: item.uid))
+                                           travelDataSource: self.services.travelService.getTravelFromObject(travelUid: item.uid),
+                                           countryDataSource: self.services.travelService.getCountriesFromObject(travelUid: item.uid),
+                                           cityDataSource: self.services.travelService.getCitiesFromObject(travelUid: item.uid))
                 }
                 
                 return [TravelSection(model: "Travels", items: travelData),
@@ -45,8 +47,8 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
     
     public func createItemOfTravel(model: TravelDataModel) {
         self.services.travelService.createTravel(uid: model.itemUid,
-                                                 countries: model.countries.value,
-                                                 cities: model.cities.value,
+                                                 country: model.countries.value[0],
+                                                 city: model.cities.value[0],
                                                  stDate: model.stDate.value,
                                                  fnDate: model.fnDate.value,
                                                  eTheme: model.theme.value)
