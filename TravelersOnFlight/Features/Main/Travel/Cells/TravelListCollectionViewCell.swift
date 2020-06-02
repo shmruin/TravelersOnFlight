@@ -27,16 +27,43 @@ class TravelListCollectionViewCell: UICollectionViewCell {
         /**
          * Title observable binded to text label
          */
-        item.travelTitleObservable
-            .bind(to: self.travelTitle.rx.text)
-            .disposed(by: disposeBag)
+        Observable.combineLatest(item.stDate.asObservable(),
+                                 item.cities.asObservable(),
+                                 item.theme.asObservable())
+                        .map { (date, cities, theme)  in
+                            return "\(date?.formatMonth ?? "-"), \(cities.first ?? "-"), \(theme)"
+                        }
+                        .bind(to: self.travelTitle.rx.text)
+                        .disposed(by: disposeBag)
         
         /**
         * Ssummary observable binded to text label
         */
-        item.travelSummaryObservable
-            .bind(to: self.travelSummary.rx.text)
-            .disposed(by: disposeBag)
+        Observable.combineLatest(item.stDate.asObservable(),
+                                 item.fnDate.asObservable(),
+                                 item.countries.asObservable(),
+                                 item.cities.asObservable())
+                    .map { (stDate, fnDate, countries, cities) in
+                        var nDay = 0
+                        
+                        if let sDate = stDate, let fDate = fnDate {
+                            nDay = sDate.distanceIntOf(targetDate: fDate) + 1
+                        } else {
+                            print("#ERROR - stDate or fnDate is nil")
+                        }
+                        let nCountry = countries.count
+                        let nCity = cities.count
+                        
+                        print("Countries: " + String(nCountry))
+                        
+                        let suffixDays = nDay > 1 ? "days" : "day"
+                        let suffixCountries = nCountry > 1 ? "countries" : "country"
+                        let suffixCities = nCity > 1 ? "cities" : "city"
+                        
+                        return "\(nDay) \(suffixDays) on \(nCountry) \(suffixCountries), \(nCity) \(suffixCities)"
+                    }
+                    .bind(to: self.travelSummary.rx.text)
+                    .disposed(by: disposeBag)
         
         /**
          * Date observable binded to text label

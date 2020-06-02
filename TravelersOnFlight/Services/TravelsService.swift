@@ -50,6 +50,9 @@ struct TravelService: TravelServiceType {
                                                                                        activityCategory: ActivityCategoryRepository.Select,
                                                                                        activityName: "")
                             }
+                            .take(1)
+                            .subscribe()
+                            .disposed(by: disposeBag)
                     } else {
                         SharedSubScheduleService.createDaySchedule(parent: travel, date: Common.increaseOneDateFeature(targetDate: stDate, feature: .day, value: distance))
                     }
@@ -115,12 +118,11 @@ struct TravelService: TravelServiceType {
     func getCountriesFromObject(travelUid: String) -> Observable<[String]> {
         let realm = withRealmDraft(RealmDraft.TravelersOnFlight)
         if let travel = realm.objects(TravelItem.self).filter("uid = %@", travelUid).first {
-            return Observable.from(object: travel)
-                            .map { travelItem in
-                                return Array(travelItem.dayItems).reduce(into: []) { (res, dayScheduleItem) in
+            return Observable.collection(from: travel.dayItems)
+                            .map { dayItems in
+                                return Array(Set(Array(dayItems).reduce(into: []) { (res, dayScheduleItem) in
                                     res += Array(dayScheduleItem.specificItems).map { $0.country }
-                                    _ = Array(Set(res))
-                                }
+                                }))
                             }
         } else {
             print("#ERROR - travel item is nil")
@@ -131,12 +133,11 @@ struct TravelService: TravelServiceType {
     func getCitiesFromObject(travelUid: String) -> Observable<[String]> {
         let realm = withRealmDraft(RealmDraft.TravelersOnFlight)
         if let travel = realm.objects(TravelItem.self).filter("uid = %@", travelUid).first {
-            return Observable.from(object: travel)
-                            .map { travelItem in
-                                return Array(travelItem.dayItems).reduce(into: []) { (res, dayScheduleItem) in
+            return Observable.collection(from: travel.dayItems)
+                            .map { dayItems in
+                                return Array(Set(Array(dayItems).reduce(into: []) { (res, dayScheduleItem) in
                                     res += Array(dayScheduleItem.specificItems).map { $0.city }
-                                    _ = Array(Set(res))
-                                }
+                                }))
                             }
         } else {
             print("#ERROR - travel item is nil")

@@ -31,9 +31,14 @@ class DayScheduleFlow: Flow, HasDisposeBag {
     }
     
     func makeTitle(view: UIViewController, travel: TravelDataModel) {
-        travel.travelTitleObservable
-            .bind(to: view.rx.title)
-            .disposed(by: self.disposeBag)
+        Observable.combineLatest(travel.stDate.asObservable(),
+                 travel.cities.asObservable(),
+                 travel.theme.asObservable())
+        .map { (date, cities, theme)  in
+            return "\(date?.formatMonth ?? "-"), \(cities.first ?? "-"), \(theme)"
+        }
+        .bind(to: view.rx.title)
+        .disposed(by: self.disposeBag)
     }
     
     func navigate(to step: Step) -> FlowContributors {

@@ -24,39 +24,6 @@ class TravelDataModel: HasDisposeBag {
     var countryDataSource: Observable<[String]>?
     var cityDataSource: Observable<[String]>?
     
-    var travelTitleObservable: Observable<String> {
-        return Observable.combineLatest(stDate.asObservable(),
-                 cities.asObservable(),
-                 theme.asObservable())
-        .map { (date, cities, theme)  in
-            return "\(date?.formatMonth ?? "-"), \(cities.first ?? "-"), \(theme)"
-        }
-    }
-    
-    var travelSummaryObservable: Observable<String> {
-        return Observable.combineLatest(stDate.asObservable(),
-                                        fnDate.asObservable(),
-                                        countries.asObservable(),
-                                        cities.asObservable())
-            .map { (stDate, fnDate, countries, cities) in
-                var nDay = 0
-                
-                if let sDate = stDate, let fDate = fnDate {
-                    nDay = sDate.distanceIntOf(targetDate: fDate) + 1
-                } else {
-                    print("#ERROR - stDate or fnDate is nil")
-                }
-                let nCountry = countries.count
-                let nCity = cities.count
-                
-                let suffixDays = nDay > 1 ? "days" : "day"
-                let suffixCountries = nCountry > 1 ? "countries" : "country"
-                let suffixCities = nCity > 1 ? "cities" : "city"
-                
-                return "\(nDay) \(suffixDays) on \(nCountry) \(suffixCountries), \(nCity) \(suffixCities)"
-            }
-    }
-    
     /**
      * Init for new travel
      */
@@ -92,13 +59,6 @@ class TravelDataModel: HasDisposeBag {
         _ = travelDataSource?.catchErrorJustComplete().map { TravelTheme(rawValue: $0.theme) ?? TravelTheme.getDefault() }.bind(to: theme)
         _ = travelDataSource?.catchErrorJustComplete().map { $0.dayItems.first?.date ?? nil }.bind(to: stDate)
         _ = travelDataSource?.catchErrorJustComplete().map { $0.dayItems.last?.date ?? nil }.bind(to: fnDate)
-        
-//        travelDataSource?
-//            .subscribe(onNext: { _ in
-//                print("Travel Data Model of \(itemUid) on next called")
-//            })
-//            .disposed(by: self.disposeBag)
-        
     }
 }
 
