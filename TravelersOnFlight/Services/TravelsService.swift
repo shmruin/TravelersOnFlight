@@ -70,14 +70,12 @@ struct TravelService: TravelServiceType {
     }
     
     @discardableResult
-    func deleteTravel(travel: TravelItem) -> Observable<String> {
-        let result = withRealm(RealmDraft.TravelersOnFlight, "deleting travel", action: { (realm) -> Observable<String> in
-            let deletedUid = travel.uid
-            
+    func deleteTravel(travel: TravelItem) -> Observable<Void> {
+        let result = withRealm(RealmDraft.TravelersOnFlight, "deleting travel", action: { (realm) -> Observable<Void> in
             try realm.write {
                 realm.delete(travel, cascading: true)
             }
-            return .just(deletedUid)
+            return .empty()
         }) ?? .error(TravelServiceError.deletionFailed(travel))
         
         return result
@@ -105,44 +103,37 @@ struct TravelService: TravelServiceType {
         return result ?? .error(TravelServiceError.gettingFailed)
     }
     
-    func getTravelFromObject(travelUid: String) -> Observable<TravelItem> {
+    func getTravelFromObject(travelUid: String) -> Observable<TravelItem>? {
         let realm = withRealmDraft(RealmDraft.TravelersOnFlight)
         if let travel = realm.objects(TravelItem.self).filter("uid = %@", travelUid).first {
             return Observable.from(object: travel)
+                            .catchErrorJustComplete()
         } else {
             print("#ERROR - travel item is nil")
         }
         return .error(TravelServiceError.gettingFailed)
     }
     
-    func getCountriesFromObject(travelUid: String) -> Observable<[String]> {
-        let realm = withRealmDraft(RealmDraft.TravelersOnFlight)
-        if let travel = realm.objects(TravelItem.self).filter("uid = %@", travelUid).first {
-            return Observable.collection(from: travel.dayItems)
-                            .map { dayItems in
-                                return Array(Set(Array(dayItems).reduce(into: []) { (res, dayScheduleItem) in
-                                    res += Array(dayScheduleItem.specificItems).map { $0.country }
-                                }))
-                            }
-        } else {
-            print("#ERROR - travel item is nil")
+    func getCountriesFromObject(travelUid: String) -> Observable<[String]>? {
+        self.getTravelFromObject(travelUid: travelUid)?
+        .catchErrorJustComplete()
+        .map { $0.dayItems }
+        .map { dayItems in
+            return Array(Set(Array(dayItems).reduce(into: []) { (res, dayScheduleItem) in
+                res += Array(dayScheduleItem.specificItems).map { $0.country }
+            }))
         }
-        return .error(TravelServiceError.gettingFailed)
     }
     
-    func getCitiesFromObject(travelUid: String) -> Observable<[String]> {
-        let realm = withRealmDraft(RealmDraft.TravelersOnFlight)
-        if let travel = realm.objects(TravelItem.self).filter("uid = %@", travelUid).first {
-            return Observable.collection(from: travel.dayItems)
-                            .map { dayItems in
-                                return Array(Set(Array(dayItems).reduce(into: []) { (res, dayScheduleItem) in
-                                    res += Array(dayScheduleItem.specificItems).map { $0.city }
-                                }))
-                            }
-        } else {
-            print("#ERROR - travel item is nil")
-        }
-        return .error(TravelServiceError.gettingFailed)
+    func getCitiesFromObject(travelUid: String) -> Observable<[String]>? {
+        self.getTravelFromObject(travelUid: travelUid)?
+            .catchErrorJustComplete()
+            .map { $0.dayItems }
+            .map { dayItems in
+                return Array(Set(Array(dayItems).reduce(into: []) { (res, dayScheduleItem) in
+                    res += Array(dayScheduleItem.specificItems).map { $0.city }
+                }))
+            }
     }
     
     func travels() -> Observable<Results<TravelItem>> {

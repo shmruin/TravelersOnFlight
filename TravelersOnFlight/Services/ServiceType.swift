@@ -86,18 +86,18 @@ protocol TravelServiceType: RealmServiceType {
     func createTravel(uid: String, country: String, city: String, stDate: Date?, fnDate: Date?, eTheme: TravelTheme) -> Observable<TravelItem>
     
     @discardableResult
-    func deleteTravel(travel: TravelItem) -> Observable<String>
+    func deleteTravel(travel: TravelItem) -> Observable<Void>
     
     @discardableResult
     func updateTravel(travel: TravelItem, eTheme: TravelTheme) -> Observable<TravelItem>
     
     func getTravel(travelUid: String) -> Observable<TravelItem>
     
-    func getTravelFromObject(travelUid: String) -> Observable<TravelItem>
+    func getTravelFromObject(travelUid: String) -> Observable<TravelItem>?
     
-    func getCountriesFromObject(travelUid: String) -> Observable<[String]>
+    func getCountriesFromObject(travelUid: String) -> Observable<[String]>?
     
-    func getCitiesFromObject(travelUid: String) -> Observable<[String]>
+    func getCitiesFromObject(travelUid: String) -> Observable<[String]>?
     
     func travels() -> Observable<Results<TravelItem>>
     

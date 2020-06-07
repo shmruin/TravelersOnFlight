@@ -65,7 +65,7 @@ class TravelListViewModel: ServicesViewModel, Stepper, HasDisposeBag {
             .flatMapLatest { travelItem in
                 return self.services.travelService.deleteTravel(travel: travelItem)
             }
-            .subscribe(onNext: { deletedUid in
+            .subscribe(onNext: { _ in
                 print("Travel is deleted")
             })
             .disposed(by: self.disposeBag)

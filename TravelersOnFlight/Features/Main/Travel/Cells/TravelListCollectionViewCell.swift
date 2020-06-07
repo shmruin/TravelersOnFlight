@@ -30,6 +30,7 @@ class TravelListCollectionViewCell: UICollectionViewCell {
         Observable.combineLatest(item.stDate.asObservable(),
                                  item.cities.asObservable(),
                                  item.theme.asObservable())
+                        .catchErrorJustComplete()
                         .map { (date, cities, theme)  in
                             return "\(date?.formatMonth ?? "-"), \(cities.first ?? "-"), \(theme)"
                         }
@@ -43,6 +44,7 @@ class TravelListCollectionViewCell: UICollectionViewCell {
                                  item.fnDate.asObservable(),
                                  item.countries.asObservable(),
                                  item.cities.asObservable())
+                    .catchErrorJustComplete()
                     .map { (stDate, fnDate, countries, cities) in
                         var nDay = 0
                         
