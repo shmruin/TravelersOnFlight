@@ -93,11 +93,11 @@ protocol TravelServiceType: RealmServiceType {
     
     func getTravel(travelUid: String) -> Observable<TravelItem>
     
-    func getTravelFromObject(travelUid: String) -> Observable<TravelItem>?
+    func getTravelFromObject(travelUid: String) -> Observable<TravelItem>
     
-    func getCountriesFromObject(travelUid: String) -> Observable<[String]>?
+    func getCountriesFromObject(travelUid: String) -> Observable<[String]>
     
-    func getCitiesFromObject(travelUid: String) -> Observable<[String]>?
+    func getCitiesFromObject(travelUid: String) -> Observable<[String]>
     
     func travels() -> Observable<Results<TravelItem>>
     

@@ -103,7 +103,7 @@ struct TravelService: TravelServiceType {
         return result ?? .error(TravelServiceError.gettingFailed)
     }
     
-    func getTravelFromObject(travelUid: String) -> Observable<TravelItem>? {
+    func getTravelFromObject(travelUid: String) -> Observable<TravelItem> {
         let realm = withRealmDraft(RealmDraft.TravelersOnFlight)
         if let travel = realm.objects(TravelItem.self).filter("uid = %@", travelUid).first {
             return Observable.from(object: travel)
@@ -114,21 +114,17 @@ struct TravelService: TravelServiceType {
         return .error(TravelServiceError.gettingFailed)
     }
     
-    func getCountriesFromObject(travelUid: String) -> Observable<[String]>? {
-        self.getTravelFromObject(travelUid: travelUid)?
-        .catchErrorJustComplete()
-        .map { $0.dayItems }
-        .map { dayItems in
-            return Array(Set(Array(dayItems).reduce(into: []) { (res, dayScheduleItem) in
-                res += Array(dayScheduleItem.specificItems).map { $0.country }
-            }))
-        }
+    func getCountriesFromObject(travelUid: String) -> Observable<[String]> {
+        SharedSubScheduleService.daySchedules(ofParentTravelUid: travelUid)
+            .map { dayItems in
+                return Array(Set(Array(dayItems).reduce(into: []) { (res, dayScheduleItem) in
+                    res += Array(dayScheduleItem.specificItems).map { $0.country }
+                }))
+            }
     }
     
-    func getCitiesFromObject(travelUid: String) -> Observable<[String]>? {
-        self.getTravelFromObject(travelUid: travelUid)?
-            .catchErrorJustComplete()
-            .map { $0.dayItems }
+    func getCitiesFromObject(travelUid: String) -> Observable<[String]> {
+        SharedSubScheduleService.daySchedules(ofParentTravelUid: travelUid)
             .map { dayItems in
                 return Array(Set(Array(dayItems).reduce(into: []) { (res, dayScheduleItem) in
                     res += Array(dayScheduleItem.specificItems).map { $0.city }
