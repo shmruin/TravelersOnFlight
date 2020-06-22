@@ -1,8 +1,8 @@
 # TravelersOnFlight
 
-![Alt text](screenshots/TravelersOnFlightDemo.PNG?raw=true "TravelersOnFlight Demo")
-![Alt text](screenshots/TravelersOnFlightDemo2.PNG?raw=true "TravelersOnFlight Demo2")
-![Alt text](screenshots/TravelersOnFlightDemo3.PNG?raw=true "TravelersOnFlight Demo2")
+![Alt text](screenshots/TravelersOnFlightDemo.png?raw=true "TravelersOnFlight Demo")
+![Alt text](screenshots/TravelersOnFlightDemo2.png?raw=true "TravelersOnFlight Demo2")
+![Alt text](screenshots/TravelersOnFlightDemo3.png?raw=true "TravelersOnFlight Demo2")
 
 A simple travel scheduler iOS app for all busy travels!
 This app is mainly focused on reactive and offline availability.
